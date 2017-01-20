@@ -19,6 +19,7 @@ import org.xml.sax.SAXException;
 
 import pstl.musicxml.tools.FileUtils;
 
+import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.ValidationDriver;
 
 public class XMLParser {
@@ -48,17 +49,26 @@ public class XMLParser {
 			final String rngAbsPath = rngFile.getAbsolutePath();
 			final InputSource inputSource = ValidationDriver.fileInputSource(rngAbsPath);
 			final ValidationDriver vd = new ValidationDriver();
-			
-			
-			
 			vd.loadSchema(inputSource);
+
+			
 			InputSource is = new InputSource(new StringReader(inputText));
 			
 			if (!vd.validate(is)) {
 				throw new ParseException("Invalid xml :(");
 			}
 
+			System.out.println("Validation done");
+			
 			final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			
+			dbf.setValidating(false);
+			dbf.setNamespaceAware(true);
+			dbf.setFeature("http://xml.org/sax/features/namespaces", false);
+			dbf.setFeature("http://xml.org/sax/features/validation", false);
+			dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+			dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+			
 			final DocumentBuilder db = dbf.newDocumentBuilder();
 
 			is = new InputSource(new StringReader(inputText));
