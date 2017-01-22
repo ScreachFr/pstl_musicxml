@@ -1,32 +1,35 @@
 package pstl.musicxml.parsing;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import pstl.musicxml.tools.FileUtils;
 
-import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.ValidationDriver;
 
 public class XMLParser {
 	private File rngFile;
 	private String input;
-	private String dtdDir;
-
+	private Pattern dtdPattern;
+	
+	public final static String REGEX_DTD = "(<!DOCTYPE score-partwise PUBLIC)(\\s)*(\")([a-z A-Z]|-|\\/|[0-9]|\\.)*(\")(\\s)*(\")([a-z A-Z]|:|\\/|\\.)*(\")(\\s)*(>)";
+	
+	public XMLParser() {
+		dtdPattern = Pattern.compile(REGEX_DTD);
+	}
+	
 	public void setRng(File rngFile) throws IOException {
 		if (!rngFile.exists())
 			throw new IOException(rngFile + " does not exist!");		
@@ -37,15 +40,12 @@ public class XMLParser {
 		this.input = inputPath;
 	}
 
-	public void setDtdDir(String dtdDir) {
-		this.dtdDir = dtdDir;
-	}
-	
 	
 	public Document getDocument() throws ParseException {
 		try {
 			Document result;
-			final String inputText = FileUtils.getTextFromFile(input);
+			String inputText = FileUtils.getTextFromFile(input);
+			inputText = removeDTD(inputText);
 			final String rngAbsPath = rngFile.getAbsolutePath();
 			final InputSource inputSource = ValidationDriver.fileInputSource(rngAbsPath);
 			final ValidationDriver vd = new ValidationDriver();
@@ -61,14 +61,6 @@ public class XMLParser {
 			System.out.println("Validation done");
 			
 			final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			
-			dbf.setValidating(false);
-			dbf.setNamespaceAware(true);
-			dbf.setFeature("http://xml.org/sax/features/namespaces", false);
-			dbf.setFeature("http://xml.org/sax/features/validation", false);
-			dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
-			dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-			
 			final DocumentBuilder db = dbf.newDocumentBuilder();
 
 			is = new InputSource(new StringReader(inputText));
@@ -88,6 +80,13 @@ public class XMLParser {
 			throw new ParseException("Error while configuring parser");
 		}
 	}
+	
+	private String removeDTD(String input) {
+		Matcher matcher = dtdPattern.matcher(input);
+
+		
+		return matcher.replaceAll("");
+	}
 
 	public static void main(String[] args) {
 
@@ -95,7 +94,7 @@ public class XMLParser {
 		File rng;
 		try {
 			//Bad!
-			System.setProperty("http.agent", "Mozilla/5.0 (X11; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0");
+//			System.setProperty("http.agent", "Mozilla/5.0 (X11; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0");
 			
 			parser.setInput("/home/alexandre/git/pstl_musicxml/test-data/simple/helloworld.mxl");
 
@@ -117,5 +116,6 @@ public class XMLParser {
 			e.printStackTrace();
 		}
 
+		
 	}
 }
