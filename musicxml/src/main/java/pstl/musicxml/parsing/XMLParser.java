@@ -24,7 +24,7 @@ public class XMLParser {
 	private String input;
 	private Pattern dtdPattern;
 	
-	public final static String REGEX_DTD = "(<!DOCTYPE score-partwise PUBLIC)(\\s)*(\")([a-z A-Z]|-|\\/|[0-9]|\\.)*(\")(\\s)*(\")([a-z A-Z]|:|\\/|\\.)*(\")(\\s)*(>)";
+	public final static String REGEX_DTD = "(<!DOCTYPE (score-partwise|score-timewise) PUBLIC)(\\s)*(\")([a-z A-Z]|-|\\/|[0-9]|\\.)*(\")(\\s)*(\")([a-z A-Z]|:|\\/|\\.)*(\")(\\s)*(>)";
 	
 	public XMLParser() {
 		dtdPattern = Pattern.compile(REGEX_DTD);
