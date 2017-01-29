@@ -1,0 +1,105 @@
+% This file was created with JabRef 2.8.1.
+% Encoding: UTF8
+% MISC : divers
+
+
+
+@BOOK{Maral2011,
+  title = {Satellite communications systems: systems, techniques and technology},
+  publisher = {Wiley},
+  year = {2011},
+  author = {Maral, G{\'e}rard and Bousquet, Michel}
+}
+
+
+@ARTICLE{Roque2012b,
+  author = {Roque, D. and Siclet, C.},
+  title = {Performances of weighted cyclic prefix {OFDM} with low-complexity
+	equalization},
+  journal = {{IEEE} Commun. Lett.},
+  year = {2013},
+  volume = {17},
+  pages = {439-442},
+  number = {3},
+  abstract = {In this paper, we justify low-complexity equalization techniques for
+	weighted cyclic prefix (WCP)-OFDM. This modulation technique refers
+	to filter bank based multicarrier (FBMC) transmission system provided
+	with short filters. It allows the use of non-rectangular waveforms
+	in order to mitigate interference caused by time-frequency selective
+	channels while preserving an efficient implementation.},
+  doi = {10.1109/LCOMM.2013.011513.121997},
+  file = {:Roque2012b.pdf:PDF},
+  issn = {1089-7798},
+  keywords = {OFDM modulation;channel bank filters;interference suppression;FBMC
+	transmission system;WCP-OFDM;filter bank based multicarrier transmission
+	system;interference mitigation;low-complexity equalization techniques;modulation
+	technique;nonrectangular waveforms;short filters;time-frequency selective
+	channels;weighted cyclic prefix OFDM;Bit error rate;Complexity theory;Equalizers;Gain;OFDM;Shape;Time
+	frequency analysis;Time-varying multipath channels;efficient realization;equalization;filter
+	bank based multicarrier modulations},
+  owner = {damien},
+  timestamp = {2012.08.15}
+}
+
+@INPROCEEDINGS{Roque2012,
+  author = {Roque, D. and Siclet, C. and Siohan, P.},
+  title = {A performance comparison of {FBMC} modulation schemes with short
+	perfect reconstruction filters},
+  booktitle = {Proc. IEEE International Conference on Telecommunications, ICT '12},
+  year = {2012},
+  pages = {1-6},
+  abstract = {In this paper, we study the performance of filter bank based multicarrier
+	(FBMC) transmission systems over doubly-dispersive channels.},
+  doi = {10.1109/ICTEL.2012.6221247},
+  file = {:Roque2012.pdf:PDF},
+  keywords = {OFDM modulation;error statistics},
+  owner = {damien},
+  timestamp = {2011.11.16}
+}
+
+@PHDTHESIS{Rusek2007b,
+  author = {Rusek, Frederik},
+  title = {Partial Response and Faster-Than-Nyquist Signaling},
+  school = {Lund Universitet},
+  year = {2007},
+  abstract = {Bandwidth efﬁciency is a key objective in the design of a digital communication
+	system. Traditionally it is accomplished by increasing the constellation
+	size of the signaling system. In this thesis alternative techniques	are studied. },
+  file = {:Rusek2007b.pdf:PDF},
+  owner = {Cyrille S.},
+  timestamp = {2013.07.02}
+}
+
+@MISC{Siclet2013,
+  author = {Siclet, C. and Roque, D.},
+  title = {On the relations between ordinary {TF} moments for continuous and
+	discrete-time signals},
+  year = {2013},
+  note = {Journal},
+  owner = {damien},
+  timestamp = {2013.09.09}
+}
+
+@INCOLLECTION{Thompson2013raey,
+  author = {Thompson, P.T.},
+  title = {Satellite Communications Modulation and Multiplexing},
+  booktitle = {Handbook of Satellite Applications},
+  publisher = {Springer New York},
+  year = {2013},
+  editor = {Pelton, JosephN. and Madry, Scott and Camacho-Lara, Sergio},
+  pages = {325-358},
+  doi = {10.1007/978-1-4419-7671-0_86},
+  isbn = {978-1-4419-7670-3},
+  keywords = {Aloha random access; Bit error rate (BER); Bit rate; Block codes;
+	Carrier to noise ratio; CDMA; Coding; Coding gain; Convolutional
+	coding; Decoding; Demand assigned multiple access (DAMA); Demand
+	assignment; Demodulator; Digital video broadcast (DVB); Encoding;
+	Forward error correction (FEC); Low density parity check (LDPC) coding;
+	Medium access control (MAC); Modem; Modulation; Multiple access techniques;
+	Nyquist filtering; Random access; Reed–Solomon coding; Claude Shannon;
+	Signal constellation; Spectral efficiency; Symbol rate; TDMA; Turbo
+	coding; Viterbi algorithm or Viterbi coding; VSAT networks},
+  language = {English},
+  url = {http://dx.doi.org/10.1007/978-1-4419-7671-0_86}
+}
+

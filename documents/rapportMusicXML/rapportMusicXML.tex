@@ -1,0 +1,187 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[frenchb]{babel}
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{tikz}
+\usepackage{ifthen}
+\usepackage{ifpdf}
+\usepackage{comment}
+\usepackage{listings} % pour code XML
+
+
+\graphicspath{{images/}}
+
+\newlength\figureheight
+\newlength\figurewidth
+
+\ifpdf
+\usepackage[pdftex]{hyperref}
+\else
+\usepackage{hyperref}
+\fi
+
+\usepackage{color}
+\hypersetup{
+colorlinks=true,
+linkcolor=black,
+citecolor=black,
+urlcolor=black}
+
+\renewcommand{\baselinestretch}{1.05}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyfoot{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[RE]{\bfseries\nouppercase{\leftmark}}
+\fancyhead[LO]{\bfseries\nouppercase{\rightmark}}
+\setlength{\headheight}{15pt}
+
+\let\headruleORIG\headrule
+\renewcommand{\headrule}{\color{black} \headruleORIG}
+\renewcommand{\headrulewidth}{1.0pt}
+\usepackage{colortbl}
+\arrayrulecolor{black}
+
+\fancypagestyle{plain}{
+  \fancyhead{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+\makeatletter
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+  \hbox{}
+  \thispagestyle{empty}
+  \newpage
+  \if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother
+
+\parskip=5pt
+
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{bm}
+
+\lstset{ % encadrer et coloriser un document XML
+  language=xml,frame=single, 
+  breaklines=true, 
+  basicstyle=\ttfamily,
+  basicstyle=\scriptsize, 
+  keywordstyle=\color{blue}, 
+  commentstyle=\color{green}, 
+  stringstyle=\color{red}, 
+  identifierstyle=\color{blue}
+}
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  page de garde  %%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+\begin{center}
+
+\begin{minipage}[c]{.46\linewidth}
+  \centering
+  \includegraphics[width=0.6\textwidth]{logo_UPMC.png}\\[1cm]
+\end{minipage}
+\hfill
+\begin{minipage}[c]{.46\linewidth}
+  \centering
+  \includegraphics[width=0.3\textwidth]{logo_lip6.png}\\[1cm]
+\end{minipage}
+
+\vspace*{1cm}
+
+{\large Université Pierre et Marie Curie}\\[1cm]
+
+{\large Master Informatique, Spécialité STL}\\[1cm]
+
+{\large Semestre 2, UE Projet STL}\\[1cm]
+
+% titre
+\rule{\linewidth}{0.5mm} \\[0.5cm]
+{ \huge \bfseries Un analyseur syntaxique pour MusicXML \\[0.4cm] }
+\rule{\linewidth}{0.5mm} \\[0.5cm]
+
+\vspace*{1cm}
+
+% Auteurs
+\noindent
+\begin{minipage}{0.5\textwidth}
+  \begin{flushleft} \large
+    \emph{Auteurs :}\\
+      Sébastien \textsc{Duchenne}\\
+      Alexandre \textsc{Gaspard Cilia}\\~\\
+    \emph{Encadrant :} \\
+    Pr.~Carlos \textsc{Agon}\\
+  \end{flushleft}
+\end{minipage}
+
+\vspace*{2cm}
+
+{\large Soutenue le xx xx 2017}\\[1cm]
+
+\vfill
+
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Remerciements  %%%%%%%%%%%%%%%%%%%%
+
+
+%\begin{acknowledgements}
+%\addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
+%The acknowledgments and the people to thank go here, don't forget to include your project advisor\ldots
+%\end{acknowledgements}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Liste des figures  %%%%%%%%%%%%%%%%%%%%
+
+
+\listoffigures % liste des figures
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Abbréviation  %%%%%%%%%%%%%%%%%%%%
+
+%\begin{abbreviations}{ll} % liste des abbréviations
+
+%\textbf{DOM} & \textbf{Document} \textbf{O}bject \textbf{M}odel\\
+%\textbf{XML} & E\textbf{x}tensible \textbf{M}arkup \textbf{L}angage\\
+
+%\end{abbreviations}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Contenu  %%%%%%%%%%%%%%%%%%%%
+
+
+\pagestyle{fancy}
+
+\include{1_introduction}
+\include{2_technologies_utilisees}
+\include{3_autre}
+%\include{conclusion}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Annexes  %%%%%%%%%%%%%%%%%%%%
+
+%\appendix %
+
+%\include{annexes}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Bibliographie  %%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{authoryear-fr}
+\bibliography{biblio}
+\nocite{*}
+
+\end{document}
