@@ -3,6 +3,7 @@ package pstl.musicxml.tools;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class FileUtils {
@@ -45,6 +46,25 @@ public class FileUtils {
 					result.add(f);
 				}
 			}
+		}
+		
+		return result;
+	}
+	
+	public static Collection<File> getFileList(String dir) {
+		Collection<File> result = new ArrayList<File>();
+		
+		File d = new File(dir);
+		
+		System.out.println(d.getAbsolutePath());
+		
+		if (!d.isDirectory())
+			return null;
+		
+		String[] files = d.list();
+		
+		for (String s : files) {
+			result.add(new File(d.getAbsolutePath() + "/" + s));
 		}
 		
 		return result;
