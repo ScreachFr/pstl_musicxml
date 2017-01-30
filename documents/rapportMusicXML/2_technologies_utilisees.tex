@@ -24,7 +24,7 @@ Il y a plus de 20 ans, le format MIDI était très utilisé. Cependant, il n’e
 
 En 2004, la société Recordare LLC s’inspire des 2 formats universitaires MuseData et Humdrum pour créer la première version du format MusicXML. Ses avantages sont qu’il est facile à manipuler. Il permet le transfert de morceaux de musique d’une application à une autre. Il peut représenter beaucoup de caractéristiques de la musique. Cependant, il est verbeux, puisqu'il utilise le format XML, et ne donc permet pas de représenter la musique non occidentale.
 
-Il est de plus en plus utilisé puisque plus de 200 logiciels de musique l’ont adopté. Il est donc possible de travailler finement sur un morceau de musique en utilisant différents programmes. 
+Il est de plus en plus utilisé puisque plus de 200 logiciels de musique l’ont adopté. Il est donc possible de travailler finement sur un morceau de musique en utilisant différents programmes.
 
 Comme le format XML est verbeux, le fichier prend de la place. La version 2.0, sortie en 2007, apporte donc la compression du fichier au format xml en un fichier au format mxl, et permet de diviser sa taille de façon importante. La version 3.0, sortie en 2011, permet le support des instruments virtuels.\\~\\
 
@@ -111,7 +111,11 @@ XML permet à l'utilisateur de définir lui même la grammaire de son document g
 
 
 \subsection{Affichage d'un graphe}
-...
+Une fois le fichier xml parsé, nous disposons d'un \emph{DOM} sous forme d'un objet
+\emph{document}. Pour afficher ce document il nous suffit d'appeler récursivement
+un méthode qui affiche un noeud de l'arbre sur la racine du \emph{Document}. Cette
+méthode s'appelle récursivement sur les fils du noeud courant. Cela nous permet
+donc d'afficher tout l'arbre.
 
 %mettre ici limage d'une partition et le graphe associé
 
@@ -159,7 +163,3 @@ Le DOM, ou Document Object Model, est une interface de programmation normalisée
 \caption{Exemple d'un DOM}
 \label{Exemple d'un DOM}
 \end{figure}
-
-
-
-
