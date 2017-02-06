@@ -27,6 +27,10 @@ public class RythmicTree {
 		chords.add(c);
 	}
 	
+	public void setSignture(Signature signture) {
+		this.signture = signture;
+	}
+	
 	@Override
 	public String toString() {
 		String result = "";
@@ -67,14 +71,14 @@ public class RythmicTree {
 		RythmicTree rt = new RythmicTree(new Signature(4, 4));
 
 		Chord c1 = new Chord(4);
-		c1.addNote(new Note(4));
+		c1.addNote(new Note(4, 4));
 		
 		Chord c2 = new Chord(4);
-		c2.addNote(new Note(4));
+		c2.addNote(new Note(4, 4));
 		
 		Chord c3 = new Chord(1);
-		c3.addNote(new Note(1));
-		c3.addNote(new Note(1));
+		c3.addNote(new Note(1, 1));
+		c3.addNote(new Note(1, 1));
 		
 		rt.addChord(c1);
 		rt.addChord(c2);

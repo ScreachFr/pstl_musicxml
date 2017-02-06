@@ -5,6 +5,8 @@ public class Chord {
 	private ArrayList<Note> notes;
 	private int duration;
 	
+	public Chord() {
+	}
 	
 	public Chord(int duration) {
 		notes = new ArrayList<>();
@@ -17,6 +19,10 @@ public class Chord {
 	
 	public int getDuration() {
 		return duration;
+	}
+	
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 	
 	@Override
@@ -45,10 +51,10 @@ public class Chord {
 	public static void main(String[] args) {
 		Chord c = new Chord(1);
 		
-		c.addNote(new Note(1));
-		c.addNote(new Note(1));
-		c.addNote(new Note(1));
-		c.addNote(new Note(1));
+		c.addNote(new Note(1, 1));
+		c.addNote(new Note(1, 1));
+		c.addNote(new Note(1, 1));
+		c.addNote(new Note(1, 1));
 		
 		System.out.println(c);
 	}
