@@ -2,6 +2,11 @@ package pstl.musicxml.rhythmicstructures;
 
 import java.util.ArrayList;
 
+import pstl.musicxml.rhythmicstructures.items.Chord;
+import pstl.musicxml.rhythmicstructures.items.Note;
+import pstl.musicxml.rhythmicstructures.items.Rest;
+import pstl.musicxml.rhythmicstructures.items.Tie;
+
 public class RythmicTree {
 	private Signature signture;
 	private ArrayList<Chord> chords;
@@ -71,20 +76,20 @@ public class RythmicTree {
 		RythmicTree rt = new RythmicTree(new Signature(4, 4));
 
 		Chord c1 = new Chord(4);
-		c1.addNote(new Note(4, 4));
+		c1.addItem(new Note(4, 4));
 		
 		Chord c2 = new Chord(4);
-		c2.addNote(new Note(4, 4));
+		c2.addItem(new Note(4, 4));
 		
 		Chord c3 = new Chord(1);
-		c3.addNote(new Note(1, 1));
-		c3.addNote(new Note(1, 1));
+		c3.addItem(new Note(1, 1));
+		c3.addItem(new Note(1, 1));
+		c3.addItem(new Tie(1, 1));
+		c3.addItem(new Rest(3));
+		
 		
 		rt.addChord(c1);
 		rt.addChord(c2);
-		rt.addChord(c3);
-		rt.addChord(c3);
-		rt.addChord(c3);
 		rt.addChord(c3);
 		System.out.println(rt);
 	}

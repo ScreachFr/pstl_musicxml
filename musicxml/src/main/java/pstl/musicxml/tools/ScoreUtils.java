@@ -13,10 +13,12 @@ import pstl.musicxml.Part;
 import pstl.musicxml.Score;
 import pstl.musicxml.parsing.ParseException;
 import pstl.musicxml.parsing.XMLParser;
-import pstl.musicxml.rhythmicstructures.Chord;
-import pstl.musicxml.rhythmicstructures.Note;
 import pstl.musicxml.rhythmicstructures.RythmicTree;
 import pstl.musicxml.rhythmicstructures.Signature;
+import pstl.musicxml.rhythmicstructures.items.Chord;
+import pstl.musicxml.rhythmicstructures.items.IMusicalItem;
+import pstl.musicxml.rhythmicstructures.items.Note;
+import pstl.musicxml.rhythmicstructures.items.Rest;
 
 public class ScoreUtils {
 	//MusicXML tag names
@@ -35,11 +37,17 @@ public class ScoreUtils {
 	private final static String MXL_BEAT_TYPE = "beat-type";
 	private final static String MXL_NOTE = "note";
 	private final static String MXL_CHORD = "chord";
+	private final static String MXL_PITCH = "pitch";
+	private final static String MXL_REST = "rest";
+	private final static String MXL_DURATION = "duration";
+	private final static String MXL_STEP = "step";
+	private final static String MXL_OCTAVE = "octave";
+	
 	
 	
 	//TODO Make to different method to handle both part-wise and time-wise scores. 
 	//TODO throw a buttload of exceptions to handle every error.
-	
+	//XXX Should I test every error case ?
 	
 	public static Score loadFromDom(Document document) {
 		Score result = new Score();
@@ -88,28 +96,57 @@ public class ScoreUtils {
 		//TODO load chords.
 		ArrayList<Node> notes = getChildNodeByName(measure, MXL_NOTE);
 		boolean isChord = false;
-		Chord crtChord = new Chord();
-		Note crtNote;
+		boolean containsChord;
+		Chord crtChord = null;
+		IMusicalItem crtItem;
 		for (Node noteNode : notes) {
-			crtNote = loadNote(noteNode);
+			crtItem = loadMuscialItem(noteNode);
 			
-			if (crtChord.getDuration() == 0)
-				crtChord.setDuration(crtNote.getDuration());
+			containsChord = containsNode(noteNode, MXL_CHORD);
 			
-			if (!containsNode(noteNode, MXL_CHORD)) {
-			} else {
+			if (containsChord && !isChord) {
+				isChord = true;
+				crtChord = new Chord(crtItem.getDuration());
+				crtChord.addItem(crtItem);
+			} else if (containsChord && isChord) {
+				crtChord.addItem(crtItem);
+			} else if (!containsChord && isChord) {
+				isChord = false;
+				rt.addChord(crtChord);
 				
+				crtChord = new Chord(crtItem.getDuration());
+				crtChord.addItem(crtItem);
+				
+				rt.addChord(crtChord);
 			}
 			
 		}
 		
-		
+		if (isChord)
+			rt.addChord(crtChord);
 		
 		result.setRt(rt);
 		return result;
 	}
 	
-	private static Note loadNote(Node noteNode) {
+	private static IMusicalItem loadMuscialItem(Node noteNode) {
+		int pitch;
+		int duration;
+		
+		
+		duration = Integer.parseInt(getSingleChildByName(noteNode, MXL_DURATION).getTextContent());
+		
+		if (containsNode(noteNode, MXL_REST)) {
+			return new Rest(duration);
+		} else {
+			Node pitchNode = getSingleChildByName(noteNode, MXL_PITCH);
+			String step = getSingleChildByName(pitchNode, MXL_STEP).getTextContent();
+			int octave = Integer.parseInt(getSingleChildByName(pitchNode, MXL_OCTAVE).getTextContent());
+			
+			//TODO calculate pitch from height and octave.
+		}
+		
+		
 		return null;
 	}
 	
