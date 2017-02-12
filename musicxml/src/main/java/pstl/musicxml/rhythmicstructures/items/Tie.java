@@ -4,8 +4,8 @@ public class Tie extends Note implements IMusicalItem{
 
 	
 	
-	public Tie(int pitch, int duration) {
-		super(pitch, duration);
+	public Tie(String step, int pitch, int duration) {
+		super(step, pitch, duration);
 	}
 
 

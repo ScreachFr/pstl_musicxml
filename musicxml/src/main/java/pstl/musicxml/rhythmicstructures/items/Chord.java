@@ -7,6 +7,7 @@ public class Chord implements IMusicalItem {
 	private int duration;
 	
 	public Chord() {
+		items = new ArrayList<>();
 	}
 	
 	public Chord(int duration) {
@@ -56,10 +57,10 @@ public class Chord implements IMusicalItem {
 	public static void main(String[] args) {
 		Chord c = new Chord(1);
 		
-		c.addItem(new Note(1, 1));
-		c.addItem(new Note(1, 1));
-		c.addItem(new Note(1, 1));
-		c.addItem(new Note(1, 1));
+		c.addItem(new Note("A", 1, 1));
+		c.addItem(new Note("A", 1, 1));
+		c.addItem(new Note("A", 1, 1));
+		c.addItem(new Note("A", 1, 1));
 		
 		System.out.println(c);
 	}

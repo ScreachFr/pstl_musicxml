@@ -8,9 +8,11 @@ import pstl.musicxml.rhythmicstructures.items.Rest;
 import pstl.musicxml.rhythmicstructures.items.Tie;
 
 public class RythmicTree {
+	//XXX include voices as ArrayList<ArrayList<Chord>> voices ?
 	private Signature signture;
 	private ArrayList<Chord> chords;
-
+	//durée
+	//proportion liste de RT
 	public RythmicTree(Signature signature) {
 		this();
 		this.signture = signature;
@@ -76,15 +78,15 @@ public class RythmicTree {
 		RythmicTree rt = new RythmicTree(new Signature(4, 4));
 
 		Chord c1 = new Chord(4);
-		c1.addItem(new Note(4, 4));
+		c1.addItem(new Note("A", 4, 4));
 		
 		Chord c2 = new Chord(4);
-		c2.addItem(new Note(4, 4));
+		c2.addItem(new Note("A", 4, 4));
 		
 		Chord c3 = new Chord(1);
-		c3.addItem(new Note(1, 1));
-		c3.addItem(new Note(1, 1));
-		c3.addItem(new Tie(1, 1));
+		c3.addItem(new Note("A", 1, 1));
+		c3.addItem(new Note("A", 1, 1));
+		c3.addItem(new Tie("A", 1, 1));
 		c3.addItem(new Rest(3));
 		
 		

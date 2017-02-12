@@ -79,8 +79,7 @@ public class ScoreUtils {
 	private static Measure loadMeasures(Node measure) {
 		int number = Integer.parseInt(measure.getAttributes().getNamedItem(MXL_NUMBER).getNodeValue());
 		Measure result = new Measure(number);
-		RythmicTree rt = new RythmicTree();
-		
+
 		ArrayList<Node> attributes = getChildNodeByName(measure, MXL_ATTRIBUTES);
 		Signature s = null;
 		for (Node att : attributes) {
@@ -91,7 +90,7 @@ public class ScoreUtils {
 		
 		//TODO throw an exception when s is null.
 		
-		rt.setSignture(s);
+		result.setSignature(s);
 		
 		//TODO load chords.
 		ArrayList<Node> notes = getChildNodeByName(measure, MXL_NOTE);
@@ -101,6 +100,7 @@ public class ScoreUtils {
 		IMusicalItem crtItem;
 		for (Node noteNode : notes) {
 			crtItem = loadMuscialItem(noteNode);
+			
 			
 			containsChord = containsNode(noteNode, MXL_CHORD);
 			
@@ -112,42 +112,41 @@ public class ScoreUtils {
 				crtChord.addItem(crtItem);
 			} else if (!containsChord && isChord) {
 				isChord = false;
-				rt.addChord(crtChord);
+				result.addChord(crtChord);
 				
 				crtChord = new Chord(crtItem.getDuration());
 				crtChord.addItem(crtItem);
 				
-				rt.addChord(crtChord);
+				result.addChord(crtChord);
+			} else {
+				
+				crtChord = new Chord();
+				crtChord.addItem(crtItem);
+				result.addChord(crtChord);
+				
 			}
 			
 		}
 		
 		if (isChord)
-			rt.addChord(crtChord);
+			result.addChord(crtChord);
 		
-		result.setRt(rt);
 		return result;
 	}
 	
 	private static IMusicalItem loadMuscialItem(Node noteNode) {
-		int pitch;
-		int duration;
-		
-		
-		duration = Integer.parseInt(getSingleChildByName(noteNode, MXL_DURATION).getTextContent());
+		int duration = Integer.parseInt(getSingleChildByName(noteNode, MXL_DURATION).getTextContent());
 		
 		if (containsNode(noteNode, MXL_REST)) {
+			
 			return new Rest(duration);
 		} else {
 			Node pitchNode = getSingleChildByName(noteNode, MXL_PITCH);
 			String step = getSingleChildByName(pitchNode, MXL_STEP).getTextContent();
 			int octave = Integer.parseInt(getSingleChildByName(pitchNode, MXL_OCTAVE).getTextContent());
-			
-			//TODO calculate pitch from height and octave.
+
+			return new Note(step, octave, duration);
 		}
-		
-		
-		return null;
 	}
 	
 	private static boolean containsNode(Node n, String nodeName) {
@@ -162,8 +161,9 @@ public class ScoreUtils {
 		int beats;
 		int beatType;
 		
-		beats = Integer.parseInt(getSingleChildByName(attributes, MXL_BEATS).getTextContent());
-		beatType = Integer.parseInt(getSingleChildByName(attributes, MXL_BEAT_TYPE).getTextContent());
+		
+		beats = Integer.parseInt(getSingleChildByName(time, MXL_BEATS).getTextContent());
+		beatType = Integer.parseInt(getSingleChildByName(time, MXL_BEAT_TYPE).getTextContent());
 		
 		return new Signature(beats, beatType);
 	}
@@ -230,19 +230,27 @@ public class ScoreUtils {
 		XMLParser parser = new XMLParser();
 		File rng;
 		try {
-
-			parser.setInput("/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/helloworld.mxl");
-			//			parser.setInput("/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/bwv0254.krn.xml");
+//			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/helloworld.mxl";
+			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/bwv0254.krn.xml";
+			
+			parser.setInput(input);
 
 
 			rng = new File("/home/alexandre/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
 			parser.setRng(rng);
 
-
+			
+			
 			Document doc = parser.getDocument();
 
+			System.out.println("Loading " + input + "...");
+			
 			Score s = ScoreUtils.loadFromDom(doc);
-
+			for (Part p : s.getParts()) {
+				for (Measure m : p.getMeasures()) {
+					System.out.println(m);
+				}
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();

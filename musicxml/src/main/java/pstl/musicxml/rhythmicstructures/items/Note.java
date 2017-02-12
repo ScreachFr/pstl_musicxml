@@ -2,18 +2,20 @@ package pstl.musicxml.rhythmicstructures.items;
 
 
 public class Note implements IMusicalItem {
-	protected int pitch;
+	protected String step;
+	protected int octave;
 	protected int duration;
 	protected int voice;
 
-	public Note(int pitch, int duration) {
-		this.pitch = pitch;
+	public Note(String step, int octave, int duration) {
+		this.step = step;
+		this.octave = octave;
 		this.duration = duration;
 		voice = 1;
 	}
 
-	public Note(int pitch, int duration, int voice) {
-		this(pitch, duration);
+	public Note(String pitch, int octave, int duration, int voice) {
+		this(pitch, octave, duration);
 		this.voice = voice;
 	}
 
@@ -21,8 +23,8 @@ public class Note implements IMusicalItem {
 		return duration;
 	}
 
-	public int getPitch() {
-		return pitch;
+	public String getPitch() {
+		return step;
 	}
 
 	public int getVoice() {
@@ -40,7 +42,7 @@ public class Note implements IMusicalItem {
 	
 	@Override
 	public String toString() {
-		return pitch + "";
+		return step + "" +  octave + ":" + duration;
 
 
 	}
