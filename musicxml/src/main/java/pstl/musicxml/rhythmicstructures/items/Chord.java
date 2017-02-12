@@ -40,7 +40,7 @@ public class Chord implements IMusicalItem {
 		result += duration + "(";
 		
 		for (IMusicalItem item : items) {
-			result += item.toRythmicTreeString() + "";
+			result += item.toMeasureString() + "";
 			if (i < items.size()-1)
 				result += " ";
 			i++;
@@ -50,7 +50,7 @@ public class Chord implements IMusicalItem {
 	}
 
 	@Override
-	public String toRythmicTreeString() {
+	public String toMeasureString() {
 		return toString();
 	}
 	

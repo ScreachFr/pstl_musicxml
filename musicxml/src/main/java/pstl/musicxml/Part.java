@@ -34,6 +34,15 @@ public class Part {
 	
 	@Override
 	public String toString() {
-		return "Part(" + id + ", " + name + ")";
+		String result = "";
+		
+		result += "Part #" + id + ":" + name + " {\n";
+		
+		for (Measure m : measures) {
+			result += "\t" + m + "\n";
+		}
+		
+		
+		return result + "}";
 	}
 }

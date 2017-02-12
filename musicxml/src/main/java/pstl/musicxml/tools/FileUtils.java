@@ -51,7 +51,7 @@ public class FileUtils {
 		return result;
 	}
 	
-	public static Collection<File> getFileList(String dir) {
+	public static Collection<File> getFileList(String dir) throws IOException {
 		Collection<File> result = new ArrayList<File>();
 		
 		File d = new File(dir);
@@ -59,7 +59,7 @@ public class FileUtils {
 		System.out.println(d.getAbsolutePath());
 		
 		if (!d.isDirectory())
-			return null;
+			throw new IOException(dir + " is not a directory");
 		
 		String[] files = d.list();
 		

@@ -3,6 +3,7 @@ package pstl.musicxml.tools;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -231,30 +232,56 @@ public class ScoreUtils {
 		File rng;
 		try {
 //			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/helloworld.mxl";
-			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/bwv0254.krn.xml";
+//			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/bwv0254.krn.xml";
+			String testDir = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/";
+			String pattern = ".*\\.(xml|mxl)";
 			
-			parser.setInput(input);
-
+			
 
 			rng = new File("/home/alexandre/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
 			parser.setRng(rng);
-
 			
+			Collection<File> files = FileUtils.getFileList(testDir);
+			ArrayList<Score> scores = new ArrayList<>();
+			Document crtDoc;
+			Score crtScore;
+			int i = 0;
+			int skip = 0;
 			
-			Document doc = parser.getDocument();
-
-			System.out.println("Loading " + input + "...");
-			
-			Score s = ScoreUtils.loadFromDom(doc);
-			for (Part p : s.getParts()) {
-				for (Measure m : p.getMeasures()) {
-					System.out.println(m);
+			for (File f : files) {
+				
+				if (!f.getAbsolutePath().matches(pattern)) {
+					skip++;
+					continue;
 				}
+					
+					
+					
+				parser.setInput(f.getAbsolutePath());
+				try {
+					crtDoc = parser.getDocument();
+					crtScore = loadFromDom(crtDoc);
+					
+					scores.add(crtScore);
+					
+					i++;
+					if (i%10 == 0)
+						System.out.println((int)(((i*1.0)/(files.size() * 1.0))*100) + "% done");
+					
+				} catch (ParseException e) {
+					System.out.println("Can't parse " + f);
+				}
+				
 			}
-
+			
+			System.out.println(scores.size() + "/" + files.size() + " score succesfully parsed.");
+			System.out.println(skip + " files skipped.");
+//			for (Score s : scores) {
+//				System.out.println(s);
+//			}
+			
+			
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 

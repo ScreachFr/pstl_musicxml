@@ -14,8 +14,13 @@ public class Rest implements IMusicalItem {
 	}
 
 	@Override
-	public String toRythmicTreeString() {
-		return "-" + duration;
+	public String toMeasureString() {
+		return "R" + duration;
+	}
+	
+	@Override
+	public String toString() {
+		return toMeasureString();
 	}
 	
 }

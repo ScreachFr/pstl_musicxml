@@ -23,4 +23,13 @@ public class Score {
 		return null;
 	}
 	
+	@Override
+	public String toString() {
+		String result = "Score :";
+		for (Part p : parts) {
+			result += p + "\n";
+		}
+		return result;
+	}
+	
 }

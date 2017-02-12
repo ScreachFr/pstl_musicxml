@@ -10,7 +10,7 @@ public class Tie extends Note implements IMusicalItem{
 
 
 	@Override
-	public String toRythmicTreeString() {
+	public String toMeasureString() {
 		return (duration * 1.0) + "";
 	}
 

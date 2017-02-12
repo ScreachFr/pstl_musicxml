@@ -46,13 +46,18 @@ public class Measure implements Comparable<Measure>{
 	public String toString() {
 		String result = "";
 
-		result += "(" + signature + " ";
+		result += "#" + number + "(" ;
+		
+		if (signature == null)
+			result += "NS" + " ";
+		else
+			result += signature + " ";
 
 		if (chords.isEmpty()) {
 			result += "Empty";
 		} else {
 			for (Chord c : chords) {
-				result += c;
+				result += c + " ";
 			}
 		}
 

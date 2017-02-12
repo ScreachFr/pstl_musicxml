@@ -36,7 +36,7 @@ public class Note implements IMusicalItem {
 	}
 
 	@Override
-	public String toRythmicTreeString() {
+	public String toMeasureString() {
 		return toString();
 	}
 	
