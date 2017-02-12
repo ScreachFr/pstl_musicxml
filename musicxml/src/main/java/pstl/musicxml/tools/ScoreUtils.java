@@ -276,9 +276,9 @@ public class ScoreUtils {
 			
 			System.out.println(scores.size() + "/" + files.size() + " score succesfully parsed.");
 			System.out.println(skip + " files skipped.");
-//			for (Score s : scores) {
-//				System.out.println(s);
-//			}
+			for (Score s : scores) {
+				System.out.println(s);
+			}
 			
 			
 		} catch (IOException e) {
