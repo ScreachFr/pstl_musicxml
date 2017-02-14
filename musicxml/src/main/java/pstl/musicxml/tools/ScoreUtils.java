@@ -14,7 +14,8 @@ import pstl.musicxml.Part;
 import pstl.musicxml.Score;
 import pstl.musicxml.parsing.ParseException;
 import pstl.musicxml.parsing.XMLParser;
-import pstl.musicxml.rhythmicstructures.RythmicTree;
+import pstl.musicxml.rhythmicstructures.RhythmicThreeFactory;
+import pstl.musicxml.rhythmicstructures.RhythmicTree;
 import pstl.musicxml.rhythmicstructures.Signature;
 import pstl.musicxml.rhythmicstructures.items.Chord;
 import pstl.musicxml.rhythmicstructures.items.IMusicalItem;
@@ -138,6 +139,7 @@ public class ScoreUtils {
 	private static IMusicalItem loadMuscialItem(Node noteNode) {
 		int duration = Integer.parseInt(getSingleChildByName(noteNode, MXL_DURATION).getTextContent());
 		
+		
 		if (containsNode(noteNode, MXL_REST)) {
 			
 			return new Rest(duration);
@@ -145,7 +147,6 @@ public class ScoreUtils {
 			Node pitchNode = getSingleChildByName(noteNode, MXL_PITCH);
 			String step = getSingleChildByName(pitchNode, MXL_STEP).getTextContent();
 			int octave = Integer.parseInt(getSingleChildByName(pitchNode, MXL_OCTAVE).getTextContent());
-
 			return new Note(step, octave, duration);
 		}
 	}
@@ -234,7 +235,9 @@ public class ScoreUtils {
 //			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/helloworld.mxl";
 //			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/bwv0254.krn.xml";
 			String testDir = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/";
+//			String testDir = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/xmlsamples";
 			String pattern = ".*\\.(xml|mxl)";
+//			String pattern = ".*\\.(xml)";
 			
 			
 
@@ -259,6 +262,7 @@ public class ScoreUtils {
 					
 				parser.setInput(f.getAbsolutePath());
 				try {
+					System.out.println("Parsing " + f.getAbsolutePath());
 					crtDoc = parser.getDocument();
 					crtScore = loadFromDom(crtDoc);
 					
@@ -276,9 +280,24 @@ public class ScoreUtils {
 			
 			System.out.println(scores.size() + "/" + files.size() + " score succesfully parsed.");
 			System.out.println(skip + " files skipped.");
-			for (Score s : scores) {
-				System.out.println(s);
+			ArrayList<ArrayList<RhythmicTree>> rts = new ArrayList<>();
+			
+			for (Score score : scores) {
+				System.out.println(score);
 			}
+			
+			for (Score s : scores) {
+				rts.add(RhythmicThreeFactory.buildRtFromScore(s));
+			}
+			
+			for (ArrayList<RhythmicTree> arrayList : rts) {
+				for (RhythmicTree rt : arrayList) {
+					System.out.println(rt);
+				}
+			}
+			
+			
+			
 			
 			
 		} catch (IOException e) {

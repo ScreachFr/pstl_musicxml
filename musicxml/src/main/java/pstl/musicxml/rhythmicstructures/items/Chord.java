@@ -17,6 +17,9 @@ public class Chord implements IMusicalItem {
 	
 	public void addItem(IMusicalItem n) {
 		items.add(n);
+		
+		if (duration < n.getDuration())
+			duration = n.getDuration();
 	}
 	
 	public int getDuration() {
