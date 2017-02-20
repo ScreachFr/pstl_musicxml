@@ -1,0 +1,87 @@
+\section{Architecture du programme}
+\par
+Dans cette section nous aborderons l'architecture du programme. C'est-à-dire
+la façon dont est organisé notre code et notamment les choix d'implementation
+que nous avons effectués. Pour rappel, notre objectif est de générer un arbre rythique
+et de récupérer la liste des accords et symboles musicaux pour réaliser l'affichage
+de la partition musical.
+
+\subsection{Architecture general}
+\par
+Le programme se divise en trois parties. La première étant le parser. Cette partie
+permet au programme de disposer d'un \emph{DOM} à partir d'un fichier MusicXML.
+La seconde partie est la représentation objet des données contenues dans le \emph{DOM}.
+Et enfin la troisième partie est l'arbre rythmique qui pourra être généré à partir
+de la représentation objet de la partition.
+
+\subsection{Parsing du fichier MusicXML}
+\par
+La première étape est de parser le document afin d'extraire les informations qu'il
+contient. C'est là qu'interviennent les éléments contenus dans le package
+\emph{pstl.musicxml.parsing}. Nous avons décidé d'encapsuler le parser XML natif
+de Java dans une class \emph{XMLParser}. Ce choix est motivé pour plusieurs raisons.
+\par
+Tout d'abord pour ne laisser apparent que les fonctions du parser de Java que
+nous allons réellement utiliser afin de limiter le risque que nous ou un utilisateur
+tiers fasse usage du parser d'une mauvaise façon. Nous avons aussi fait ce choix pour simplifier
+l'utilisation de la class pour que la création du parser qu'elle encapsule se fasse de la même façon à chaque fois.
+ Et enfin ce choix a été rendu nécessaire à cause de \emph{Relax NG}. En effet comme nous
+ne faisons appel ni aux fichiers \emph{DTD} ni aux fichiers \emph{XML Schema}, il nous
+faut effectuer un prétraitement pour éliminer les références aux \emph{DTD} du
+fichier à parser. Vous pourriez vous demander pourquoi ne pas simplement
+utiliser les \emph{DTD} pour valider le document ? La raison est simple,
+la plupart des fichiers font référence aux \emph{DTD} en ligne fournis par
+MusicXML. Or ces derniers n'autorisent que les navigateurs web à accéder à de tels
+fichiers. Les possibilitées qui s'offraient à nous étaient les suivantes : se faire
+passer pour un navigateur en modifiant quelques variables d'environement. Cela
+aurait eu pour désavantage tout d'abord de ne pas être très rapide, l'accès à
+aux \emph{DTD} par réseau n'est pas très rapide comparé à un accès local.
+Nous jugions d'autre part la méthode peu honnête. En effet si l'organisation derrière MusicXML
+ne permet pas cela pour des raisons que j'imagine financières (par cela j'entends le coût engendré par la maintenance des serveurs)
+ il n'aurait pas été juste d'outrepasser leurs instructions. Et enfin le dernier choix non retenu était celui de faire appel
+à des \emph{DTD} stockées localement. Cette méthode a été écartée bien que conseillée
+dans la documentation du format MusicXML car elle impliquait des redirections d'URI
+ce qui aurait fortement complexifié la création du parser.
+\par %TODO Mettre reference vers le git de la grammaire rng de music xml
+C'est donc pour toutes ces raisons que nous avons choisi d'utiliser \emph{Relax NG}.
+De plus, les fichiers décrivants la grammaire de MusicXML sont disponibles en ligne
+et l'auteur a fait preuve d'une certaine exhaustivité lors de la rédaction de ces derniers.
+\par
+Ce parser nous permet de disposer d'un \emph{DOM} (qui a pour nom de class \emph{Document} avec Java)
+qui pourra être parcouru plus tard.
+
+\subsection{Représentation objet de la partition}
+\par
+Nous aurions pu nous satisfaire du \emph{Document} retourné par le parser pour
+générer notre arbre rythmique mais cela aurait posé plusieurs problèmes. Tout d'abord
+la manipulation du \emph{DOM} n'est pas aisée. Cette structure de données basé sur
+des noeuds qui contiennent des fils, attributs et leur contenu textuel, doit
+être exploré d'une façon assez lourde à cause en partie du fait qu'un noeud n'est
+pas nativement un objet iterable comme les \emph{Collections} de Java par exemple.
+D'autre part, toutes les données contenues dans ces noeuds sont considérées comme des chaines
+de caractère qui nécessitent un parsing et donc une manipulation assez verbeuse.
+De ce fait, il est plus simple pour nous de parcourir ce \emph{Document} une seule fois et d'extraire les données qu'il
+contient dans une structure de données plus aisément manipulable dans java. Cela
+permet par exemple d'éviter des erreurs lors du développement des autres fonctionnalités de
+l'application qui se basent sur ces informations.
+
+%Mettre des figures pour expliciter les partitions ? Un diagramme de class par exemple ?
+%TODO établir un vrai package pour les partitions.
+\par
+La structure de données que nous avons élaborée se compose de la façon suivante :
+l'élément qui va contenir toutes les informations est la class \emph{Score}. Une
+\emph{Score} contient une liste de \emph{Parts} qui l'on peut qualifier de
+\emph{Voix} en français. Chaque \emph{Part} contient un nom, un identifiant ainsi qu'une liste
+de \emph{Measures} (mesure) qui contient elle-même un numéro, une \emph{Signature} et une
+liste de \emph{Chord} (accord). Un accord est composé d'une liste d'éléments musicaux
+appelés \emph{MusicalItems} dans le programme. Chaque élément peut être soit une note
+un silence ou une liaison. Un élément musical possède aussi une liste de symboles
+musicaux. Un symbole musical représente une notation qui peut être une nuance comme
+un point ou encore un répétition par exemple.
+\par
+On pourrait penser ce modèle de données lourd, mais cela est largement compensé entre autres
+par l'aisance d'utilisation qu'il procure ainsi qui la possibilité notamment de déduire les
+"coordonnées" des éléments qui le composent. En effet rien de plus facile que de dire
+qu'une note se trouve dans le \emph{Chord} 4 de la \emph{Measure} 2 de la \emph{Part}
+2 de telle \emph{Score}. Ainsi nous pouvons par exemple utiliser ces coordonnées pour
+placer certains symboles à des endroits précis.
