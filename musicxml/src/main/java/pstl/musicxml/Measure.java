@@ -57,7 +57,7 @@ public class Measure implements Comparable<Measure>{
 			result += "Empty";
 		} else {
 			for (Chord c : chords) {
-				result += c + " ";
+				result += c.toMeasureString() + " ";
 			}
 		}
 

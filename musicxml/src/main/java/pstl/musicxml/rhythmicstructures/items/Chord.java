@@ -2,32 +2,35 @@ package pstl.musicxml.rhythmicstructures.items;
 
 import java.util.ArrayList;
 
+import pstl.musicxml.Type;
+
 public class Chord implements IMusicalItem {
 	private ArrayList<IMusicalItem> items;
-	private int duration;
-	
+	private Type type;
 	public Chord() {
 		items = new ArrayList<>();
 	}
 	
-	public Chord(int duration) {
+	public Chord(Type type) {
 		items = new ArrayList<>();
-		this.duration = duration;
+		this.type = type;
+	}
+	
+	@Override
+	public Type getType() {
+		return type;
 	}
 	
 	public void addItem(IMusicalItem n) {
 		items.add(n);
 		
-		if (duration < n.getDuration())
-			duration = n.getDuration();
+		if (type == null)
+			type = n.getType();
 	}
 	
-	public int getDuration() {
-		return duration;
-	}
-	
-	public void setDuration(int duration) {
-		this.duration = duration;
+
+	public void setType(Type type) {
+		this.type = type;
 	}
 	
 	@Override
@@ -40,7 +43,7 @@ public class Chord implements IMusicalItem {
 			return "";
 		
 		int i = 0;
-		result += duration + "(";
+		result += type.getNumber() + "(";
 		
 		for (IMusicalItem item : items) {
 			result += item.toMeasureString() + "";
@@ -58,12 +61,12 @@ public class Chord implements IMusicalItem {
 	}
 	
 	public static void main(String[] args) {
-		Chord c = new Chord(1);
+		Chord c = new Chord();
 		
-		c.addItem(new Note("A", 1, 1));
-		c.addItem(new Note("A", 1, 1));
-		c.addItem(new Note("A", 1, 1));
-		c.addItem(new Note("A", 1, 1));
+		c.addItem(new Note("A", 1, Type.QUARTER));
+		c.addItem(new Note("A", 1, Type.QUARTER));
+		c.addItem(new Note("A", 1, Type.QUARTER));
+		c.addItem(new Note("A", 1, Type.QUARTER));
 		
 		System.out.println(c);
 	}

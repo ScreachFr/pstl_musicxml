@@ -1,21 +1,24 @@
 package pstl.musicxml.rhythmicstructures.items;
 
+import pstl.musicxml.Type;
+
 
 public class Rest implements IMusicalItem {
-	private int duration;
+	private Type type;
 	
-	public Rest(int duration) {
-		this.duration = duration;
+	public Rest(Type type) {
+		this.type = type;
 	}
 
 	@Override
-	public int getDuration() {
-		return duration;
+	public Type getType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
+	
 	@Override
 	public String toMeasureString() {
-		return "R" + duration;
+		return "R" + type.getNumber();
 	}
 	
 	@Override

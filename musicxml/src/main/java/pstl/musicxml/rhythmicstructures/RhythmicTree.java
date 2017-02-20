@@ -2,20 +2,22 @@ package pstl.musicxml.rhythmicstructures;
 
 import java.util.ArrayList;
 
+import pstl.musicxml.Type;
+
 public class RhythmicTree {
 	private Signature signture;
-	private int duration;
+	private Type type;
 	
 	private ArrayList<RhythmicTree> children;
 	public RhythmicTree(Signature signature) {
 		this();
 		this.signture = signature;
-		duration = -1;
+		type = Type.UNDEFINED;
 	}
 	
-	public RhythmicTree(int duration) {
+	public RhythmicTree(Type type) {
 		this();
-		this.duration = duration;
+		this.type = type;
 	}
 	
 	public RhythmicTree() {
@@ -34,23 +36,23 @@ public class RhythmicTree {
 		return signture;
 	}
 
-	public int getDuration() {
-		return duration;
+	public Type getType() {
+		return type;
 	}
 	
 	public void setSignture(Signature signture) {
 		this.signture = signture;
 	}
 	
-	public void setDuration(int duration) {
-		this.duration = duration;
+	public void setType(Type type) {
+		this.type = type;
 	}
 	
 	@Override
 	public String toString() {
 		if (children.size() == 0) {
-			if (duration > 0)
-				return duration + "";
+			if (type != null && (!type.equals(Type.UNKNOWN) || !type.equals(Type.UNDEFINED)))
+				return type.getNumber() + "";
 			else if (signture != null)
 				return signture + "";
 			else 
@@ -59,8 +61,10 @@ public class RhythmicTree {
 		
 		String result = "(";
 		
-		if (duration > 0)
-			result += duration + " ";
+		
+		
+		if (type != null && (!type.equals(Type.UNKNOWN) || !type.equals(Type.UNDEFINED)))
+			result += type.getNumber() + " ";
 		else if (signture != null)
 			result += signture + " ";
 			
@@ -77,41 +81,41 @@ public class RhythmicTree {
 	}
 	
 	public static void main(String[] args) {
-		RhythmicTree root = new RhythmicTree(1);
+		RhythmicTree root = new RhythmicTree(Type.QUARTER);
 		
-		root.addChild(new RhythmicTree(1));
-		root.addChild(new RhythmicTree(1));
-		root.addChild(new RhythmicTree(1));
-		root.addChild(new RhythmicTree(1));
+		root.addChild(new RhythmicTree(Type.QUARTER));
+		root.addChild(new RhythmicTree(Type.QUARTER));
+		root.addChild(new RhythmicTree(Type.QUARTER));
+		root.addChild(new RhythmicTree(Type.QUARTER));
 		
 		System.out.println(root);
 		
 		
-		RhythmicTree root2 = new RhythmicTree(2);
+		RhythmicTree root2 = new RhythmicTree(Type.HALF);
 		
-		RhythmicTree c1 = new RhythmicTree(1);
-		RhythmicTree c2 = new RhythmicTree(1);
+		RhythmicTree c1 = new RhythmicTree(Type.QUARTER);
+		RhythmicTree c2 = new RhythmicTree(Type.QUARTER);
 		
 		root2.addChild(c1);
 		root2.addChild(c2);
 		
-		c1.addChild(new RhythmicTree(1));
-		c1.addChild(new RhythmicTree(1));
-		c1.addChild(new RhythmicTree(1));
-		c1.addChild(new RhythmicTree(1));
+		c1.addChild(new RhythmicTree(Type.QUARTER));
+		c1.addChild(new RhythmicTree(Type.QUARTER));
+		c1.addChild(new RhythmicTree(Type.QUARTER));
+		c1.addChild(new RhythmicTree(Type.QUARTER));
 		
-		c2.addChild(new RhythmicTree(1));
-		c2.addChild(new RhythmicTree(1));
-		c2.addChild(new RhythmicTree(1));
-		c2.addChild(new RhythmicTree(1));
+		c2.addChild(new RhythmicTree(Type.QUARTER));
+		c2.addChild(new RhythmicTree(Type.QUARTER));
+		c2.addChild(new RhythmicTree(Type.QUARTER));
+		c2.addChild(new RhythmicTree(Type.QUARTER));
 		
 		System.out.println(root2);
 		
 		RhythmicTree root3 = new RhythmicTree(new Signature(3, 4));
 		
-		root3.addChild(new RhythmicTree(1));
-		root3.addChild(new RhythmicTree(1));
-		root3.addChild(new RhythmicTree(1));
+		root3.addChild(new RhythmicTree(Type.QUARTER));
+		root3.addChild(new RhythmicTree(Type.QUARTER));
+		root3.addChild(new RhythmicTree(Type.QUARTER));
 		
 		System.out.println(root3);
 		

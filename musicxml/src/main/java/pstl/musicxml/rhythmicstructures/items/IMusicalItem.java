@@ -1,6 +1,8 @@
 package pstl.musicxml.rhythmicstructures.items;
 
+import pstl.musicxml.Type;
+
 public interface IMusicalItem {
-	public int getDuration();
+	public Type getType();
 	public String toMeasureString();
 }
