@@ -18,7 +18,7 @@ import pstl.musicxml.parsing.XMLParser;
 @RunWith(Parameterized.class)
 public class ParserTest {
 //	private static String[] testDir = {"test-data/chorales.all.musicxml", "test-data/simple"};
-	private static String[] testDir = {"test-data/simple"};
+	private static String[] testDir = {"test-data/customfiles"};
 	private static String pattern = ".*\\.(xml|mxl)";
 	private static File rng = new File("grammars/rng/musicXML.rng");
 	private static XMLParser parser;

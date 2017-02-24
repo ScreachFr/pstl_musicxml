@@ -9,20 +9,21 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import pstl.musicxml.Measure;
-import pstl.musicxml.Part;
-import pstl.musicxml.Score;
-import pstl.musicxml.Type;
+import pstl.musicxml.musicalstructures.Measure;
+import pstl.musicxml.musicalstructures.Part;
+import pstl.musicxml.musicalstructures.Score;
+import pstl.musicxml.musicalstructures.Signature;
+import pstl.musicxml.musicalstructures.Type;
+import pstl.musicxml.musicalstructures.items.Chord;
+import pstl.musicxml.musicalstructures.items.IMusicalItem;
+import pstl.musicxml.musicalstructures.items.Note;
+import pstl.musicxml.musicalstructures.items.Rest;
+import pstl.musicxml.musicalstructures.symbols.unary.Alter;
+import pstl.musicxml.musicalstructures.symbols.unary.Dot;
 import pstl.musicxml.parsing.ParseException;
 import pstl.musicxml.parsing.XMLParser;
 import pstl.musicxml.rhythmicstructures.RhythmicThreeFactory;
 import pstl.musicxml.rhythmicstructures.RhythmicTree;
-import pstl.musicxml.rhythmicstructures.Signature;
-import pstl.musicxml.rhythmicstructures.items.Chord;
-import pstl.musicxml.rhythmicstructures.items.IMusicalItem;
-import pstl.musicxml.rhythmicstructures.items.Note;
-import pstl.musicxml.rhythmicstructures.items.Rest;
-import pstl.musicxml.symboles.unary.*;
 
 public class ScoreUtils {
 	//MusicXML tag names
@@ -135,7 +136,7 @@ public class ScoreUtils {
 
 		if (isChord)
 			result.addChord(crtChord);
-
+		
 		return result;
 	}
 
@@ -177,7 +178,7 @@ public class ScoreUtils {
 			nodeName = crtNode.getNodeName();
 			if (nodeName.equals(Dot.getTrigger())) {
 				note.addExtraSymbol(Dot.getDot());
-			}
+			} 
 		}
 		
 		

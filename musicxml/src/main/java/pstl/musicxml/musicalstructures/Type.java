@@ -1,4 +1,4 @@
-package pstl.musicxml;
+package pstl.musicxml.musicalstructures;
 
 
 public enum Type {

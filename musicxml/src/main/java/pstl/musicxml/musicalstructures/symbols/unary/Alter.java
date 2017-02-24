@@ -1,6 +1,6 @@
-package pstl.musicxml.symboles.unary;
+package pstl.musicxml.musicalstructures.symbols.unary;
 
-public class Alter extends UnarySymbol {
+public class Alter implements UnarySymbol {
 	private int value;
 	
 	public Alter(int value) {

@@ -1,6 +1,6 @@
-package pstl.musicxml.symboles.unary;
+package pstl.musicxml.musicalstructures.symbols.unary;
 
-public class Dot extends UnarySymbol {
+public class Dot implements UnarySymbol {
 	private static Dot dot = new Dot();
 	
 	@Override

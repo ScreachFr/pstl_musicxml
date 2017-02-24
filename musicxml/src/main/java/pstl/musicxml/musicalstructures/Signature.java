@@ -1,4 +1,4 @@
-package pstl.musicxml.rhythmicstructures;
+package pstl.musicxml.musicalstructures;
 
 public class Signature {
 	private int beats;

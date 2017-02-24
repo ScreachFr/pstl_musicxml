@@ -1,6 +1,6 @@
-package pstl.musicxml.rhythmicstructures.items;
+package pstl.musicxml.musicalstructures.items;
 
-import pstl.musicxml.Type;
+import pstl.musicxml.musicalstructures.Type;
 
 
 public class Rest implements IMusicalItem {
@@ -12,13 +12,12 @@ public class Rest implements IMusicalItem {
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return type;
 	}
 	
 	@Override
 	public String toMeasureString() {
-		return "R" + type.getNumber();
+		return "-" + type.getNumber();
 	}
 	
 	@Override

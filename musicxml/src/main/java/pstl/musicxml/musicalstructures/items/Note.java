@@ -1,9 +1,9 @@
-package pstl.musicxml.rhythmicstructures.items;
+package pstl.musicxml.musicalstructures.items;
 
 import java.util.ArrayList;
 
-import pstl.musicxml.Type;
-import pstl.musicxml.symboles.ExtraSymbol;
+import pstl.musicxml.musicalstructures.Type;
+import pstl.musicxml.musicalstructures.symbols.ExtraSymbol;
 
 
 public class Note implements IMusicalItem {

@@ -2,10 +2,10 @@ package pstl.musicxml.rhythmicstructures;
 
 import java.util.ArrayList;
 
-import pstl.musicxml.Measure;
-import pstl.musicxml.Part;
-import pstl.musicxml.Score;
-import pstl.musicxml.rhythmicstructures.items.Chord;
+import pstl.musicxml.musicalstructures.Measure;
+import pstl.musicxml.musicalstructures.Part;
+import pstl.musicxml.musicalstructures.Score;
+import pstl.musicxml.musicalstructures.items.Chord;
 
 public class RhythmicThreeFactory {
 	public static ArrayList<RhythmicTree> buildRtFromScore(Score score) {
@@ -37,7 +37,7 @@ public class RhythmicThreeFactory {
 		//TODO this method is kinda dumb. Need to include beams and stuff like that to return a true well formed RT.
 		
 		for (Chord chord : chords) {
-			result.addChild(new RhythmicTree(chord.getType()));
+			result.addChild(new RhythmicTree(FractionFactory.newFraction(1, chord.getType())));
 		}
 		
 		

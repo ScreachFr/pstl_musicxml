@@ -1,9 +1,8 @@
-package pstl.musicxml;
+package pstl.musicxml.musicalstructures;
 
 import java.util.ArrayList;
 
-import pstl.musicxml.rhythmicstructures.Signature;
-import pstl.musicxml.rhythmicstructures.items.Chord;
+import pstl.musicxml.musicalstructures.items.Chord;
 
 
 public class Measure implements Comparable<Measure>{

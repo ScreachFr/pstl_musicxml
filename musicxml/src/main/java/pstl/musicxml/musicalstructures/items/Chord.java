@@ -1,8 +1,8 @@
-package pstl.musicxml.rhythmicstructures.items;
+package pstl.musicxml.musicalstructures.items;
 
 import java.util.ArrayList;
 
-import pstl.musicxml.Type;
+import pstl.musicxml.musicalstructures.Type;
 
 public class Chord implements IMusicalItem {
 	private ArrayList<IMusicalItem> items;

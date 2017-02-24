@@ -1,6 +1,6 @@
-package pstl.musicxml.rhythmicstructures.items;
+package pstl.musicxml.musicalstructures.items;
 
-import pstl.musicxml.Type;
+import pstl.musicxml.musicalstructures.Type;
 
 public class Tie extends Note implements IMusicalItem{
 

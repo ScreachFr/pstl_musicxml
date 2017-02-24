@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
-		pstl.musicxml.ParserTest.class
+		pstl.musicxml.ParserTest.class,
+		pstl.musicxml.ScoreUtilsTest.class
 })
 public class WholeTestSuite {}

@@ -2,22 +2,23 @@ package pstl.musicxml.rhythmicstructures;
 
 import java.util.ArrayList;
 
-import pstl.musicxml.Type;
+import pstl.musicxml.musicalstructures.Signature;
+import pstl.musicxml.musicalstructures.Type;
 
 public class RhythmicTree {
 	private Signature signture;
-	private Type type;
+	private Fraction fraction;
 	
 	private ArrayList<RhythmicTree> children;
 	public RhythmicTree(Signature signature) {
 		this();
 		this.signture = signature;
-		type = Type.UNDEFINED;
+		fraction = new Fraction(0, Type.UNDEFINED);
 	}
 	
-	public RhythmicTree(Type type) {
+	public RhythmicTree(Fraction f) {
 		this();
-		this.type = type;
+		this.fraction = f;
 	}
 	
 	public RhythmicTree() {
@@ -36,23 +37,23 @@ public class RhythmicTree {
 		return signture;
 	}
 
-	public Type getType() {
-		return type;
+	public Fraction getFraction() {
+		return fraction;
 	}
 	
 	public void setSignture(Signature signture) {
 		this.signture = signture;
 	}
 	
-	public void setType(Type type) {
-		this.type = type;
+	public void setFraction(Fraction fraction) {
+		this.fraction = fraction;
 	}
 	
 	@Override
 	public String toString() {
 		if (children.size() == 0) {
-			if (type != null && (!type.equals(Type.UNKNOWN) || !type.equals(Type.UNDEFINED)))
-				return type.getNumber() + "";
+			if (fraction != null && (!fraction.getBaseType().equals(Type.UNKNOWN) || !fraction.getBaseType().equals(Type.UNDEFINED)))
+				return fraction.toRTString() + "";
 			else if (signture != null)
 				return signture + "";
 			else 
@@ -63,8 +64,8 @@ public class RhythmicTree {
 		
 		
 		
-		if (type != null && (!type.equals(Type.UNKNOWN) || !type.equals(Type.UNDEFINED)))
-			result += type.getNumber() + " ";
+		if (fraction != null && (!fraction.getBaseType().equals(Type.UNKNOWN) || !fraction.getBaseType().equals(Type.UNDEFINED)))
+			result += fraction.toRTString() + " ";
 		else if (signture != null)
 			result += signture + " ";
 			
@@ -81,41 +82,41 @@ public class RhythmicTree {
 	}
 	
 	public static void main(String[] args) {
-		RhythmicTree root = new RhythmicTree(Type.QUARTER);
+		RhythmicTree root = new RhythmicTree(FractionFactory.newQuarter());
 		
-		root.addChild(new RhythmicTree(Type.QUARTER));
-		root.addChild(new RhythmicTree(Type.QUARTER));
-		root.addChild(new RhythmicTree(Type.QUARTER));
-		root.addChild(new RhythmicTree(Type.QUARTER));
+		root.addChild(new RhythmicTree(FractionFactory.newQuarter()));
+		root.addChild(new RhythmicTree(FractionFactory.newQuarter()));
+		root.addChild(new RhythmicTree(FractionFactory.newQuarter()));
+		root.addChild(new RhythmicTree(FractionFactory.newQuarter()));
 		
 		System.out.println(root);
 		
 		
-		RhythmicTree root2 = new RhythmicTree(Type.HALF);
+		RhythmicTree root2 = new RhythmicTree(FractionFactory.newHalf());
 		
-		RhythmicTree c1 = new RhythmicTree(Type.QUARTER);
-		RhythmicTree c2 = new RhythmicTree(Type.QUARTER);
+		RhythmicTree c1 = new RhythmicTree(FractionFactory.newQuarter());
+		RhythmicTree c2 = new RhythmicTree(FractionFactory.newQuarter());
 		
 		root2.addChild(c1);
 		root2.addChild(c2);
 		
-		c1.addChild(new RhythmicTree(Type.QUARTER));
-		c1.addChild(new RhythmicTree(Type.QUARTER));
-		c1.addChild(new RhythmicTree(Type.QUARTER));
-		c1.addChild(new RhythmicTree(Type.QUARTER));
+		c1.addChild(new RhythmicTree(FractionFactory.newQuarter()));
+		c1.addChild(new RhythmicTree(FractionFactory.newQuarter()));
+		c1.addChild(new RhythmicTree(FractionFactory.newQuarter()));
+		c1.addChild(new RhythmicTree(FractionFactory.newQuarter()));
 		
-		c2.addChild(new RhythmicTree(Type.QUARTER));
-		c2.addChild(new RhythmicTree(Type.QUARTER));
-		c2.addChild(new RhythmicTree(Type.QUARTER));
-		c2.addChild(new RhythmicTree(Type.QUARTER));
+		c2.addChild(new RhythmicTree(FractionFactory.newQuarter()));
+		c2.addChild(new RhythmicTree(FractionFactory.newQuarter()));
+		c2.addChild(new RhythmicTree(FractionFactory.newQuarter()));
+		c2.addChild(new RhythmicTree(FractionFactory.newQuarter()));
 		
 		System.out.println(root2);
 		
 		RhythmicTree root3 = new RhythmicTree(new Signature(3, 4));
 		
-		root3.addChild(new RhythmicTree(Type.QUARTER));
-		root3.addChild(new RhythmicTree(Type.QUARTER));
-		root3.addChild(new RhythmicTree(Type.QUARTER));
+		root3.addChild(new RhythmicTree(FractionFactory.newQuarter()));
+		root3.addChild(new RhythmicTree(FractionFactory.newQuarter()));
+		root3.addChild(new RhythmicTree(FractionFactory.newQuarter()));
 		
 		System.out.println(root3);
 		
