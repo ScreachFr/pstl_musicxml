@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -20,6 +22,11 @@ import pstl.musicxml.musicalstructures.items.Note;
 import pstl.musicxml.musicalstructures.items.Rest;
 import pstl.musicxml.musicalstructures.symbols.unary.Alter;
 import pstl.musicxml.musicalstructures.symbols.unary.Dot;
+import pstl.musicxml.musicalstructures.symbols.unary.Mordent;
+import pstl.musicxml.musicalstructures.symbols.unary.Staccatissimo;
+import pstl.musicxml.musicalstructures.symbols.unary.Tremolo;
+import pstl.musicxml.musicalstructures.symbols.unary.TrillMark;
+import pstl.musicxml.musicalstructures.symbols.unary.Turn;
 import pstl.musicxml.parsing.ParseException;
 import pstl.musicxml.parsing.XMLParser;
 import pstl.musicxml.rhythmicstructures.RhythmicThreeFactory;
@@ -48,6 +55,9 @@ public class ScoreUtils {
 	private final static String MXL_STEP = "step";
 	private final static String MXL_OCTAVE = "octave";
 	private final static String MXL_TYPE = "type";
+	private final static String MXL_NOTATIONS = "notations";
+	private final static String MXL_ORNAMENTS = "ornaments";
+	private final static String MXL_ARTICULATIONS = "articulations";
 
 
 
@@ -178,7 +188,47 @@ public class ScoreUtils {
 			nodeName = crtNode.getNodeName();
 			if (nodeName.equals(Dot.getTrigger())) {
 				note.addExtraSymbol(Dot.getDot());
-			} 
+			} else if(nodeName.equals(MXL_NOTATIONS)){
+				Node childNotationsNode = crtNode.getFirstChild();
+				
+				if(childNotationsNode.getNodeName().equals(MXL_ORNAMENTS)){
+					Node ornamentsNode = childNotationsNode.getFirstChild();
+					Node childOrnamentsNode = ornamentsNode.getFirstChild();
+					String childOrnNodeName = childOrnamentsNode.getNodeName();
+					
+					if(childOrnNodeName.equals(TrillMark.getTrigger())){
+						note.addExtraSymbol(TrillMark.getTrillMark());
+					} else if(childOrnNodeName.equals(Tremolo.getTrigger())){
+						Element e = (Element)childOrnamentsNode;
+						String type = e.getAttribute(MXL_TYPE);
+						int markNumber = Integer.parseInt(childOrnamentsNode.getTextContent());
+						
+						Tremolo tremolo = Tremolo.getTremolo();
+						tremolo.setNum(markNumber);
+						tremolo.setType(type);
+						note.addExtraSymbol(tremolo);
+					} else if(childOrnNodeName.equals(Turn.getTrigger())){
+						note.addExtraSymbol(Turn.getTurn());
+					}  else if(childOrnNodeName.equals(Mordent.getTrigger())){
+						note.addExtraSymbol(Mordent.getMordent());
+					}
+					
+					//add others ornaments
+					
+				} else if(childNotationsNode.getNodeName().equals(MXL_ARTICULATIONS)){
+					Node articulationNode = childNotationsNode.getFirstChild();
+					Node childArticulationNode = articulationNode.getFirstChild();
+					String childArtNodeName = childArticulationNode.getNodeName();
+					
+					if(childArtNodeName.equals(Staccatissimo.getTrigger())){
+						note.addExtraSymbol(Staccatissimo.getStaccatissimo());
+					}
+					
+					//add others articulations
+					
+				}
+			}
+			
 		}
 		
 		
@@ -288,17 +338,21 @@ public class ScoreUtils {
 	public static void main(String[] args) {
 		XMLParser parser = new XMLParser();
 		File rng;
+		
+//		String compte = "alexandre";
+		String compte = "sduchenne";
+		
 		try {
-//			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/helloworld.mxl";
-//			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/bwv0254.krn.xml";
-			String testDir = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/";
-//			String testDir = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/xmlsamples";
+//			String input = "/home/"+compte+"/git/pstl_musicxml/musicxml/test-data/simple/helloworld.mxl";
+//			String input = "/home/"+compte+"/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/bwv0254.krn.xml";
+//			String testDir = "/home/"+compte+"/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/";
+			String testDir = "/home/"+compte+"/git/pstl_musicxml/musicxml/test-data/simple";
 			String pattern = ".*\\.(xml|mxl)";
 //			String pattern = ".*\\.(xml)";
 
 
 
-			rng = new File("/home/alexandre/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
+			rng = new File("/home/"+compte+"/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
 			parser.setRng(rng);
 
 			Collection<File> files = FileUtils.getFileList(testDir);
