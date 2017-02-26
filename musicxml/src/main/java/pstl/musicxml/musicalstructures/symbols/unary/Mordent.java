@@ -1,6 +1,7 @@
 package pstl.musicxml.musicalstructures.symbols.unary;
 
 public class Mordent implements UnarySymbol {
+	private boolean isLong;
 	private static Mordent mordent = new Mordent();
 	
 	@Override
@@ -15,4 +16,10 @@ public class Mordent implements UnarySymbol {
 	public static Mordent getMordent() {
 		return mordent;
 	}
+
+	public void setLong(boolean b) {
+		this.isLong = b;
+	}
+	
+	
 }

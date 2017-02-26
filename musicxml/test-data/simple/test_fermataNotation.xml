@@ -2,7 +2,6 @@
 <!DOCTYPE score-partwise PUBLIC
     "-//Recordare//DTD MusicXML 3.0 Partwise//EN"
     "http://www.musicxml.org/dtds/partwise.dtd">
-<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 1.1 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="3.0">
   <part-list>
     <score-part id="P1">
@@ -17,7 +16,7 @@
           <fifths>0</fifths>
         </key>
         <time>
-          <beats>2</beats>
+          <beats>1</beats>
           <beat-type>4</beat-type>
         </time>
         <clef>
@@ -27,24 +26,16 @@
       </attributes>
       <note>
         <pitch>
-          <step>F</step>
-          <octave>4</octave>
+          <step>C</step>
+          <octave>5</octave>
         </pitch>
-        <duration>2</duration>
+        <duration>8</duration>
         <voice>1</voice>
-        <type>half</type>
-        <stem default-y="0">up</stem>
-      </note>
-	  <note>
-        <pitch>
-          <step>F</step>
-          <octave>4</octave>
-        </pitch>
-		<dot/>
-        <duration>2</duration>
-        <voice>1</voice>
-        <type>half</type>
-        <stem default-y="0">up</stem>
+        <type>quarter</type>
+        <stem>down</stem>
+        <notations>
+          <fermata default-x="-5" default-y="10" type="upright"/>
+        </notations>
       </note>
     </measure>
   </part>

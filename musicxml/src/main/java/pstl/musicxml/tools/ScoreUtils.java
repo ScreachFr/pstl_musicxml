@@ -20,8 +20,11 @@ import pstl.musicxml.musicalstructures.items.Chord;
 import pstl.musicxml.musicalstructures.items.IMusicalItem;
 import pstl.musicxml.musicalstructures.items.Note;
 import pstl.musicxml.musicalstructures.items.Rest;
+import pstl.musicxml.musicalstructures.symbols.binary.Slur;
 import pstl.musicxml.musicalstructures.symbols.unary.Alter;
 import pstl.musicxml.musicalstructures.symbols.unary.Dot;
+import pstl.musicxml.musicalstructures.symbols.unary.FermataNotation;
+import pstl.musicxml.musicalstructures.symbols.unary.InvertedMordent;
 import pstl.musicxml.musicalstructures.symbols.unary.Mordent;
 import pstl.musicxml.musicalstructures.symbols.unary.Staccatissimo;
 import pstl.musicxml.musicalstructures.symbols.unary.Tremolo;
@@ -58,7 +61,9 @@ public class ScoreUtils {
 	private final static String MXL_NOTATIONS = "notations";
 	private final static String MXL_ORNAMENTS = "ornaments";
 	private final static String MXL_ARTICULATIONS = "articulations";
-
+	private final static String MXL_TECHNICAL= "technical";
+	private final static String MXL_SLUR= "slur";
+	private final static String MXL_LONG= "long";
 
 
 	//TODO Make to different method to handle both part-wise and time-wise scores. 
@@ -189,50 +194,115 @@ public class ScoreUtils {
 			if (nodeName.equals(Dot.getTrigger())) {
 				note.addExtraSymbol(Dot.getDot());
 			} else if(nodeName.equals(MXL_NOTATIONS)){
-				Node childNotationsNode = crtNode.getFirstChild();
+				NodeList childsList = crtNode.getChildNodes();
 				
-				if(childNotationsNode.getNodeName().equals(MXL_ORNAMENTS)){
-					Node ornamentsNode = childNotationsNode.getFirstChild();
-					Node childOrnamentsNode = ornamentsNode.getFirstChild();
-					String childOrnNodeName = childOrnamentsNode.getNodeName();
-					
-					if(childOrnNodeName.equals(TrillMark.getTrigger())){
-						note.addExtraSymbol(TrillMark.getTrillMark());
-					} else if(childOrnNodeName.equals(Tremolo.getTrigger())){
-						Element e = (Element)childOrnamentsNode;
-						String type = e.getAttribute(MXL_TYPE);
-						int markNumber = Integer.parseInt(childOrnamentsNode.getTextContent());
-						
-						Tremolo tremolo = Tremolo.getTremolo();
-						tremolo.setNum(markNumber);
-						tremolo.setType(type);
-						note.addExtraSymbol(tremolo);
-					} else if(childOrnNodeName.equals(Turn.getTrigger())){
-						note.addExtraSymbol(Turn.getTurn());
-					}  else if(childOrnNodeName.equals(Mordent.getTrigger())){
-						note.addExtraSymbol(Mordent.getMordent());
-					}
-					
-					//add others ornaments
-					
-				} else if(childNotationsNode.getNodeName().equals(MXL_ARTICULATIONS)){
-					Node articulationNode = childNotationsNode.getFirstChild();
-					Node childArticulationNode = articulationNode.getFirstChild();
-					String childArtNodeName = childArticulationNode.getNodeName();
-					
-					if(childArtNodeName.equals(Staccatissimo.getTrigger())){
-						note.addExtraSymbol(Staccatissimo.getStaccatissimo());
-					}
-					
-					//add others articulations
-					
+				for(int j = 0; j < childsList.getLength(); j++){
+					addNotations(note, childsList.item(j));
 				}
 			}
 			
+			//add others note node
+		}
+	}
+	
+	
+	public static void addNotations(Note note, Node notationsNode){
+		NodeList childsList = notationsNode.getChildNodes();
+		Node childNotationsNode;
+		String childName;
+		
+		for(int i = 0; i < childsList.getLength(); i++){
+			childNotationsNode = childsList.item(i);
+			childName = childNotationsNode.getNodeName();
+			
+			if(childName.equals(MXL_ORNAMENTS)){
+				NodeList ornamentsChildList = childNotationsNode.getChildNodes();
+				for(int j = 0; j < ornamentsChildList.getLength(); j++){
+					Node ornamentsChild = ornamentsChildList.item(j);
+					addOrnaments(note, ornamentsChild);
+				}
+			} else if(childName.equals(MXL_ARTICULATIONS)){
+				NodeList articulationsChildList = childNotationsNode.getChildNodes();
+				for(int j = 0; j < articulationsChildList.getLength(); j++){
+					Node articulationsChild = articulationsChildList.item(j);
+					addArticulations(note, articulationsChild);
+				}
+			} else if(childName.equals(MXL_TECHNICAL)){
+				NodeList articulationsChildList = childNotationsNode.getChildNodes();
+				for(int j = 0; j < articulationsChildList.getLength(); j++){
+					Node articulationsChild = articulationsChildList.item(j);
+					addTechnicals(note, articulationsChild);
+				}
+			} else if(childName.equals(MXL_SLUR)){
+				Element e = (Element)childNotationsNode;
+				int number = Integer.parseInt(e.getAttribute(MXL_NUMBER));
+				Slur.Type type = Slur.Type.valueOf(e.getAttribute(MXL_TYPE));
+				Slur slur = new Slur(type, number);
+				note.addExtraSymbol(slur);
+			}
+			
+			//add other notations
+			
 		}
 		
-		
 	}
+	
+	
+	public static void addOrnaments(Note note, Node node){
+		String nodeName = node.getNodeName();
+		
+		if(nodeName.equals(TrillMark.getTrigger())){
+			note.addExtraSymbol(TrillMark.getTrillMark());
+		} else if(nodeName.equals(Tremolo.getTrigger())){
+			Element e = (Element)node;
+			String type = e.getAttribute(MXL_TYPE);
+			int markNumber = Integer.parseInt(node.getTextContent());
+			
+			Tremolo tremolo = Tremolo.getTremolo();
+			tremolo.setNum(markNumber);
+			tremolo.setType(type);
+			note.addExtraSymbol(tremolo);
+		} else if(nodeName.equals(Turn.getTrigger())){
+			note.addExtraSymbol(Turn.getTurn());
+		} else if(nodeName.equals(Mordent.getTrigger())){
+			Element e = (Element)node;
+			boolean isLong = Boolean.parseBoolean(e.getAttribute(MXL_LONG));
+			
+			Mordent m = Mordent.getMordent();
+			m.setLong(isLong);
+			note.addExtraSymbol(m);
+		} else if(nodeName.equals(InvertedMordent.getTrigger())){
+			Element e = (Element)node;
+			boolean isLong = Boolean.parseBoolean(e.getAttribute(MXL_LONG));
+			
+			InvertedMordent im = InvertedMordent.getInvertedMordent();
+			im.setLong(isLong);
+			note.addExtraSymbol(im);
+		} else if(nodeName.equals(FermataNotation.getTrigger())){
+			note.addExtraSymbol(FermataNotation.getFermataNotation());
+		}
+		
+		//add others ornaments
+	}
+	
+	
+	public static void addArticulations(Note note, Node node){
+		String nodeName = node.getNodeName();
+		
+		if(nodeName.equals(Staccatissimo.getTrigger())){
+			note.addExtraSymbol(Staccatissimo.getStaccatissimo());
+		}
+		
+		//add others articulations
+	}
+
+	
+	public static void addTechnicals(Note note, Node node){
+		String nodeName = node.getNodeName();
+		
+		//add others technical
+	}
+	
 	
 	private static Type getTypeFromMXLType(String mxlType) {
 		if (mxlType.equals(Type.WHOLE.getMxlEquivalent())) {
