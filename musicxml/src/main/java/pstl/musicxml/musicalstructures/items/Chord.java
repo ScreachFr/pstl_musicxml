@@ -3,16 +3,17 @@ package pstl.musicxml.musicalstructures.items;
 import java.util.ArrayList;
 
 import pstl.musicxml.musicalstructures.Type;
+import pstl.musicxml.musicalstructures.symbols.binary.Beam;
 
 public class Chord implements IMusicalItem {
-	private ArrayList<IMusicalItem> items;
+	private ArrayList<Note> notes;
 	private Type type;
 	public Chord() {
-		items = new ArrayList<>();
+		notes = new ArrayList<>();
 	}
 	
 	public Chord(Type type) {
-		items = new ArrayList<>();
+		notes = new ArrayList<>();
 		this.type = type;
 	}
 	
@@ -21,8 +22,8 @@ public class Chord implements IMusicalItem {
 		return type;
 	}
 	
-	public void addItem(IMusicalItem n) {
-		items.add(n);
+	public void addNote(Note n) {
+		notes.add(n);
 		
 		if (type == null)
 			type = n.getType();
@@ -33,21 +34,39 @@ public class Chord implements IMusicalItem {
 		this.type = type;
 	}
 	
+	public ArrayList<Note> getNotes() {
+		return notes;
+	}
+	
+	public ArrayList<Beam> getBeams() {
+		ArrayList<Beam> result = new ArrayList<>();
+		
+		for (Note note : notes) {
+			result.addAll(note.getBeams());
+		}
+		
+		return result;
+	}
+	
+	public void removeBeam(int number) {
+		notes.forEach(item -> item.removeBeam(number));
+	}
+	
 	@Override
 	public String toString() {
 		String result = "";
 		
-		if (items.size() == 1)
-			return items.get(0) + "";
-		else if (items.size() == 0)
+		if (notes.size() == 1)
+			return notes.get(0) + "";
+		else if (notes.size() == 0)
 			return "";
 		
 		int i = 0;
 		result += type.getNumber() + "(";
 		
-		for (IMusicalItem item : items) {
+		for (IMusicalItem item : notes) {
 			result += item.toMeasureString() + "";
-			if (i < items.size()-1)
+			if (i < notes.size()-1)
 				result += " ";
 			i++;
 		}
@@ -63,10 +82,10 @@ public class Chord implements IMusicalItem {
 	public static void main(String[] args) {
 		Chord c = new Chord();
 		
-		c.addItem(new Note("A", 1, Type.QUARTER));
-		c.addItem(new Note("A", 1, Type.QUARTER));
-		c.addItem(new Note("A", 1, Type.QUARTER));
-		c.addItem(new Note("A", 1, Type.QUARTER));
+		c.addNote(new Note("A", 1, Type.QUARTER));
+		c.addNote(new Note("A", 1, Type.QUARTER));
+		c.addNote(new Note("A", 1, Type.QUARTER));
+		c.addNote(new Note("A", 1, Type.QUARTER));
 		
 		System.out.println(c);
 	}

@@ -18,11 +18,12 @@ import pstl.musicxml.musicalstructures.items.Chord;
 import pstl.musicxml.musicalstructures.items.IMusicalItem;
 import pstl.musicxml.musicalstructures.items.Note;
 import pstl.musicxml.musicalstructures.items.Rest;
+import pstl.musicxml.musicalstructures.symbols.binary.Beam;
 import pstl.musicxml.musicalstructures.symbols.unary.Alter;
 import pstl.musicxml.musicalstructures.symbols.unary.Dot;
 import pstl.musicxml.parsing.ParseException;
 import pstl.musicxml.parsing.XMLParser;
-import pstl.musicxml.rhythmicstructures.RhythmicThreeFactory;
+import pstl.musicxml.rhythmicstructures.RhythmicTreeFactory;
 import pstl.musicxml.rhythmicstructures.RhythmicTree;
 
 public class ScoreUtils {
@@ -105,72 +106,76 @@ public class ScoreUtils {
 		boolean containsChord;
 		Chord crtChord = null;
 		IMusicalItem crtItem;
+		Note crtNote;
 		for (Node noteNode : notes) {
 			crtItem = loadMusicalItem(noteNode);
 
 			containsChord = containsNode(noteNode, MXL_CHORD);
 
-			if (containsChord && !isChord) {
-				isChord = true;
-				crtChord = new Chord(crtItem.getType());
-				crtChord.addItem(crtItem);
-			} else if (containsChord && isChord) {
-				crtChord.addItem(crtItem);
-			} else if (!containsChord && isChord) {
-				isChord = false;
-				result.addChord(crtChord);
-
-				crtChord = new Chord(crtItem.getType());
-				crtChord.addItem(crtItem);
-
-				result.addChord(crtChord);
+			if (!(crtItem instanceof Note)) {
+				result.addItem(crtItem);
 			} else {
+				crtNote = (Note) crtItem;
+				if (containsChord && !isChord) {
+					isChord = true;
+					crtChord = new Chord(crtItem.getType());
+					crtChord.addNote(crtNote);
+				} else if (containsChord && isChord) {
+					crtChord.addNote(crtNote);
+				} else if (!containsChord && isChord) {
+					isChord = false;
+					result.addItem(crtChord);
 
-				crtChord = new Chord();
-				crtChord.addItem(crtItem);
-				result.addChord(crtChord);
+					crtChord = new Chord(crtItem.getType());
+					crtChord.addNote(crtNote);
 
+					result.addItem(crtChord);
+				}  else {
+
+					crtChord = new Chord();
+					crtChord.addNote(crtNote);
+					result.addItem(crtChord);
+
+				}
 			}
 
 		}
 
 		if (isChord)
-			result.addChord(crtChord);
-		
+			result.addItem(crtChord);
+
 		return result;
 	}
 
 	private static IMusicalItem loadMusicalItem(Node noteNode) {
 		Type type  = getTypeFromMXLType(getSingleChildByName(noteNode, MXL_TYPE).getTextContent());
-		
-		
-		
-		if (containsNode(noteNode, MXL_REST)) {
+
+		if (containsNode(noteNode, MXL_REST)) { //Is a rest
 
 			return new Rest(type);
-		} else {
+		} else { // Is a note.
 			Node pitchNode = getSingleChildByName(noteNode, MXL_PITCH);
 			String step = getSingleChildByName(pitchNode, MXL_STEP).getTextContent();
 			int octave = Integer.parseInt(getSingleChildByName(pitchNode, MXL_OCTAVE).getTextContent());
 			Note result = new Note(step, octave, type);
-			
+
 			Node alterNode = getSingleChildByName(pitchNode, Alter.getTrigger());
-			
+
 			if (alterNode != null) {
 				result.addExtraSymbol(new Alter(Integer.parseInt(alterNode.getTextContent())));
 			}
-			
+
 			lookForExtraSymbols(result, noteNode);
-			
+
 			return result;
 		}
 	}
-	
-	
+
+
 	//XXX You can add new symbols here.
 	private static void lookForExtraSymbols(Note note, Node noteNode) {
 		NodeList cList = noteNode.getChildNodes();
-		
+
 		Node crtNode;
 		String nodeName;
 		for (int i = 0; i < cList.getLength(); i++) {
@@ -178,12 +183,30 @@ public class ScoreUtils {
 			nodeName = crtNode.getNodeName();
 			if (nodeName.equals(Dot.getTrigger())) {
 				note.addExtraSymbol(Dot.getDot());
-			} 
+			} else if (nodeName.equals(Beam.getTrigger())) {
+
+				note.addExtraSymbol(buildBeamFromNod(crtNode));
+			}
 		}
-		
-		
+
+
 	}
-	
+
+	private static Beam buildBeamFromNod(Node beamNode) {
+		int number = Integer.parseInt(beamNode.getAttributes().getNamedItem(MXL_NUMBER).getTextContent());
+
+		String rawType = beamNode.getTextContent();
+
+		for (Beam.BeamType t : Beam.BeamType.values()) {
+			if (t.getMXLEquivalent().equals(rawType)) {
+				return new Beam(t, number);
+			}
+		}
+
+		//Shouldn't be reached
+		return null;
+	}
+
 	private static Type getTypeFromMXLType(String mxlType) {
 		if (mxlType.equals(Type.WHOLE.getMxlEquivalent())) {
 			return Type.WHOLE;
@@ -204,7 +227,7 @@ public class ScoreUtils {
 		} else {
 			return Type.UNKNOWN;
 		}
-		
+
 	}
 
 	private static boolean containsNode(Node n, String nodeName) {
@@ -241,7 +264,7 @@ public class ScoreUtils {
 	private static Node getPartWiseRoot(Document d) {
 		return getRoot(d, MXL_SCORE_PARTWISE);
 	}
-	
+
 	//XXX Timewise scores are not really popular it seems. Will implement that later.
 	private static Node getTimeWiseRoot(Document d) {
 		return getRoot(d, MXL_SCORE_TIMEWISE);
@@ -285,117 +308,120 @@ public class ScoreUtils {
 		return new Part(id, name);
 	}
 
+	//	public static void main(String[] args) {
+	//		XMLParser parser = new XMLParser();
+	//		File rng;
+	//		try {
+	////			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/helloworld.mxl";
+	////			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/bwv0254.krn.xml";
+	//			String testDir = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/";
+	////			String testDir = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/xmlsamples";
+	//			String pattern = ".*\\.(xml|mxl)";
+	////			String pattern = ".*\\.(xml)";
+	//
+	//
+	//
+	//			rng = new File("/home/alexandre/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
+	//			parser.setRng(rng);
+	//
+	//			Collection<File> files = FileUtils.getFileList(testDir);
+	//			ArrayList<Score> scores = new ArrayList<>();
+	//			Document crtDoc;
+	//			Score crtScore;
+	//			int i = 0;
+	//			int skip = 0;
+	//
+	//			for (File f : files) {
+	//
+	//				if (!f.getAbsolutePath().matches(pattern)) {
+	//					skip++;
+	//					continue;
+	//				}
+	//
+	//
+	//
+	//				parser.setInput(f.getAbsolutePath());
+	//				try {
+	//					System.out.println("Parsing " + f.getAbsolutePath());
+	//					crtDoc = parser.getDocument();
+	//					crtScore = loadFromDom(crtDoc);
+	//
+	//					scores.add(crtScore);
+	//
+	//					i++;
+	//					if (i%10 == 0)
+	//						System.out.println((int)(((i*1.0)/(files.size() * 1.0))*100) + "% done");
+	//
+	//				} catch (ParseException e) {
+	//					System.out.println("Can't parse " + f);
+	//				}
+	//
+	//			}
+	//
+	//			System.out.println(scores.size() + "/" + files.size() + " score succesfully parsed.");
+	//			System.out.println(skip + " files skipped.");
+	//			ArrayList<ArrayList<RhythmicTree>> rts = new ArrayList<>();
+	//
+	//			for (Score score : scores) {
+	//				System.out.println(score);
+	//			}
+	//
+	//			for (Score s : scores) {
+	//				rts.add(RhythmicThreeFactory.buildRtFromScore(s));
+	//			}
+	//
+	//			for (ArrayList<RhythmicTree> arrayList : rts) {
+	//				for (RhythmicTree rt : arrayList) {
+	//					System.out.println(rt);
+	//				}
+	//			}
+	//
+	//
+	//
+	//
+	//
+	//		} catch (IOException e) {
+	//			e.printStackTrace();
+	//		}
+	//
+	//	}
+
 	public static void main(String[] args) {
 		XMLParser parser = new XMLParser();
 		File rng;
+		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/t_beam01.xml";
+
+
+
+		rng = new File("/home/alexandre/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
 		try {
-//			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/helloworld.mxl";
-//			String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/bwv0254.krn.xml";
-			String testDir = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/chorales.all.musicxml/";
-//			String testDir = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/xmlsamples";
-			String pattern = ".*\\.(xml|mxl)";
-//			String pattern = ".*\\.(xml)";
-
-
-
-			rng = new File("/home/alexandre/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
 			parser.setRng(rng);
-
-			Collection<File> files = FileUtils.getFileList(testDir);
-			ArrayList<Score> scores = new ArrayList<>();
+			parser.setInput(input);
 			Document crtDoc;
 			Score crtScore;
-			int i = 0;
-			int skip = 0;
 
-			for (File f : files) {
-
-				if (!f.getAbsolutePath().matches(pattern)) {
-					skip++;
-					continue;
-				}
-
-
-
-				parser.setInput(f.getAbsolutePath());
-				try {
-					System.out.println("Parsing " + f.getAbsolutePath());
-					crtDoc = parser.getDocument();
-					crtScore = loadFromDom(crtDoc);
-
-					scores.add(crtScore);
-
-					i++;
-					if (i%10 == 0)
-						System.out.println((int)(((i*1.0)/(files.size() * 1.0))*100) + "% done");
-
-				} catch (ParseException e) {
-					System.out.println("Can't parse " + f);
-				}
-
+			crtDoc = parser.getDocument();
+			crtScore = ScoreUtils.loadFromDom(crtDoc);
+			
+			crtScore.convertBeams();
+			
+			
+			ArrayList<RhythmicTree> rts = RhythmicTreeFactory.buildRtFromScore(crtScore);
+			System.out.println(crtScore);
+			for (RhythmicTree rt : rts) {
+				System.out.println(rt);
 			}
-
-			System.out.println(scores.size() + "/" + files.size() + " score succesfully parsed.");
-			System.out.println(skip + " files skipped.");
-			ArrayList<ArrayList<RhythmicTree>> rts = new ArrayList<>();
-
-			for (Score score : scores) {
-				System.out.println(score);
-			}
-
-			for (Score s : scores) {
-				rts.add(RhythmicThreeFactory.buildRtFromScore(s));
-			}
-
-			for (ArrayList<RhythmicTree> arrayList : rts) {
-				for (RhythmicTree rt : arrayList) {
-					System.out.println(rt);
-				}
-			}
-
-
-
 
 
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-
-//	public static void main(String[] args) {
-//		XMLParser parser = new XMLParser();
-//		File rng;
-//		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/simpleTest.mxl";
-//
-//
-//
-//		rng = new File("/home/alexandre/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
-//		try {
-//			parser.setRng(rng);
-//			parser.setInput(input);
-//			Document crtDoc;
-//			Score crtScore;
-//
-//			crtDoc = parser.getDocument();
-//			crtScore = ScoreUtils.loadFromDom(crtDoc);
-//			
-//			ArrayList<RhythmicTree> rts = RhythmicThreeFactory.buildRtFromScore(crtScore);
-//			System.out.println(crtScore);
-//			for (RhythmicTree rt : rts) {
-//				System.out.println(rt);
-//			}
-//			
-//			
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//	}
 }
 
 

@@ -31,6 +31,10 @@ public class Part {
 		return id;
 	}
 	
+	public void convertBeams() {
+		measures.forEach(item -> item.convertBeams());
+	}
+	
 	
 	@Override
 	public String toString() {

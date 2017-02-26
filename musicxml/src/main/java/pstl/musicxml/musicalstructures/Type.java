@@ -32,6 +32,10 @@ public enum Type {
 		return mxlEquivalent.equals(mxlType);
 	}
 	
+	public int compareNumber(Type o) {
+		return Integer.compare(number, o.getNumber());
+	}
+	
 	@Override
 	public String toString() {
 		return mxlEquivalent + ":" + number;

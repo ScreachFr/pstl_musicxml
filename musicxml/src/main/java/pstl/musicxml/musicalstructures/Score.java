@@ -14,6 +14,10 @@ public class Score {
 		return parts;
 	}
 	
+	public void convertBeams() {
+		parts.forEach(item -> item.convertBeams());
+	}
+	
 	public Part getPartById(String id) {
 		for (Part p : parts) {
 			if (p.getId().equals(id))

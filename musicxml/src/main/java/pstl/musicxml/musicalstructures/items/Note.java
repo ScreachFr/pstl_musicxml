@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pstl.musicxml.musicalstructures.Type;
 import pstl.musicxml.musicalstructures.symbols.ExtraSymbol;
+import pstl.musicxml.musicalstructures.symbols.binary.Beam;
 
 
 public class Note implements IMusicalItem {
@@ -50,6 +51,39 @@ public class Note implements IMusicalItem {
 	
 	public ArrayList<ExtraSymbol> getExtraSymbols() {
 		return extraSymbols;
+	}
+	
+	public ArrayList<Beam> getBeams() {
+		ArrayList<Beam> beams =  new ArrayList<>();
+		
+		if (extraSymbols == null)
+			return beams;
+		
+		for (ExtraSymbol e : extraSymbols) {
+			if (e instanceof Beam)
+				beams.add((Beam) e);
+		}
+		
+		return beams;
+	}
+	
+	public void removeBeam(int number) {
+		ExtraSymbol e;
+		Beam b;
+		ArrayList<Beam> toRemove = new ArrayList<>();
+		for (int i = 0; i < extraSymbols.size(); i++) {
+			e = extraSymbols.get(i);
+			
+			if (e instanceof Beam) {
+				b = (Beam) e;
+				
+				if (b.getNumber() == number) {
+					toRemove.add(b);
+				}
+			}
+		}
+		
+		toRemove.forEach(item -> extraSymbols.remove(item));
 	}
 	
 	@Override
