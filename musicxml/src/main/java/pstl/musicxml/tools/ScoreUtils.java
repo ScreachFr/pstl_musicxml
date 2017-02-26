@@ -3,9 +3,9 @@ package pstl.musicxml.tools;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -19,8 +19,16 @@ import pstl.musicxml.musicalstructures.items.IMusicalItem;
 import pstl.musicxml.musicalstructures.items.Note;
 import pstl.musicxml.musicalstructures.items.Rest;
 import pstl.musicxml.musicalstructures.symbols.binary.Beam;
+import pstl.musicxml.musicalstructures.symbols.binary.Slur;
 import pstl.musicxml.musicalstructures.symbols.unary.Alter;
 import pstl.musicxml.musicalstructures.symbols.unary.Dot;
+import pstl.musicxml.musicalstructures.symbols.unary.FermataNotation;
+import pstl.musicxml.musicalstructures.symbols.unary.InvertedMordent;
+import pstl.musicxml.musicalstructures.symbols.unary.Mordent;
+import pstl.musicxml.musicalstructures.symbols.unary.Staccatissimo;
+import pstl.musicxml.musicalstructures.symbols.unary.Tremolo;
+import pstl.musicxml.musicalstructures.symbols.unary.TrillMark;
+import pstl.musicxml.musicalstructures.symbols.unary.Turn;
 import pstl.musicxml.parsing.ParseException;
 import pstl.musicxml.parsing.XMLParser;
 import pstl.musicxml.rhythmicstructures.RhythmicTreeFactory;
@@ -49,7 +57,12 @@ public class ScoreUtils {
 	private final static String MXL_STEP = "step";
 	private final static String MXL_OCTAVE = "octave";
 	private final static String MXL_TYPE = "type";
-
+	private final static String MXL_NOTATIONS = "notations";
+	private final static String MXL_ORNAMENTS = "ornaments";
+	private final static String MXL_ARTICULATIONS = "articulations";
+	private final static String MXL_TECHNICAL= "technical";
+	private final static String MXL_SLUR= "slur";
+	private final static String MXL_LONG= "long";
 
 
 	//TODO Make to different method to handle both part-wise and time-wise scores. 
@@ -186,9 +199,57 @@ public class ScoreUtils {
 			} else if (nodeName.equals(Beam.getTrigger())) {
 
 				note.addExtraSymbol(buildBeamFromNod(crtNode));
-			}
-		}
+			} else if(nodeName.equals(MXL_NOTATIONS)){
+				NodeList childsList = crtNode.getChildNodes();
 
+				for(int j = 0; j < childsList.getLength(); j++){
+					addNotations(note, childsList.item(j));
+				}
+			}
+
+			//add others note node
+		}
+	}
+
+
+	public static void addNotations(Note note, Node notationsNode){
+		NodeList childsList = notationsNode.getChildNodes();
+		Node childNotationsNode;
+		String childName;
+
+		for(int i = 0; i < childsList.getLength(); i++){
+			childNotationsNode = childsList.item(i);
+			childName = childNotationsNode.getNodeName();
+
+			if(childName.equals(MXL_ORNAMENTS)){
+				NodeList ornamentsChildList = childNotationsNode.getChildNodes();
+				for(int j = 0; j < ornamentsChildList.getLength(); j++){
+					Node ornamentsChild = ornamentsChildList.item(j);
+					addOrnaments(note, ornamentsChild);
+				}
+			} else if(childName.equals(MXL_ARTICULATIONS)){
+				NodeList articulationsChildList = childNotationsNode.getChildNodes();
+				for(int j = 0; j < articulationsChildList.getLength(); j++){
+					Node articulationsChild = articulationsChildList.item(j);
+					addArticulations(note, articulationsChild);
+				}
+			} else if(childName.equals(MXL_TECHNICAL)){
+				NodeList articulationsChildList = childNotationsNode.getChildNodes();
+				for(int j = 0; j < articulationsChildList.getLength(); j++){
+					Node articulationsChild = articulationsChildList.item(j);
+					addTechnicals(note, articulationsChild);
+				}
+			} else if(childName.equals(MXL_SLUR)){
+				Element e = (Element)childNotationsNode;
+				int number = Integer.parseInt(e.getAttribute(MXL_NUMBER));
+				Slur.Type type = Slur.Type.valueOf(e.getAttribute(MXL_TYPE));
+				Slur slur = new Slur(type, number);
+				note.addExtraSymbol(slur);
+			}
+
+			//add other notations
+
+		}
 
 	}
 
@@ -206,6 +267,63 @@ public class ScoreUtils {
 		//Shouldn't be reached
 		return null;
 	}
+
+
+	public static void addOrnaments(Note note, Node node){
+		String nodeName = node.getNodeName();
+
+		if(nodeName.equals(TrillMark.getTrigger())){
+			note.addExtraSymbol(TrillMark.getTrillMark());
+		} else if(nodeName.equals(Tremolo.getTrigger())){
+			Element e = (Element)node;
+			String type = e.getAttribute(MXL_TYPE);
+			int markNumber = Integer.parseInt(node.getTextContent());
+
+			Tremolo tremolo = Tremolo.getTremolo();
+			tremolo.setNum(markNumber);
+			tremolo.setType(type);
+			note.addExtraSymbol(tremolo);
+		} else if(nodeName.equals(Turn.getTrigger())){
+			note.addExtraSymbol(Turn.getTurn());
+		} else if(nodeName.equals(Mordent.getTrigger())){
+			Element e = (Element)node;
+			boolean isLong = Boolean.parseBoolean(e.getAttribute(MXL_LONG));
+
+			Mordent m = Mordent.getMordent();
+			m.setLong(isLong);
+			note.addExtraSymbol(m);
+		} else if(nodeName.equals(InvertedMordent.getTrigger())){
+			Element e = (Element)node;
+			boolean isLong = Boolean.parseBoolean(e.getAttribute(MXL_LONG));
+
+			InvertedMordent im = InvertedMordent.getInvertedMordent();
+			im.setLong(isLong);
+			note.addExtraSymbol(im);
+		} else if(nodeName.equals(FermataNotation.getTrigger())){
+			note.addExtraSymbol(FermataNotation.getFermataNotation());
+		}
+
+		//add others ornaments
+	}
+
+
+	public static void addArticulations(Note note, Node node){
+		String nodeName = node.getNodeName();
+
+		if(nodeName.equals(Staccatissimo.getTrigger())){
+			note.addExtraSymbol(Staccatissimo.getStaccatissimo());
+		}
+
+		//add others articulations
+	}
+
+
+	public static void addTechnicals(Note note, Node node){
+		String nodeName = node.getNodeName();
+
+		//add others technical
+	}
+
 
 	private static Type getTypeFromMXLType(String mxlType) {
 		if (mxlType.equals(Type.WHOLE.getMxlEquivalent())) {
@@ -386,7 +504,7 @@ public class ScoreUtils {
 	//
 	//	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, ParseException {
 		XMLParser parser = new XMLParser();
 		File rng;
 		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/t_beam01.xml";
@@ -394,32 +512,28 @@ public class ScoreUtils {
 
 
 		rng = new File("/home/alexandre/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
-		try {
-			parser.setRng(rng);
-			parser.setInput(input);
-			Document crtDoc;
-			Score crtScore;
 
-			crtDoc = parser.getDocument();
-			crtScore = ScoreUtils.loadFromDom(crtDoc);
-			
-			crtScore.convertBeams();
-			
-			
-			ArrayList<RhythmicTree> rts = RhythmicTreeFactory.buildRtFromScore(crtScore);
-			System.out.println(crtScore);
-			for (RhythmicTree rt : rts) {
-				System.out.println(rt);
-			}
+		String pattern = ".*\\.(xml|mxl)";
+		//			String pattern = ".*\\.(xml)";
 
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		parser.setRng(rng);
+		parser.setInput(input);
+		Document crtDoc;
+		Score crtScore;
+
+		crtDoc = parser.getDocument();
+		crtScore = ScoreUtils.loadFromDom(crtDoc);
+
+		crtScore.convertBeams();
+
+
+		ArrayList<RhythmicTree> rts = RhythmicTreeFactory.buildRtFromScore(crtScore);
+		System.out.println(crtScore);
+		for (RhythmicTree rt : rts) {
+			System.out.println(rt);
 		}
+
 
 	}
 }
