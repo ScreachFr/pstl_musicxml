@@ -17,7 +17,7 @@
           <fifths>0</fifths>
         </key>
         <time>
-          <beats>2</beats>
+          <beats>3</beats>
           <beat-type>4</beat-type>
         </time>
         <clef>
@@ -30,15 +30,10 @@
           <step>F</step>
           <octave>4</octave>
         </pitch>
-        <duration>2</duration>
-        <voice>1</voice>
+        <duration>3</duration>
         <type>half</type>
+		<dot/>
         <stem default-y="0">up</stem>
-        <notations>
-          <ornaments>
-            <tremolo default-x="6" default-y="-27" type="single">2</tremolo>
-          </ornaments>
-        </notations>
       </note>
     </measure>
   </part>
