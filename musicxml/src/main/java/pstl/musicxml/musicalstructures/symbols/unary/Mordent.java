@@ -6,11 +6,11 @@ public class Mordent implements UnarySymbol {
 	
 	@Override
 	public String toString() {
-		return "turn";
+		return "mordent";
 	}
 
 	public static String getTrigger() {
-		return "turn";
+		return "mordent";
 	}
 	
 	public static Mordent getMordent() {

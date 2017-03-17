@@ -25,7 +25,10 @@ import pstl.musicxml.musicalstructures.symbols.unary.Dot;
 import pstl.musicxml.musicalstructures.symbols.unary.FermataNotation;
 import pstl.musicxml.musicalstructures.symbols.unary.InvertedMordent;
 import pstl.musicxml.musicalstructures.symbols.unary.Mordent;
+import pstl.musicxml.musicalstructures.symbols.unary.Spiccato;
 import pstl.musicxml.musicalstructures.symbols.unary.Staccatissimo;
+import pstl.musicxml.musicalstructures.symbols.unary.Staccato;
+import pstl.musicxml.musicalstructures.symbols.unary.Tenuto;
 import pstl.musicxml.musicalstructures.symbols.unary.Tremolo;
 import pstl.musicxml.musicalstructures.symbols.unary.TrillMark;
 import pstl.musicxml.musicalstructures.symbols.unary.Turn;
@@ -312,6 +315,12 @@ public class ScoreUtils {
 
 		if(nodeName.equals(Staccatissimo.getTrigger())){
 			note.addExtraSymbol(Staccatissimo.getStaccatissimo());
+		} else if(nodeName.equals(Staccato.getTrigger())){
+			note.addExtraSymbol(Staccato.getStaccato());
+		} else if(nodeName.equals(Spiccato.getTrigger())){
+			note.addExtraSymbol(Spiccato.getSpiccato());
+		} else if(nodeName.equals(Tenuto.getTrigger())){
+			note.addExtraSymbol(Tenuto.getTenuto());
 		}
 
 		//add others articulations
