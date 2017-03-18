@@ -17,7 +17,7 @@
           <fifths>0</fifths>
         </key>
         <time>
-          <beats>2</beats>
+          <beats>4</beats>
           <beat-type>4</beat-type>
         </time>
         <clef>
@@ -33,10 +33,32 @@
         <duration>2</duration>
         <type>half</type>
         <stem>up</stem>
-		<notations>
-          <ornaments>
-            <tremolo type="single">2</tremolo>
-          </ornaments>
+        <notations>
+          <slur number="1" placement="below" type="start"/>
+        </notations>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>1</duration>
+        <type>quarter</type>
+        <stem>up</stem>
+        <notations>
+          <slur number="1" type="stop"/>
+        </notations>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>1</duration>
+        <type>quarter</type>
+        <stem>up</stem>
+        <notations>
+          <slur number="1" type="start"/>
         </notations>
       </note>
     </measure>
@@ -46,33 +68,29 @@
           <step>F</step>
           <octave>4</octave>
         </pitch>
-        <duration>2</duration>
-        <type>whole</type>
-		<time-modification>
-          <actual-notes>2</actual-notes>
-          <normal-notes>1</normal-notes>
-        </time-modification>
-		<notations>
-          <ornaments>
-            <tremolo type="start">1</tremolo>
-          </ornaments>
-        </notations>
+        <duration>1</duration>
+        <type>quarter</type>
+        <stem>up</stem>
       </note>
-	  <note>
+      <note>
         <pitch>
-          <step>F</step>
+          <step>B</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>1</duration>
+        <type>quarter</type>
+        <stem>up</stem>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
           <octave>4</octave>
         </pitch>
         <duration>2</duration>
-        <type>whole</type>
-		<time-modification>
-          <actual-notes>2</actual-notes>
-          <normal-notes>1</normal-notes>
-        </time-modification>
-		<notations>
-          <ornaments>
-            <tremolo type="stop">1</tremolo>
-          </ornaments>
+        <type>half</type>
+        <stem>up</stem>
+        <notations>
+          <slur number="1" placement="below" type="stop"/>
         </notations>
       </note>
     </measure>
