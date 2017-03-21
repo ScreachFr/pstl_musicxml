@@ -1,15 +1,15 @@
 package pstl.musicxml.musicalstructures.symbols.binary;
 
 public class Beam implements BinarySymbol {
-	private BeamType type;
+	private BinarySymbolType type;
 	private int number;
 	
-	public Beam(BeamType type, int number) {
+	public Beam(BinarySymbolType type, int number) {
 		this.type = type;
 		this.number = number;
 	}
 	
-	public BeamType getType() {
+	public BinarySymbolType getType() {
 		return type;
 	}
 	
@@ -17,37 +17,6 @@ public class Beam implements BinarySymbol {
 		return number;
 	}
 	
-	public enum BeamType {
-		BEGIN, CONTINUE, END;
-
-		public String toString() {
-			switch (this) {
-			case BEGIN:
-				return "begin";
-			case CONTINUE:
-				return "cont";
-			case END:
-				return "end";
-			}
-			
-			return "null";
-		}
-		
-		public String getMXLEquivalent() {
-			switch (this) {
-			case BEGIN:
-				return "begin";
-			case CONTINUE:
-				return "continue";
-			case END:
-				return "end";
-
-			}
-			
-			//Never reached.
-			return "";
-		}
-	}
 	
 	@Override
 	public String toString() {

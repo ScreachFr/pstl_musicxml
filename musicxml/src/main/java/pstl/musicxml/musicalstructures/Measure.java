@@ -10,7 +10,6 @@ import pstl.musicxml.musicalstructures.items.IMusicalItem;
 import pstl.musicxml.musicalstructures.items.Note;
 import pstl.musicxml.musicalstructures.symbols.ExtraSymbol;
 import pstl.musicxml.musicalstructures.symbols.binary.Beam;
-import pstl.musicxml.musicalstructures.symbols.binary.Beam.BeamType;
 import pstl.musicxml.rhythmicstructures.Fraction;
 
 

@@ -1,37 +1,20 @@
 package pstl.musicxml.musicalstructures.symbols.binary;
 
 public class Slur implements BinarySymbol {
-	private Type type;
+	private SlurType type;
 	private int number;
 	
-	public Slur(Type type, int number) {
+	public Slur(SlurType type, int number) {
 		this.type = type;
 		this.number = number;
 	}
 
-	public Type getType() {
+	public SlurType getType() {
 		return type;
 	}
 
 	public int getNumber() {
 		return number;
-	}
-	
-	public enum Type {
-		START, CONTINUE, STOP;
-
-		public String toString() {
-			switch (this) {
-			case START:
-				return "start";
-			case CONTINUE:
-				return "continue";
-			case STOP:
-				return "stop";
-			}
-			
-			return "null";
-		}
 	}
 
 	@Override
@@ -39,5 +22,31 @@ public class Slur implements BinarySymbol {
 		return "slur:" + type + ":" + number;
 	}
 	
-	
+	public enum SlurType {
+		START, STOP;
+
+		public String toString() {
+			switch (this) {
+			case START:
+				return "start";
+			case STOP:
+				return "stop";
+			}
+			
+			return "null";
+		}
+		
+		public String getMXLEquivalent() {
+			switch (this) {
+			case START:
+				return "start";
+			case STOP:
+				return "stop";
+
+			}
+			
+			//Never reached.
+			return "";
+		}
+	}
 }

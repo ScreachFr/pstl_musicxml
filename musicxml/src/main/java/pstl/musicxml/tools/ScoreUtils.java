@@ -18,9 +18,10 @@ import pstl.musicxml.musicalstructures.items.Chord;
 import pstl.musicxml.musicalstructures.items.IMusicalItem;
 import pstl.musicxml.musicalstructures.items.Note;
 import pstl.musicxml.musicalstructures.items.Rest;
-import pstl.musicxml.musicalstructures.symbols.ExtraSymbol;
 import pstl.musicxml.musicalstructures.symbols.binary.Beam;
+import pstl.musicxml.musicalstructures.symbols.binary.BinarySymbolFactory;
 import pstl.musicxml.musicalstructures.symbols.binary.Slur;
+import pstl.musicxml.musicalstructures.symbols.binary.Slur.SlurType;
 import pstl.musicxml.musicalstructures.symbols.unary.Alter;
 import pstl.musicxml.musicalstructures.symbols.unary.Dot;
 import pstl.musicxml.musicalstructures.symbols.unary.FermataNotation;
@@ -218,10 +219,9 @@ public class ScoreUtils {
 				note.addExtraSymbol(grace);
 			} else if(nodeName.equals(MXL_NOTATIONS)){ // notations
 				NodeList childsList = crtNode.getChildNodes();
-
-				for(int j = 0; j < childsList.getLength(); j++){
-					addNotations(note, childsList.item(j));
-				}
+				
+				addNotations(note, crtNode);
+				
 			}
 
 			//add others note node
@@ -259,7 +259,8 @@ public class ScoreUtils {
 			} else if(childName.equals(MXL_SLUR)){
 				Element e = (Element)childNotationsNode;
 				int number = Integer.parseInt(e.getAttribute(MXL_NUMBER));
-				Slur.Type type = Slur.Type.valueOf(e.getAttribute(MXL_TYPE));
+				SlurType type = BinarySymbolFactory.getSlurTypeFromString(e.getAttribute(MXL_TYPE));
+				
 				Slur slur = new Slur(type, number);
 				note.addExtraSymbol(slur);
 			}
@@ -275,14 +276,7 @@ public class ScoreUtils {
 
 		String rawType = beamNode.getTextContent();
 
-		for (Beam.BeamType t : Beam.BeamType.values()) {
-			if (t.getMXLEquivalent().equals(rawType)) {
-				return new Beam(t, number);
-			}
-		}
-
-		//Shouldn't be reached
-		return null;
+		return new Beam(BinarySymbolFactory.getTypeFromString(rawType), number);
 	}
 
 
@@ -539,14 +533,14 @@ public class ScoreUtils {
 		XMLParser parser = new XMLParser();
 		File rng;
 //		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/t_beam01.xml";
-		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/bigfile.xml";
+//		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/bigfile.xml";
+		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/test_slur_2_measures.xml";
 
 
 
 		rng = new File("/home/alexandre/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
 
-		String pattern = ".*\\.(xml|mxl)";
-		//			String pattern = ".*\\.(xml)";
+//		String pattern = ".*\\.(xml)";
 
 
 		parser.setRng(rng);
@@ -557,12 +551,7 @@ public class ScoreUtils {
 		crtDoc = parser.getDocument();
 		crtScore = ScoreUtils.loadFromDom(crtDoc);
 		
-//		ArrayList<RhythmicTree> rts_pre = RhythmicTreeFactory.buildRtFromScore(crtScore);
-//		
-//		rts_pre.forEach(rt -> System.out.println(rt));
-		
 		crtScore.convertBeams();
-
 
 		ArrayList<RhythmicTree> rts = RhythmicTreeFactory.buildRtFromScore(crtScore);
 		System.out.println(crtScore);
