@@ -14,13 +14,14 @@ import pstl.musicxml.musicalstructures.symbols.binary.Beam.BeamType;
 import pstl.musicxml.rhythmicstructures.Fraction;
 
 
-public class Measure implements Comparable<Measure>{
+public class Measure extends Group implements Comparable<Measure>{
 	private int number;
 	private ArrayList<IMusicalItem> items;
 	private Signature signature;
 
 
 	public Measure(int number) {
+		super(number, null);
 		this.number = number;
 		items = new ArrayList<>();
 	}
@@ -45,7 +46,8 @@ public class Measure implements Comparable<Measure>{
 		this.items = items;
 	}
 
-	public void convertBeams() {
+	@Override
+	public void checkGroups() {
 		ArrayList<Chord> beamMembers = new ArrayList<>();
 		Chord crtChord = null;
 		ArrayList<Beam> crtBeams;
@@ -109,7 +111,7 @@ public class Measure implements Comparable<Measure>{
 		
 		//Convert until there's no more beam.
 		if (number != -1)
-			convertBeams();
+			checkGroups();
 	}
 
 	@Override

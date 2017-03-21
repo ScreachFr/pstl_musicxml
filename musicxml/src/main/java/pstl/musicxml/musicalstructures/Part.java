@@ -32,7 +32,7 @@ public class Part {
 	}
 	
 	public void convertBeams() {
-		measures.forEach(item -> item.convertBeams());
+		measures.forEach(item -> item.checkGroups());
 	}
 	
 	

@@ -52,6 +52,7 @@ public class Chord implements IMusicalItem {
 		notes.forEach(item -> item.removeBeam(number));
 	}
 	
+	
 	@Override
 	public String toString() {
 		String result = "";
@@ -73,7 +74,7 @@ public class Chord implements IMusicalItem {
 		result += ")";
 		return result;
 	}
-
+	
 	@Override
 	public String toMeasureString() {
 		return toString();

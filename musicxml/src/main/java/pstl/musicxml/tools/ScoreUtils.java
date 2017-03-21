@@ -18,6 +18,7 @@ import pstl.musicxml.musicalstructures.items.Chord;
 import pstl.musicxml.musicalstructures.items.IMusicalItem;
 import pstl.musicxml.musicalstructures.items.Note;
 import pstl.musicxml.musicalstructures.items.Rest;
+import pstl.musicxml.musicalstructures.symbols.ExtraSymbol;
 import pstl.musicxml.musicalstructures.symbols.binary.Beam;
 import pstl.musicxml.musicalstructures.symbols.binary.Slur;
 import pstl.musicxml.musicalstructures.symbols.unary.Alter;
@@ -507,7 +508,8 @@ public class ScoreUtils {
 	public static void main(String[] args) throws IOException, ParseException {
 		XMLParser parser = new XMLParser();
 		File rng;
-		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/t_beam01.xml";
+//		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/t_beam01.xml";
+		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/bigfile.xml";
 
 
 
@@ -524,7 +526,11 @@ public class ScoreUtils {
 
 		crtDoc = parser.getDocument();
 		crtScore = ScoreUtils.loadFromDom(crtDoc);
-
+		
+//		ArrayList<RhythmicTree> rts_pre = RhythmicTreeFactory.buildRtFromScore(crtScore);
+//		
+//		rts_pre.forEach(rt -> System.out.println(rt));
+		
 		crtScore.convertBeams();
 
 
@@ -532,9 +538,10 @@ public class ScoreUtils {
 		System.out.println(crtScore);
 		for (RhythmicTree rt : rts) {
 			System.out.println(rt);
+			rt.getAllExtraSymbols().forEach(System.out::print);
+			System.out.println();
 		}
-
-
+		
 	}
 }
 

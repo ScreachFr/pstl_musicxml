@@ -42,7 +42,8 @@ public class Group implements IMusicalItem {
 			if (items.get(i) instanceof Chord) {
 				crtChord = (Chord) items.get(i);
 				crtBeams = crtChord.getBeams();
-
+				
+				System.out.println(crtChord);
 
 				if (crtBeams.isEmpty())//No beam
 					continue;

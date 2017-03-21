@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import pstl.musicxml.musicalstructures.Signature;
 import pstl.musicxml.musicalstructures.Type;
+import pstl.musicxml.musicalstructures.symbols.ExtraSymbol;
 
 public class RhythmicTree {
 	private Signature signture;
 	private Fraction fraction;
 	private ItemType itemType;
+	private ArrayList<ExtraSymbol> extraSymbols;
 	
 	private ArrayList<RhythmicTree> children;
 	
@@ -25,8 +27,10 @@ public class RhythmicTree {
 	}
 	
 	public RhythmicTree(ItemType itemType) {
+		this.extraSymbols = new ArrayList<>();
 		this.children = new ArrayList<>();
 		this.itemType = itemType;
+		
 	}
 
 	public void calculateFractions() {
@@ -70,8 +74,10 @@ public class RhythmicTree {
 		return children;
 	}
 	
-	public void addChild(RhythmicTree rt) {
+	public RhythmicTree addChild(RhythmicTree rt) {
 		children.add(rt);
+		
+		return rt;
 	}
 	
 	public Signature getSignture() {
@@ -88,6 +94,29 @@ public class RhythmicTree {
 	
 	public void setFraction(Fraction fraction) {
 		this.fraction = fraction;
+	}
+	
+	public void addExtraSymbol(ExtraSymbol es) {
+		extraSymbols.add(es);
+	}
+	
+	public void addExtraSymbol(ArrayList<ExtraSymbol> es) {
+		extraSymbols.addAll(es);
+	}
+	
+	public ArrayList<ExtraSymbol> getExtraSymbols() {
+		return extraSymbols;
+	}
+	
+	// For debug purpose only.
+	public ArrayList<ExtraSymbol> getAllExtraSymbols() {
+		ArrayList<ExtraSymbol> result = new ArrayList<>();
+		
+		result.addAll(extraSymbols);
+		
+		children.forEach(child -> result.addAll(child.getAllExtraSymbols()));
+		
+		return result;
 	}
 	
 	@Override

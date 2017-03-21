@@ -15,20 +15,20 @@ public class RhythmicTreeFactory {
 		ArrayList<RhythmicTree> result = new ArrayList<>();
 		
 		for (Part p : score.getParts()) {
-			result.add(buildRTFromPart(p));
+			result.addAll(buildRTFromPart(p));
 		}
 		
 		return result;
 	}
 	
 	
-	public static RhythmicTree buildRTFromPart(Part part) {
-		RhythmicTree result = new RhythmicTree(ItemType.Measure);
-		
-		for (Measure m : part.getMeasures()) {
-			result.addChild(buidRTFromMeasure(m));
-		}
+	public static ArrayList<RhythmicTree> buildRTFromPart(Part part) {
+		ArrayList<RhythmicTree> result = new ArrayList<>();
 
+		for (Measure m : part.getMeasures()) {
+			result.add(buidRTFromMeasure(m));
+		}
+		
 		return result;
 	}
 	
@@ -72,6 +72,11 @@ public class RhythmicTreeFactory {
 	
 	public static RhythmicTree buildRTFromChord(Chord c) {
 		RhythmicTree rt = new RhythmicTree(ItemType.Note, new Fraction(1, c.getType()));
+		
+		c.getNotes().forEach(note -> {
+			if (note.getExtraSymbols() != null)
+				rt.addExtraSymbol(note.getExtraSymbols());
+		});
 		
 		return rt;
 	}
