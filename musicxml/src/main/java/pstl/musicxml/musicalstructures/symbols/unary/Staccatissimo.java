@@ -5,11 +5,11 @@ public class Staccatissimo implements UnarySymbol{
 	
 	@Override
 	public String toString() {
-		return "turn";
+		return "staccatissimo";
 	}
 
 	public static String getTrigger() {
-		return "turn";
+		return "staccatissimo";
 	}
 	
 	public static Staccatissimo getStaccatissimo() {

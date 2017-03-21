@@ -24,9 +24,14 @@ import pstl.musicxml.musicalstructures.symbols.binary.Slur;
 import pstl.musicxml.musicalstructures.symbols.unary.Alter;
 import pstl.musicxml.musicalstructures.symbols.unary.Dot;
 import pstl.musicxml.musicalstructures.symbols.unary.FermataNotation;
+import pstl.musicxml.musicalstructures.symbols.unary.Grace;
 import pstl.musicxml.musicalstructures.symbols.unary.InvertedMordent;
 import pstl.musicxml.musicalstructures.symbols.unary.Mordent;
+import pstl.musicxml.musicalstructures.symbols.unary.Snap_pizzicato;
+import pstl.musicxml.musicalstructures.symbols.unary.Spiccato;
 import pstl.musicxml.musicalstructures.symbols.unary.Staccatissimo;
+import pstl.musicxml.musicalstructures.symbols.unary.Staccato;
+import pstl.musicxml.musicalstructures.symbols.unary.Tenuto;
 import pstl.musicxml.musicalstructures.symbols.unary.Tremolo;
 import pstl.musicxml.musicalstructures.symbols.unary.TrillMark;
 import pstl.musicxml.musicalstructures.symbols.unary.Turn;
@@ -64,6 +69,7 @@ public class ScoreUtils {
 	private final static String MXL_TECHNICAL= "technical";
 	private final static String MXL_SLUR= "slur";
 	private final static String MXL_LONG= "long";
+	private final static String MXL_SLAH= "slach";
 
 
 	//TODO Make to different method to handle both part-wise and time-wise scores. 
@@ -195,12 +201,22 @@ public class ScoreUtils {
 		for (int i = 0; i < cList.getLength(); i++) {
 			crtNode = cList.item(i);
 			nodeName = crtNode.getNodeName();
-			if (nodeName.equals(Dot.getTrigger())) {
+			if (nodeName.equals(Dot.getTrigger())) { // dot
 				note.addExtraSymbol(Dot.getDot());
-			} else if (nodeName.equals(Beam.getTrigger())) {
-
+			} else if (nodeName.equals(Beam.getTrigger())) { // beam
 				note.addExtraSymbol(buildBeamFromNod(crtNode));
-			} else if(nodeName.equals(MXL_NOTATIONS)){
+			} else if (nodeName.equals(Grace.getTrigger())) { // grace
+				Element e = (Element)crtNode;
+				String slash = e.getAttribute(MXL_SLAH);
+				boolean isSlashed = false;
+				if(slash.equals("yes"))
+					isSlashed = true;
+				
+				Grace grace = Grace.getGrace();
+				grace.setSlash(isSlashed);
+				
+				note.addExtraSymbol(grace);
+			} else if(nodeName.equals(MXL_NOTATIONS)){ // notations
 				NodeList childsList = crtNode.getChildNodes();
 
 				for(int j = 0; j < childsList.getLength(); j++){
@@ -278,6 +294,10 @@ public class ScoreUtils {
 		} else if(nodeName.equals(Tremolo.getTrigger())){
 			Element e = (Element)node;
 			String type = e.getAttribute(MXL_TYPE);
+			
+			if(type.equals(""))
+				type = "single";
+			
 			int markNumber = Integer.parseInt(node.getTextContent());
 
 			Tremolo tremolo = Tremolo.getTremolo();
@@ -313,6 +333,12 @@ public class ScoreUtils {
 
 		if(nodeName.equals(Staccatissimo.getTrigger())){
 			note.addExtraSymbol(Staccatissimo.getStaccatissimo());
+		} else if(nodeName.equals(Staccato.getTrigger())){
+			note.addExtraSymbol(Staccato.getStaccato());
+		} else if(nodeName.equals(Spiccato.getTrigger())){
+			note.addExtraSymbol(Spiccato.getSpiccato());
+		} else if(nodeName.equals(Tenuto.getTrigger())){
+			note.addExtraSymbol(Tenuto.getTenuto());
 		}
 
 		//add others articulations
@@ -321,7 +347,11 @@ public class ScoreUtils {
 
 	public static void addTechnicals(Note note, Node node){
 		String nodeName = node.getNodeName();
-
+		
+		if(nodeName.equals(Snap_pizzicato.getTrigger())){
+			note.addExtraSymbol(Snap_pizzicato.getSnap_pizzicato());
+		}
+		
 		//add others technical
 	}
 

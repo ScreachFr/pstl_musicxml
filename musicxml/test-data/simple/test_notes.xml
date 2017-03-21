@@ -2,6 +2,7 @@
 <!DOCTYPE score-partwise PUBLIC
     "-//Recordare//DTD MusicXML 3.0 Partwise//EN"
     "http://www.musicxml.org/dtds/partwise.dtd">
+<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 1.1 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="3.0">
   <part-list>
     <score-part id="P1">
@@ -10,13 +11,13 @@
   </part-list>
   <part id="P1">
     <measure number="1">
-      <attributes>
-        <divisions>1</divisions>
+	  <attributes>
+        <divisions>2</divisions>
         <key>
           <fifths>0</fifths>
         </key>
         <time>
-          <beats>3</beats>
+          <beats>4</beats>
           <beat-type>4</beat-type>
         </time>
         <clef>
@@ -24,50 +25,41 @@
           <line>2</line>
         </clef>
       </attributes>
-      <note default-x="80">
+      <note>
         <pitch>
           <step>C</step>
           <octave>5</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
-        <type>quarter</type>
-        <stem default-y="-50.5">down</stem>
-        <notations>
-          <ornaments>
-            <inverted-mordent default-x="-4" default-y="6" placement="above"/>
-          </ornaments>
-        </notations>
+        <duration>4</duration>
+        <type>half</type>
       </note>
-      <note default-x="141">
+      <note>
         <pitch>
-          <step>C</step>
-          <octave>5</octave>
+          <step>G</step>
+          <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
+        <duration>2</duration>
         <type>quarter</type>
-        <stem default-y="-50.5">down</stem>
-        <notations>
-          <ornaments>
-            <mordent default-x="-6" default-y="6" placement="above"/>
-          </ornaments>
-        </notations>
       </note>
-      <note default-x="202">
+      <note>
+        <pitch>
+          <step>E</step>
+          <octave>5</octave>
+        </pitch>
+        <duration>1</duration>
+        <type>eighth</type>
+		<stem>up</stem>
+        <beam number="1">begin</beam>
+      </note>
+      <note>
         <pitch>
           <step>C</step>
           <octave>5</octave>
         </pitch>
         <duration>1</duration>
-        <voice>1</voice>
-        <type>quarter</type>
-        <stem default-y="-50.5">down</stem>
-        <notations>
-          <ornaments>
-            <inverted-mordent default-x="-10" default-y="5" long="yes" placement="above"/>
-          </ornaments>
-        </notations>
+        <type>eighth</type>
+		<stem>up</stem>
+        <beam number="1">end</beam>
       </note>
     </measure>
   </part>

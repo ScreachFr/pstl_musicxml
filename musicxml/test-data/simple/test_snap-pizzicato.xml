@@ -30,13 +30,12 @@
           <octave>5</octave>
         </pitch>
         <duration>1</duration>
-        <voice>1</voice>
         <type>quarter</type>
         <stem>down</stem>
-        <notations>
-          <articulations>
-            <staccatissimo default-x="5" default-y="2" placement="above"/>
-          </articulations>
+ 		<notations>
+          <technical>
+            <snap-pizzicato placement="above"/>
+          </technical>
         </notations>
       </note>
     </measure>

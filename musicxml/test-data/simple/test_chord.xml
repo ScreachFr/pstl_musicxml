@@ -16,7 +16,7 @@
           <fifths>0</fifths>
         </key>
         <time>
-          <beats>3</beats>
+          <beats>2</beats>
           <beat-type>4</beat-type>
         </time>
         <clef>
@@ -24,50 +24,39 @@
           <line>2</line>
         </clef>
       </attributes>
-      <note default-x="80">
+	  <note>
         <pitch>
           <step>C</step>
-          <octave>5</octave>
+          <octave>4</octave>
         </pitch>
         <duration>1</duration>
-        <voice>1</voice>
         <type>quarter</type>
-        <stem default-y="-50.5">down</stem>
-        <notations>
-          <ornaments>
-            <inverted-mordent default-x="-4" default-y="6" placement="above"/>
-          </ornaments>
-        </notations>
       </note>
-      <note default-x="141">
+	  <note>
         <pitch>
           <step>C</step>
-          <octave>5</octave>
+          <octave>4</octave>
         </pitch>
         <duration>1</duration>
-        <voice>1</voice>
         <type>quarter</type>
-        <stem default-y="-50.5">down</stem>
-        <notations>
-          <ornaments>
-            <mordent default-x="-6" default-y="6" placement="above"/>
-          </ornaments>
-        </notations>
       </note>
-      <note default-x="202">
+	  <note>
+		<chord/>
         <pitch>
-          <step>C</step>
-          <octave>5</octave>
+          <step>E</step>
+          <octave>4</octave>
         </pitch>
         <duration>1</duration>
-        <voice>1</voice>
         <type>quarter</type>
-        <stem default-y="-50.5">down</stem>
-        <notations>
-          <ornaments>
-            <inverted-mordent default-x="-10" default-y="5" long="yes" placement="above"/>
-          </ornaments>
-        </notations>
+      </note>
+	  <note>
+		<chord/>
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>1</duration>
+        <type>quarter</type>
       </note>
     </measure>
   </part>
