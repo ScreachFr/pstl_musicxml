@@ -2,7 +2,7 @@
 
 \subsection{OpenMusic}
 
-OpenMusic est un langage de programmation visuel basé sur le langage Lisp qui permet d'écrire des programmes graphiquement. Il a été conçu par les chercheurs de l'IRCAM Carlos Agon, Gérard Assayag et Jean Bresson.
+OpenMusic \cite{openmusic} est un langage de programmation visuel basé sur le langage Lisp qui permet d'écrire graphiquement des compositions musicales. Il a été conçu par les chercheurs de l'IRCAM Carlos Agon, Gérard Assayag et Jean Bresson. Les programmes sont constitués d'éléments reliés entre eux et représentant des structures de données ou des fonctions. La figure suivante montre l'interface du logiciel.
 
 
 \begin{figure}[!h] %h : here
@@ -16,7 +16,7 @@ OpenMusic est un langage de programmation visuel basé sur le langage Lisp qui p
 Dans ce logiciel, les morceaux de musique sont constitués d'une suite d'arbres rythmiques. Comme décrit dans l'article \cite{agon}, \enquote{un arbre rythmique est défini comme un couple (D S) où D est une fraction (< 0) et S est une liste de n-éléments définissant n-proportions de D. Chaque élément de S peut-être soit un entier, soit un arbre rythmique.}
 
 \par
-Les images suivantes sont des exemples d'arbres rythmiques.
+Les images suivantes sont des exemples d'arbres rythmiques, en haut, et la partition correspondante, en bas.
 
 
 \begin{minipage}[c]{.46\linewidth}
@@ -54,7 +54,7 @@ Ci-dessus, un classique "Hello world" en Java. Nous pouvons y voir la définitio
 
 \subsection{Le format MusicXML}
 
-MusicXML est un format de fichier permettant de représenter la notation musicale occidentale (notation classique, accords en notation anglo-saxonne, tablatures et percussions) et basé sur le langage XML. Il est propriétaire mais il peut librement utilisé avec une licence publique.
+MusicXML \cite{musicxml} est un format de fichier permettant de représenter la notation musicale occidentale (notation classique, accords en notation anglo-saxonne, tablatures et percussions) et basé sur le langage XML. Il est propriétaire mais il peut librement utilisé avec une licence publique.
 
 \par
 Il y a plus de 20 ans, le format MIDI était très utilisé. Cependant, il n’est pas très adapté pour représenter toutes les caractéristiques de la musique, on perd donc en informations avec ce format. Pour pallier à cela, les formats SMDL et NIFF ont été créés. Cependant, le format SMDL était complexe et donc peu compréhensible. Il était donc très peu utilisé. Le format NIFF était un format peu pratique à utiliser et n’a donc pas été adopté par certains logiciels. Ces formats n’ont donc pas eu le succès souhaité.
@@ -124,7 +124,7 @@ On voit, dans le code correspondant à la partition suivante, que les informatio
 
 \subsection{Le langage XML}
 
-Le langage XML, acronyme de Extensible Markup Langage, est langage de balisage générique spécifié par le W3C. Il permet de définir différents espaces de noms, c'est à dire des langages avec leur propre grammaire et vocabulaire. Il permet l'échange d'information entre des programmes très différents à condition d'utiliser la même grammaire.
+Le langage XML \cite{xml_w3c, xml_ocr}, acronyme de e\textbf{X}tensible \textbf{M}arkup \textbf{L}angage, est langage de balisage générique spécifié par le W3C. Il permet de définir différents espaces de noms, c'est à dire des langages avec leur propre grammaire et vocabulaire. Il permet l'échange d'information entre des programmes très différents à condition d'utiliser la même grammaire.
 
 \par
 Il a l'avantage de pouvoir être compris par les êtres humains et les machines. Cependant, c'est un langage verbeux et qui peut donc prendre beaucoup de place s'il contient beaucoup d'information.
@@ -155,9 +155,9 @@ XML permet à l'utilisateur de définir lui même la grammaire de son document g
 C'est ce que nous utiliserons afin de s'assurer de la validité du document à traiter.
 
 
-\subsection{Affichage d'un graphe}
+\subsection{Affichage d'un graphe avec GraphStream}
 
-Une fois le fichier XML parsé, nous disposons d'un \emph{DOM} sous forme d'un objet \emph{document}. Pour afficher ce document il nous suffit d'appeler récursivement un méthode qui affiche un nœud de l'arbre sur la racine du \emph{Document}. Cette méthode s'appelle récursivement sur les fils du nœud courant. Cela nous permet donc d'afficher tout l'arbre.
+Une fois le fichier XML parsé, nous disposons d'un \emph{DOM} sous forme d'un objet \emph{document}. Nous pouvons ensuite afficher l'arbre grâce à la librairie GraphStream \cite{graphstream}. Pour cela nous appelons un méthode qui affiche un nœud de l'arbre sur la racine du \emph{Document}. Cela nous permet donc d'afficher tout l'arbre.
 
 
 \subsection{Les librairies}
@@ -167,7 +167,7 @@ Dans cette section, nous aborderons les librairies utilisées pour réaliser ce 
 
 \subsubsection{Trang et Jing}
 
-\textbf{Trang} et \textbf{Jing} sont deux librairies développées par \textbf{Thai Open Source}. Elles permettant de générer des grammaires Relax NG et de valider des documents XML à partir de cette même grammaire.
+\textbf{Trang} \cite{trang} et \textbf{Jing} \cite{jing} sont deux librairies développées par \textbf{Thai Open Source}. Elles permettant de générer des grammaires Relax NG et de valider des documents XML à partir de cette même grammaire.
 
 \par
 Trang est une librairie qui permet de traduire un fichier de description grammaticale en fichier Relax NG. En effet XML n'est pas facilement lisible pour un esprit humain, c'est pour cela que Trang nous permet de créer notre grammaire dans un langage plus compréhensible. Une fois la grammaire écrite dans un fichier en \emph{.rnc}, nous pouvons générer notre fichier Relax NG en \emph{.rng}.
@@ -189,17 +189,17 @@ if (!vd.validate(inputTextStream)) {
 \end{lstlisting}
 
 \par
-Le code ci-dessus est une utilisation simplifié de Jing. Nous commençons tout d'abord par créer un objet \emph{ValidationDriver} de Jing dans lequel nous chargeons notre fichier Relax NG. Nous n'avons ensuite plus qu'à lancer la méthode \emph{validate(InputSource in) : boolean} qui nous indiquera si le document est valide.
+Le code ci-dessus est une utilisation simplifiée de Jing. Nous commençons tout d'abord par créer un objet \emph{ValidationDriver} de Jing dans lequel nous chargeons notre fichier Relax NG. Nous n'avons ensuite plus qu'à lancer la méthode \emph{validate(InputSource in) : boolean} qui nous indiquera si le document est valide.
 
 
 \subsubsection{L'API SAX}
 
-SAX est une API créée par David Megginson en 1998 et est l'acronyme de \textbf{S}imple \textbf{A}PI for \textbf{X}ML. Elle permet de manipuler des documents XML en utilisant des événements envoyées à chaque rencontre d'un élément.
+SAX \cite{sax_website, sax_oracle} est une API créée par David Megginson en 1998 et est l'acronyme de \textbf{S}imple \textbf{A}PI for \textbf{X}ML. Elle permet de manipuler des documents XML en utilisant des événements envoyées à chaque rencontre d'un élément.
 
 
 \subsubsection{Le DOM}
 
-Le DOM, ou \textbf{D}ocument \textbf{O}bject \textbf{M}odel, est une interface de programmation normalisée par le W3C et est indépendant de tout plateforme et langage. Il voit les documents à balises comme des arbres dont le contenu et la structure peuvent être accédés et mis à jour dynamiquement.
+Le DOM \cite{dom_w3c} , ou \textbf{D}ocument \textbf{O}bject \textbf{M}odel, est une interface de programmation normalisée par le W3C et est indépendant de tout plateforme et langage. Il voit les documents à balises comme des arbres dont le contenu et la structure peuvent être accédés et mis à jour dynamiquement.
 
 \par
 La figure suivante montre un exemple de DOM.
@@ -211,3 +211,4 @@ La figure suivante montre un exemple de DOM.
 \caption{Exemple d'un DOM}
 \label{Exemple d'un DOM}
 \end{figure}
+
