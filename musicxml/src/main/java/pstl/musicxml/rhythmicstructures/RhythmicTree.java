@@ -7,7 +7,7 @@ import pstl.musicxml.musicalstructures.Type;
 import pstl.musicxml.musicalstructures.symbols.ExtraSymbol;
 
 public class RhythmicTree {
-	private Signature signture;
+	private Signature signature;
 	private Fraction fraction;
 	private ItemType itemType;
 	private ArrayList<ExtraSymbol> extraSymbols;
@@ -17,7 +17,7 @@ public class RhythmicTree {
 	
 	public RhythmicTree(ItemType itemType, Signature signature) {
 		this(itemType);
-		this.signture = signature;
+		this.signature = signature;
 		fraction = new Fraction(0, Type.UNDEFINED);
 	}
 	
@@ -81,7 +81,7 @@ public class RhythmicTree {
 	}
 	
 	public Signature getSignture() {
-		return signture;
+		return signature;
 	}
 
 	public Fraction getFraction() {
@@ -89,7 +89,7 @@ public class RhythmicTree {
 	}
 	
 	public void setSignture(Signature signture) {
-		this.signture = signture;
+		this.signature = signture;
 	}
 	
 	public void setFraction(Fraction fraction) {
@@ -122,8 +122,8 @@ public class RhythmicTree {
 	@Override
 	public String toString() {
 		if (children.size() == 0) {
-			if (signture != null)
-				return signture + "";
+			if (signature != null)
+				return signature + "";
 			else if (fraction != null && (!fraction.getBaseType().equals(Type.UNKNOWN) || !fraction.getBaseType().equals(Type.UNDEFINED))) 
 				return itemType.toRTString(fraction.getValue()) + "";
 			else 
@@ -134,8 +134,8 @@ public class RhythmicTree {
 		
 		
 		
-		if (signture != null) {
-			result += signture + " ";
+		if (signature != null) {
+			result += signature + " ";
 		} else if (fraction != null && (!fraction.getBaseType().equals(Type.UNKNOWN) || !fraction.getBaseType().equals(Type.UNDEFINED)))  
 			result += itemType.toRTString(fraction.getValue()) + " ";
 			
