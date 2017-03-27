@@ -34,7 +34,7 @@ Les images suivantes sont des exemples d'arbres rythmiques, en haut, et la parti
 \subsection{Le langage Java}
 
 \par 
-Java est un langage de programmation \textbf{orienté objet} fortement typé développé par \textbf{Sun Microsystems} à partir de \textbf{1995}. La société sera plus tard rachetée par \textbf{Oracle} en 2009 qui possède et maintient Java encore aujourd'hui.
+Java \cite{java_oracle} est un langage de programmation \textbf{orienté objet} fortement typé développé par \textbf{Sun Microsystems} à partir de \textbf{1995}. La société sera plus tard rachetée par \textbf{Oracle} en 2009 qui possède et maintient Java encore aujourd'hui.
 
 \par 
 Java se détache de la masse des autres langages de programmation notamment grâce à sa portabilité et sa facilité d'utilisation.
@@ -135,7 +135,7 @@ Un document XML est constitué de balises pouvant contenir d'autres balises ou u
 \begin{lstlisting}[caption=Exemple d'un document XML]
 <?xml version="1.0" encoding="UTF-8"?>
 <racine>
-    <balise attribut="valeur" >Contenu</balise>
+    <balise attribut="valeur">Contenu</balise>
     <baliseunique />
 </racine>
 \end{lstlisting}
@@ -149,15 +149,10 @@ XML permet à l'utilisateur de définir lui même la grammaire de son document g
 
 \subsection{Le langage Relax NG}
 
-\textbf{Relax NG} (\textbf{Re}gular \textbf{La}nguage for \textbf{X}ML \textbf{N}ext \textbf{G}eneration) née de la fusion de TreX de James Clark et de Relax de Murata Makoto. C'est un langage qui permet de définir la grammaire d'un document XML. Relax NG ne s'intéresse qu'à la structure du document et non à sa valeur.
+\textbf{Relax NG} (\textbf{Re}gular \textbf{La}nguage for \textbf{X}ML \textbf{N}ext \textbf{G}eneration) \cite{relaxng} née de la fusion de TreX de James Clark et de Relax de Murata Makoto. C'est un langage qui permet de définir la grammaire d'un document XML. Relax NG ne s'intéresse qu'à la structure du document et non à sa valeur.
 
 \par
 C'est ce que nous utiliserons afin de s'assurer de la validité du document à traiter.
-
-
-\subsection{Affichage d'un graphe avec GraphStream}
-
-Une fois le fichier XML parsé, nous disposons d'un \emph{DOM} sous forme d'un objet \emph{document}. Nous pouvons ensuite afficher l'arbre grâce à la librairie GraphStream \cite{graphstream}. Pour cela nous appelons un méthode qui affiche un nœud de l'arbre sur la racine du \emph{Document}. Cela nous permet donc d'afficher tout l'arbre.
 
 
 \subsection{Les librairies}
@@ -212,3 +207,7 @@ La figure suivante montre un exemple de DOM.
 \label{Exemple d'un DOM}
 \end{figure}
 
+
+\subsubsection{Affichage d'un graphe avec GraphStream}
+
+Une fois le fichier XML parsé, nous disposons d'un \emph{DOM} sous forme d'un objet \emph{document}. Nous pouvons ensuite afficher l'arbre grâce à la librairie GraphStream \cite{graphstream}. Pour cela nous appelons un méthode qui affiche un nœud de l'arbre sur la racine du \emph{Document}. Cela nous permet donc d'afficher tout l'arbre.
