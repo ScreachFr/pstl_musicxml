@@ -101,6 +101,13 @@ musicaux. Un symbole musical représente une notation qui peut être une nuance 
 un point ou encore un répétition par exemple.
 
 \par
+Pour chaque symbole musical, une classe lui est associée. Le symbole peut être unaire ou binaire.
+Les symboles unaires sont liés à une seule note, tel que les points d'orgues. Les symboles binaires
+sont liés à 2 notes, comme les liaisons. Pour chaque note, on récupère tous les symboles qui lui 
+sont associés, on créé les objets intermédiaires et on les ajoute à l'objet \emph{Note}.
+
+
+\par
 On pourrait penser ce modèle de données lourd, mais cela est largement compensé entre autres
 par l'aisance d'utilisation qu'il procure ainsi qui la possibilité notamment de déduire les
 "coordonnées" des éléments qui le composent. En effet rien de plus facile que de dire
