@@ -70,7 +70,7 @@ public class ScoreUtils {
 	private final static String MXL_TECHNICAL= "technical";
 	private final static String MXL_SLUR= "slur";
 	private final static String MXL_LONG= "long";
-	private final static String MXL_SLAH= "slach";
+	private final static String MXL_SLASH= "slash";
 
 
 	//TODO Make to different method to handle both part-wise and time-wise scores. 
@@ -208,7 +208,7 @@ public class ScoreUtils {
 				note.addExtraSymbol(buildBeamFromNod(crtNode));
 			} else if (nodeName.equals(Grace.getTrigger())) { // grace
 				Element e = (Element)crtNode;
-				String slash = e.getAttribute(MXL_SLAH);
+				String slash = e.getAttribute(MXL_SLASH);
 				boolean isSlashed = false;
 				if(slash.equals("yes"))
 					isSlashed = true;
