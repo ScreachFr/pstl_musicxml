@@ -37,7 +37,7 @@ public class RhythmicTree {
 		if (children.isEmpty())
 			return;
 		
-//		if (signture == null && itemType == null) {
+//		if (signature == null && itemType == null) {
 //			
 //		}
 		
@@ -80,7 +80,7 @@ public class RhythmicTree {
 		return rt;
 	}
 	
-	public Signature getSignture() {
+	public Signature getSignature() {
 		return signature;
 	}
 
@@ -88,8 +88,8 @@ public class RhythmicTree {
 		return fraction;
 	}
 	
-	public void setSignture(Signature signture) {
-		this.signature = signture;
+	public void setSignature(Signature signature) {
+		this.signature = signature;
 	}
 	
 	public void setFraction(Fraction fraction) {
