@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.hamcrest.core.IsInstanceOf;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import pstl.musicxml.musicalstructures.Measure;
+import pstl.musicxml.musicalstructures.Metronome;
 import pstl.musicxml.musicalstructures.Part;
 import pstl.musicxml.musicalstructures.Score;
 import pstl.musicxml.musicalstructures.Signature;
@@ -70,14 +72,12 @@ public class ScoreUtils {
 	private final static String MXL_TECHNICAL= "technical";
 	private final static String MXL_SLUR= "slur";
 	private final static String MXL_LONG= "long";
-	private final static String MXL_SLAH= "slach";
-
-
-	//TODO Make to different method to handle both part-wise and time-wise scores. 
-	//Update : time-wise scores don't seems really wildly used. IMO we don't need to implement that right now. 
-	//TODO throw a buttload of exceptions to handle every error.
-	//XXX Should I test every error case ?
-
+	private final static String MXL_SLASH= "slach";
+	
+	private final static String MXL_METRONOME_BEAT_UNIT = "beat-unit";
+	private final static String MXL_METRONOME_PER_MINUTE = "per-minute"; 
+	private final static String MXL_METRONOME_BEAT_UNIT_DOT = "beat-unit-dot";
+	
 	public static Score loadFromDom(Document document) {
 		Score result = new Score();
 		Node root = getPartWiseRoot(document);
@@ -123,46 +123,67 @@ public class ScoreUtils {
 
 		//TODO load chords.
 		ArrayList<Node> notes = getChildNodeByName(measure, MXL_NOTE);
-		boolean isChord = false;
 		boolean containsChord;
 		Chord crtChord = null;
 		IMusicalItem crtItem;
 		Note crtNote;
 		for (Node noteNode : notes) {
+//			crtItem = loadMusicalItem(noteNode);
+//
+//			containsChord = containsNode(noteNode, MXL_CHORD);
+//
+//			if (!(crtItem instanceof Note)) {
+//				result.addItem(crtItem);
+//			} else {
+//				crtNote = (Note) crtItem;
+//				if (containsChord && !isChord) { // contains a chord tag unlike the previous note.
+//					isChord = true;
+//					crtChord = new Chord(crtItem.getType());
+//					crtChord.addNote(crtNote);
+//				} else if (containsChord && isChord) { // chord continuation
+//					crtChord.addNote(crtNote);
+//				} else if (!containsChord && isChord) {
+//					isChord = false;
+//					result.addItem(crtChord);
+//
+//					crtChord = new Chord(crtItem.getType());
+//					crtChord.addNote(crtNote);
+//
+//					result.addItem(crtChord);
+//				}  else {
+//
+//					crtChord = new Chord();
+//					crtChord.addNote(crtNote);
+//					result.addItem(crtChord);
+//
+//				}
+//				lastNote = crtNote;
+//			}
+			
+			
 			crtItem = loadMusicalItem(noteNode);
-
 			containsChord = containsNode(noteNode, MXL_CHORD);
-
+			
 			if (!(crtItem instanceof Note)) {
 				result.addItem(crtItem);
 			} else {
 				crtNote = (Note) crtItem;
-				if (containsChord && !isChord) {
-					isChord = true;
-					crtChord = new Chord(crtItem.getType());
+				
+				if (!containsChord) {
+					if (crtChord != null)
+						result.addItem(crtChord);
+					
+					crtChord = new Chord(crtNote.getType());
 					crtChord.addNote(crtNote);
-				} else if (containsChord && isChord) {
+				} else {
 					crtChord.addNote(crtNote);
-				} else if (!containsChord && isChord) {
-					isChord = false;
-					result.addItem(crtChord);
-
-					crtChord = new Chord(crtItem.getType());
-					crtChord.addNote(crtNote);
-
-					result.addItem(crtChord);
-				}  else {
-
-					crtChord = new Chord();
-					crtChord.addNote(crtNote);
-					result.addItem(crtChord);
-
 				}
+				
 			}
-
+			
 		}
 
-		if (isChord)
+		if (!crtChord.isEmpty())
 			result.addItem(crtChord);
 
 		return result;
@@ -208,7 +229,7 @@ public class ScoreUtils {
 				note.addExtraSymbol(buildBeamFromNod(crtNode));
 			} else if (nodeName.equals(Grace.getTrigger())) { // grace
 				Element e = (Element)crtNode;
-				String slash = e.getAttribute(MXL_SLAH);
+				String slash = e.getAttribute(MXL_SLASH);
 				boolean isSlashed = false;
 				if(slash.equals("yes"))
 					isSlashed = true;
@@ -218,7 +239,6 @@ public class ScoreUtils {
 				
 				note.addExtraSymbol(grace);
 			} else if(nodeName.equals(MXL_NOTATIONS)){ // notations
-				NodeList childsList = crtNode.getChildNodes();
 				
 				addNotations(note, crtNode);
 				
@@ -451,6 +471,36 @@ public class ScoreUtils {
 		return new Part(id, name);
 	}
 
+	/*
+	  	<metronome font-family="EngraverTextT" font-size="6.1" parentheses="yes">
+            <beat-unit>quarter</beat-unit>
+            <per-minute>85</per-minute>
+        </metronome>
+	 */
+	private static Metronome getMetronome(Node metronomeNode) {
+		boolean doted = false;
+		Node beatUnit, perMinute;
+		
+		int perMinuteValue;
+		Type beatUnitValue;
+		
+		beatUnit = getSingleChildByName(metronomeNode, MXL_METRONOME_BEAT_UNIT);
+		if (beatUnit == null) {
+			beatUnit = getSingleChildByName(metronomeNode, MXL_METRONOME_BEAT_UNIT_DOT);
+			doted = true;
+		}
+		if (beatUnit == null)
+			return null;
+		
+		perMinute = getSingleChildByName(metronomeNode, MXL_METRONOME_PER_MINUTE);
+		
+		perMinuteValue = Integer.parseInt(perMinute.getTextContent());
+		beatUnitValue = getTypeFromMXLType(beatUnit.getTextContent());
+		
+		
+		return new Metronome(beatUnitValue, perMinuteValue, doted);
+	}
+	
 	//	public static void main(String[] args) {
 	//		XMLParser parser = new XMLParser();
 	//		File rng;
@@ -533,8 +583,9 @@ public class ScoreUtils {
 		XMLParser parser = new XMLParser();
 		File rng;
 //		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/t_beam01.xml";
-//		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/bigfile.xml";
-		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/test_slur_2_measures.xml";
+//		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/t01-chord.xml";
+		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/bigfile.xml";
+//		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/test_slur_2_measures.xml";
 
 
 
@@ -557,8 +608,7 @@ public class ScoreUtils {
 		System.out.println(crtScore);
 		for (RhythmicTree rt : rts) {
 			System.out.println(rt);
-			rt.getAllExtraSymbols().forEach(System.out::print);
-			System.out.println();
+//			rt.getAllExtraSymbols().forEach(System.out::print);
 		}
 		
 	}
