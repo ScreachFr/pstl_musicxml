@@ -68,6 +68,9 @@ public class Note implements IMusicalItem {
 	}
 	
 	public void removeBeam(int number) {
+		if (extraSymbols == null)
+			return;
+		
 		ExtraSymbol e;
 		Beam b;
 		ArrayList<Beam> toRemove = new ArrayList<>();

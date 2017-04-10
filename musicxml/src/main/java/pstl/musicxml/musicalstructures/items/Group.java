@@ -43,7 +43,6 @@ public class Group implements IMusicalItem {
 				crtChord = (Chord) items.get(i);
 				crtBeams = crtChord.getBeams();
 				
-				System.out.println(crtChord);
 
 				if (crtBeams.isEmpty())//No beam
 					continue;
@@ -83,7 +82,6 @@ public class Group implements IMusicalItem {
 			
 			items.set(startIndice, g);
 			
-			System.out.println(number);
 			g.removeBeams(number);
 			g.checkGroups();
 			
@@ -118,7 +116,7 @@ public class Group implements IMusicalItem {
 
 	@Override
 	public String toMeasureString() {
-		String result = "(Group#" + number + " ";
+		String result = "(#" + number + " ";
 		
 		for (IMusicalItem item : items) {
 			result += item;
@@ -127,6 +125,11 @@ public class Group implements IMusicalItem {
 		result += ")";
 		
 		return result;
+	}
+	
+	@Override
+	public String toString() {
+		return toMeasureString();
 	}
 	
 }

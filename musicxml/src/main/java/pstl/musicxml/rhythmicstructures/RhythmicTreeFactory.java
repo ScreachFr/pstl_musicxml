@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import pstl.musicxml.musicalstructures.Measure;
 import pstl.musicxml.musicalstructures.Part;
 import pstl.musicxml.musicalstructures.Score;
+import pstl.musicxml.musicalstructures.Type;
 import pstl.musicxml.musicalstructures.items.Chord;
 import pstl.musicxml.musicalstructures.items.Group;import pstl.musicxml.musicalstructures.items.Rest;
 import pstl.musicxml.musicalstructures.items.Tie;
@@ -44,7 +45,12 @@ public class RhythmicTreeFactory {
 			} else if (item instanceof Group) {
 				result.addChild(buildRTFromGroup((Group) item));
 			} else if (item instanceof Rest) {
-				result.addChild(new RhythmicTree(ItemType.Rest, new Fraction(1, item.getType())));
+				Rest r = (Rest) item;
+				if (r.getType() == Type.UNKNOWN) {
+					result.addChild(new RhythmicTree(ItemType.Rest, new Fraction(1, Type.WHOLE)));
+				} else {
+					result.addChild(new RhythmicTree(ItemType.Rest, new Fraction(1, item.getType())));
+				}
 			} else if (item instanceof Tie) {
 				result.addChild(new RhythmicTree(ItemType.Tie, new Fraction(1, item.getType())));
 			}

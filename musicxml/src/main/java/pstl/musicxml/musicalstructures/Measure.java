@@ -129,6 +129,9 @@ public class Measure extends Group implements Comparable<Measure>{
 
 		result += "#" + number + "(" ;
 
+		if (metronome != null)
+			result += metronome.toString();
+		
 		if (signature == null)
 			result += "NS" + " ";
 		else
