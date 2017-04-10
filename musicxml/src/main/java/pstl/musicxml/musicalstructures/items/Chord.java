@@ -52,6 +52,10 @@ public class Chord implements IMusicalItem {
 		notes.forEach(item -> item.removeBeam(number));
 	}
 	
+	public boolean isEmpty() {
+		return notes.isEmpty();
+	}
+	
 	
 	@Override
 	public String toString() {

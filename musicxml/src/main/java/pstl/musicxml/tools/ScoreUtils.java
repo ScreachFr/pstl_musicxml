@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.hamcrest.core.IsInstanceOf;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -72,11 +71,12 @@ public class ScoreUtils {
 	private final static String MXL_TECHNICAL= "technical";
 	private final static String MXL_SLUR= "slur";
 	private final static String MXL_LONG= "long";
-	private final static String MXL_SLASH= "slach";
+	private final static String MXL_SLASH= "slash";
 	
 	private final static String MXL_METRONOME_BEAT_UNIT = "beat-unit";
 	private final static String MXL_METRONOME_PER_MINUTE = "per-minute"; 
 	private final static String MXL_METRONOME_BEAT_UNIT_DOT = "beat-unit-dot";
+	
 	
 	public static Score loadFromDom(Document document) {
 		Score result = new Score();

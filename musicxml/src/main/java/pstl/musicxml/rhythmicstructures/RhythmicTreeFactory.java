@@ -36,7 +36,7 @@ public class RhythmicTreeFactory {
 	public static RhythmicTree buidRTFromMeasure(Measure measure) {
 		RhythmicTree result = new RhythmicTree(ItemType.Measure, measure.getSignature());
 		
-		result.setSignture(measure.getSignature());
+		result.setSignature(measure.getSignature());
 		
 		measure.getItems().forEach(item -> {
 			if (item instanceof Chord) {

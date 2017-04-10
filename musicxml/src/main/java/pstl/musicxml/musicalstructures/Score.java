@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Score {
 	
 	private ArrayList<Part> parts;
+	private Metronome tempo;
 	
 	public Score() {
 		this.parts = new ArrayList<>();
@@ -26,7 +27,7 @@ public class Score {
 		
 		return null;
 	}
-	
+	//TODO add tempo
 	@Override
 	public String toString() {
 		String result = "Score :";

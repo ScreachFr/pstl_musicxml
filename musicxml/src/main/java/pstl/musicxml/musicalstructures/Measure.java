@@ -2,13 +2,10 @@ package pstl.musicxml.musicalstructures;
 
 import java.util.ArrayList;
 
-import org.hamcrest.core.IsInstanceOf;
 
 import pstl.musicxml.musicalstructures.items.Chord;
 import pstl.musicxml.musicalstructures.items.Group;
 import pstl.musicxml.musicalstructures.items.IMusicalItem;
-import pstl.musicxml.musicalstructures.items.Note;
-import pstl.musicxml.musicalstructures.symbols.ExtraSymbol;
 import pstl.musicxml.musicalstructures.symbols.binary.Beam;
 import pstl.musicxml.rhythmicstructures.Fraction;
 
@@ -17,7 +14,7 @@ public class Measure extends Group implements Comparable<Measure>{
 	private int number;
 	private ArrayList<IMusicalItem> items;
 	private Signature signature;
-
+	private Metronome metronome;
 
 	public Measure(int number) {
 		super(number, null);
@@ -45,6 +42,14 @@ public class Measure extends Group implements Comparable<Measure>{
 		this.items = items;
 	}
 
+	public Metronome getMetronome() {
+		return metronome;
+	}
+	
+	public void setMetronome(Metronome metronome) {
+		this.metronome = metronome;
+	}
+	
 	@Override
 	public void checkGroups() {
 		ArrayList<Chord> beamMembers = new ArrayList<>();

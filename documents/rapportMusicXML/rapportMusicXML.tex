@@ -80,7 +80,6 @@ urlcolor=black}
 
 
 
-
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  page de garde  %%%%%%%%%%%%%%%%%%
@@ -127,23 +126,26 @@ urlcolor=black}
 
 \vspace*{2cm}
 
-{\large Soutenue le xx xx 2017}\\[1cm]
+{\large Soutenue le 22 mai 2017}\\[1cm]
 
 \vfill
 
 \end{center}
 \end{titlepage}
 
+\newpage\null\thispagestyle{empty}\newpage
+
 \tableofcontents
 
-\newpage
+\newpage\null\thispagestyle{empty}\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Remerciements  %%%%%%%%%%%%%%%%%%%%
 
 
-\section*{Acknowledgments}
-The acknowledgments and the people to thank go here, don't forget to include your project advisor.
-\newpage
+\section*{Remerciements}
+Carlos Agon. Karim Haddad : explication sur la musique et openmusic
+
+\newpage\null\thispagestyle{empty}\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Liste des figures  %%%%%%%%%%%%%%%%%%%%
 
@@ -168,8 +170,8 @@ The acknowledgments and the people to thank go here, don't forget to include you
 
 \include{1_introduction}
 \include{2_technologies_utilisees}
-\include{3_autre}
-%\include{conclusion}
+\include{3_architecture}
+\include{conclusion}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Annexes  %%%%%%%%%%%%%%%%%%%%
@@ -181,8 +183,8 @@ The acknowledgments and the people to thank go here, don't forget to include you
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Bibliographie  %%%%%%%%%%%%%%%%%%%%
 
-\bibliographystyle{authoryear-fr}
-\bibliography{biblio}
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,biblio}
 \nocite{*}
 
 \end{document}
