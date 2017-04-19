@@ -93,10 +93,14 @@ La structure de données que nous avons élaborée se compose de la façon suiva
 l'élément qui va contenir toutes les informations est la classe \emph{Score}. Une
 \emph{Score} contient une liste de \emph{Parts} qui l'on peut qualifier de
 \emph{Voix} en français. Chaque \emph{Part} contient un nom, un identifiant ainsi qu'une liste
-de \emph{Measures} (mesure) qui contient elle-même un numéro, une \emph{Signature} et une
-liste de \emph{Chord} (accord). Un accord est composé d'une liste d'éléments musicaux
-appelés \emph{MusicalItems} dans le programme. Chaque élément peut être soit une note
-un silence ou une liaison. Un élément musical possède aussi une liste de symboles
+de \emph{Measures} (mesure) qui contient elle-même un numéro, une \emph{Signature}, une
+liste de \emph{Chord} (accord) et un \emph{Metronome} correspondant au tempo.
+
+\par
+Un accord est composé d'une liste d'éléments musicaux appelés \emph{MusicalItems} dans le programme. 
+Chaque élément peut être une note, un silence ou une liaison. Le tempo contient un type 
+(une noire par exemple) et un nombre par minute. Ainsi, le tempo \emph{60 à la noire} signifie qu'il y a, 
+dans une minute, 60 noires ou bien 30 blanches. Un élément musical possède aussi une liste de symboles
 musicaux. Un symbole musical représente une notation qui peut être une nuance comme
 un point ou encore un répétition par exemple.
 
@@ -115,6 +119,7 @@ qu'une note se trouve dans le \emph{Chord} 4 de la \emph{Measure} 2 de la \emph{
 2 de telle \emph{Score}. Ainsi nous pouvons par exemple utiliser ces coordonnées pour
 placer certains symboles à des endroits précis.
 
+
 \subsection{Construction des arbres rythmiques}
 
 Une fois la structure objet construite, les arbres rythmiques pour chaque mesure sont construits.
@@ -124,6 +129,6 @@ Pour chaque mesure rencontrée, un nouvel objet de la classe \emph{RhythmicTree}
 
 \subsection{Test du programme}
 
-Afin de vérifier que notre programme fonctionne correctement, différents fichiers tests au format MusicXML ont été créés.
-
-
+Afin de vérifier que notre programme fonctionne correctement, de nombreux fichiers tests au format MusicXML ont été créés.
+Chaque fichier contient quelques notes avec un symbole musical (signe crescendo, staccato, etc.). Chaque classe associée 
+à un symbole peut ainsi être testée.

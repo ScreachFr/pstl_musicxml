@@ -7,7 +7,7 @@ OpenMusic \cite{openmusic} est un langage de programmation visuel basé sur le l
 
 \begin{figure}[!h] %h : here
 \centering
-\includegraphics[width=0.8\textwidth]{openmusic.jpg}\\[1cm]
+\includegraphics[width=1\textwidth]{openmusic.png}\\[1cm]
 \caption{OpenMusic}
 \label{OpenMusic}
 \end{figure}
@@ -49,6 +49,32 @@ public class HelloWorld {
 
 \par
 Ci-dessus, un classique "Hello world" en Java. Nous pouvons y voir la définition de la classe \emph{HelloWorld} ainsi que la méthode principale du programme nommé \emph{main} et enfin un affichage sur la sortie standard.
+
+
+
+\subsection{Le langage XML}
+
+Le langage XML \cite{xml_w3c, xml_ocr}, acronyme de e\textbf{X}tensible \textbf{M}arkup \textbf{L}angage, est langage de balisage générique spécifié par le W3C. Il permet de définir différents espaces de noms, c'est à dire des langages avec leur propre grammaire et vocabulaire. Il permet l'échange d'information entre des programmes très différents à condition d'utiliser la même grammaire.
+
+\par
+Il a l'avantage de pouvoir être compris par les êtres humains et les machines. Cependant, c'est un langage verbeux et qui peut donc prendre beaucoup de place s'il contient beaucoup d'information.
+
+\par
+Un document XML est constitué de balises pouvant contenir d'autres balises ou une valeur simple. Une balise peut aussi contenir des attributs donnant des informations supplémentaires sur le contenu.
+
+\begin{lstlisting}[caption=Exemple d'un document XML]
+<?xml version="1.0" encoding="UTF-8"?>
+<racine>
+    <balise attribut="valeur">Contenu</balise>
+    <baliseunique />
+</racine>
+\end{lstlisting}
+
+\par
+Ci-dessus un exemple de XML simpliste mais qui met en avant les bases du langage. La première ligne annonce le type de document et la version dans lequel le document va être rédigé. \emph{<racine>} est le nœud racine du document, celui qui en somme va contenir tout le document. On peut ici, facilement remarquer que le document peut être représenté sous la forme d'un arbre.
+
+\par
+XML permet à l'utilisateur de définir lui même la grammaire de son document grâce notamment aux \textbf{DTD} et au \textbf{Schéma XML}. Ces outils nous permettent de disposer de format d’échange de données tel que \textbf{MusicXML}.
 
 
 
@@ -121,32 +147,6 @@ On voit, dans le code correspondant à la partition suivante, que les informatio
 \end{lstlisting}
 
 
-
-\subsection{Le langage XML}
-
-Le langage XML \cite{xml_w3c, xml_ocr}, acronyme de e\textbf{X}tensible \textbf{M}arkup \textbf{L}angage, est langage de balisage générique spécifié par le W3C. Il permet de définir différents espaces de noms, c'est à dire des langages avec leur propre grammaire et vocabulaire. Il permet l'échange d'information entre des programmes très différents à condition d'utiliser la même grammaire.
-
-\par
-Il a l'avantage de pouvoir être compris par les êtres humains et les machines. Cependant, c'est un langage verbeux et qui peut donc prendre beaucoup de place s'il contient beaucoup d'information.
-
-\par
-Un document XML est constitué de balises pouvant contenir d'autres balises ou une valeur simple. Une balise peut aussi contenir des attributs donnant des informations supplémentaires sur le contenu.
-
-\begin{lstlisting}[caption=Exemple d'un document XML]
-<?xml version="1.0" encoding="UTF-8"?>
-<racine>
-    <balise attribut="valeur">Contenu</balise>
-    <baliseunique />
-</racine>
-\end{lstlisting}
-
-\par
-Ci-dessus un exemple de XML simpliste mais qui met en avant les bases du langage. La première ligne annonce le type de document et la version dans lequel le document va être rédigé. \emph{<racine>} est le nœud racine du document, celui qui en somme va contenir tout le document. On peut ici, facilement remarquer que le document peut être représenté sous la forme d'un arbre.
-
-\par
-XML permet à l'utilisateur de définir lui même la grammaire de son document grâce notamment aux \textbf{DTD} et au \textbf{Schéma XML}. Ces outils nous permettent de disposer de format d’échange de données tel que \textbf{MusicXML}.
-
-
 \subsection{Le langage Relax NG}
 
 \textbf{Relax NG} (\textbf{Re}gular \textbf{La}nguage for \textbf{X}ML \textbf{N}ext \textbf{G}eneration) \cite{relaxng} née de la fusion de TreX de James Clark et de Relax de Murata Makoto. C'est un langage qui permet de définir la grammaire d'un document XML. Relax NG ne s'intéresse qu'à la structure du document et non à sa valeur.
@@ -201,10 +201,8 @@ La figure suivante montre un exemple de DOM.
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.8\textwidth]{ex_dom.jpg}\\[1cm]
-%source : http://www.computerhope.com/jargon/d/dom.htm
-\caption{Exemple d'un DOM}
-\label{Exemple d'un DOM}
+\includegraphics[width=0.8\textwidth]{dom.png}\\[1cm]
+\caption{Exemple d'un DOM d'une page HTML}
 \end{figure}
 
 
