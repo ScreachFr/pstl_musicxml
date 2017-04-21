@@ -639,11 +639,11 @@ public class ScoreUtils {
 			});
 		});
 		
-//		System.out.println(crtScore);
-//		for (RhythmicTree rt : rts) {
-//			System.out.println(rt);
-////			rt.getAllExtraSymbols().forEach(System.out::print);
-//		}
+		System.out.println(crtScore);
+		for (RhythmicTree rt : rts) {
+			System.out.println(rt);
+			rt.getAllExtraSymbols().forEach(System.out::print);
+		}
 		
 	}
 }

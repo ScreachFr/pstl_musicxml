@@ -48,12 +48,11 @@ dans la documentation du format MusicXML car elle impliquait des redirections d'
 ce qui aurait fortement complexifié la création du parser.
 
 
-%TODO Mettre reference vers le git de la grammaire rng de music xml
-
 \par
 C'est donc pour toutes ces raisons que nous avons choisi d'utiliser \emph{Relax NG}.
 De plus, les fichiers décrivant la grammaire de MusicXML sont disponibles en ligne
-et l'auteur a fait preuve d'une certaine exhaustivité lors de la rédaction de ces derniers.
+et l'auteur, qui les a déposés sur un projet GitHub \cite{relaxng_for_musicxml}, 
+a fait preuve d'une certaine exhaustivité lors de la rédaction de ces derniers.
 
 \par
 Ce parser nous permet de disposer d'un \emph{DOM} (qui a pour nom de classe \emph{Document} avec Java)
@@ -112,7 +111,7 @@ sont associés, on créé les objets intermédiaires et on les ajoute à l'objet
 
 
 \par
-On pourrait penser ce modèle de données lourd, mais cela est largement compensé entre autres
+On pourrait penser que ce modèle de données est lourd, mais cela est largement compensé entre autres
 par l'aisance d'utilisation qu'il procure ainsi que la possibilité notamment de déduire les
 "coordonnées" des éléments qui le composent. En effet rien de plus facile que de dire
 qu'une note se trouve dans le \emph{Chord} 4 de la \emph{Measure} 2 de la \emph{Part}
@@ -122,13 +121,14 @@ placer certains symboles à des endroits précis.
 
 \subsection{Construction des arbres rythmiques}
 
-Une fois la structure objet construite, les arbres rythmiques pour chaque mesure sont construits.
-Cette étape est réalisée par la classe \emph{RhythmicTreeFactory} en parcourant toute l'arbre des objets intermédiaires.
-Pour chaque mesure rencontrée, un nouvel objet de la classe \emph{RhythmicTree} est créé.
+Une fois la structure objet construite, les arbres rythmiques pour chaque mesure sont construits. 
+Cette étape est réalisée par les classes du package \emph{rhythmicstructures}. La classe factory 
+\emph{RhythmicTreeFactory} parcours tout l'arbre des objets intermédiaires, et pour chaque \emph{Measure} 
+rencontrée, un nouvel objet de la classe \emph{RhythmicTree} est créé. Ce dernier contient une 
+\emph{Signature}, une \emph{Fraction}, un \emph{ItemType}, une liste d'\emph{ExtraSymbols} et une 
+liste de \emph{RhythmicTree} correspondant aux fils.
 
 
 \subsection{Test du programme}
 
-Afin de vérifier que notre programme fonctionne correctement, de nombreux fichiers tests au format MusicXML ont été créés.
-Chaque fichier contient quelques notes avec un symbole musical (signe crescendo, staccato, etc.). Chaque classe associée 
-à un symbole peut ainsi être testée.
+Afin de vérifier que notre programme fonctionne correctement, une base de test a été créée dans le dossier \emph{test-data}. Elle est constituée de nombreux fichiers tests au format MusicXML. Chaque fichier contient quelques notes avec un symbole musical (signe crescendo, staccato, etc.). Chaque classe associée à un symbole peut ainsi être testée. Une partition complète de Bach est également présente pour tester sur un grand nombre de mesure.
