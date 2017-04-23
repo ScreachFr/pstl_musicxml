@@ -51,7 +51,7 @@ ce qui aurait fortement complexifié la création du parser.
 \par
 C'est donc pour toutes ces raisons que nous avons choisi d'utiliser \emph{Relax NG}.
 De plus, les fichiers décrivant la grammaire de MusicXML sont disponibles en ligne
-et l'auteur, qui les a déposés sur un projet GitHub \cite{relaxng_for_musicxml}, 
+et l'auteur, qui les a déposés sur un projet GitHub \cite{relaxng_for_musicxml},
 a fait preuve d'une certaine exhaustivité lors de la rédaction de ces derniers.
 
 \par
@@ -82,7 +82,13 @@ de caractère qui nécessitent un parsing et donc une manipulation assez verbeus
 De ce fait, il est plus simple pour nous de parcourir ce \emph{Document} une seule fois et d'extraire les données qu'il
 contient dans une structure de données plus aisément manipulable dans Java. Cela
 permet par exemple d'éviter des erreurs lors du développement des autres fonctionnalités de
-l'application qui se basent sur ces informations.
+l'application qui se basent sur ces informations. Nous utilisons donc un ensemble de méthodes
+contenus dans la classe \emph{ScoreUtils} pour convertir notre \emph{Document} en instance de \emph{Score}.
+
+\par
+\emph{ScoreUtils} intègre aussi une partie très importante, la récupération des symboles contenus dans la partition.
+En effet, une partition n'est pas seulement un ensemble de notes il contient aussi un grand nombre de symbole ayant
+tous des significations très differentes pourvant aussi bien influancer la tonalité de la note ainsi que sa durée.
 
 %Mettre des figures pour expliciter les partitions ? Un diagramme de class par exemple ?
 %TODO établir un vrai package pour les partitions.
@@ -93,12 +99,21 @@ l'élément qui va contenir toutes les informations est la classe \emph{Score}. 
 \emph{Score} contient une liste de \emph{Parts} qui l'on peut qualifier de
 \emph{Voix} en français. Chaque \emph{Part} contient un nom, un identifiant ainsi qu'une liste
 de \emph{Measures} (mesure) qui contient elle-même un numéro, une \emph{Signature}, une
-liste de \emph{Chord} (accord) et un \emph{Metronome} correspondant au tempo.
+liste de \emph{IMusicalItem} et un \emph{Metronome} correspondant au tempo.
+
+\part
+\emph{IMusicalItem} est la super classe de bon nombre d'élément que nous pouvons qualifer
+de bout de chaine comme les \emph{Note}, \emph{Rest} (silence) ou encore les \emph{Tie} (liaison).
+Mais ce n'est pas tout, les groupes de \emph{IMusicalItem} sont également des \emph{IMusicalItem}.
+Cela nous permet entre autre de pouvoir imbriquer des groupes de \emph{IMusicalItem}.
+Dans les premières version de cette partie du code, il y n'y avait pas de lien entre les
+mesures et les groupes. Nous nous sommes rapidement rendu compte que la mesure et le groupe étaient
+a peu de chose près la même chose. Nous avons donc décidé qu'il serait mieux que le mesure soit
+aussi un groupe pour limiter la duplication de code. Un groupe peut représenter des croches liées ou
+encore un \emph{triolet}.
 
 \par
-Un accord est composé d'une liste d'éléments musicaux appelés \emph{MusicalItems} dans le programme. 
-Chaque élément peut être une note, un silence ou une liaison. Le tempo contient un type 
-(une noire par exemple) et un nombre par minute. Ainsi, le tempo \emph{60 à la noire} signifie qu'il y a, 
+Le tempo contient un type (une noire par exemple) et un nombre par minute. Ainsi, le tempo \emph{60 à la noire} signifie qu'il y a,
 dans une minute, 60 noires ou bien 30 blanches. Un élément musical possède aussi une liste de symboles
 musicaux. Un symbole musical représente une notation qui peut être une nuance comme
 un point ou encore un répétition par exemple.
@@ -106,9 +121,24 @@ un point ou encore un répétition par exemple.
 \par
 Pour chaque symbole musical, une classe lui est associée. Le symbole peut être unaire ou binaire.
 Les symboles unaires sont liés à une seule note, tel que les points d'orgues. Les symboles binaires
-sont liés à 2 notes, comme les liaisons. Pour chaque note, on récupère tous les symboles qui lui 
+sont liés à 2 notes, comme les liaisons. Pour chaque note, on récupère tous les symboles qui lui
 sont associés, on créé les objets intermédiaires et on les ajoute à l'objet \emph{Note}.
 
+\par
+La création de l'objet \emph{Score} se fait en deux étapes. Tout d'abord nous récuperons
+les données brutes dans le \emph{Document} que nous mettons dans l'objet \emph{Score} final.
+Une fois toutes ces données à disposition nous pouvons créer les groupes en fonction des
+symboles que nous rencontrons lors du parcours des mesures. Prenons comme exemple la
+balise \emph{<beam>} qui peut être présente dans une balise \emph{<note>} et qui
+contient les informations nécessaires pour représenter un groupe de
+croches dans \emph{MusicXML}. Cette balise a principalement un attribut \emph{number} qui designe
+le numéro du groupe actuel dans le cas où il a plusieurs groupes dans une mesure et
+qui contient l'énumeration suivante : \emph{begin, end, continue} qui nous permet de
+connaitre la position de la note dans le groupe. Lors de notre premier passage nous
+stockons ces informations dans un objet \emph{Beam}. Lors de notre second passage
+nous utilisons ces données pour créer nos groupes.
+% TODO mettre ref à la doc de MusicXML ->
+% http://usermanuals.musicxml.com/MusicXML/MusicXML.htm#EL-MusicXML-beam.htm%3FTocPath%3DMusicXML%2520Reference%7CScore%2520Schema%2520(XSD)%7CElements%7Cnote%7C_____18
 
 \par
 On pourrait penser que ce modèle de données est lourd, mais cela est largement compensé entre autres
@@ -121,11 +151,11 @@ placer certains symboles à des endroits précis.
 
 \subsection{Construction des arbres rythmiques}
 
-Une fois la structure objet construite, les arbres rythmiques pour chaque mesure sont construits. 
-Cette étape est réalisée par les classes du package \emph{rhythmicstructures}. La classe factory 
-\emph{RhythmicTreeFactory} parcours tout l'arbre des objets intermédiaires, et pour chaque \emph{Measure} 
-rencontrée, un nouvel objet de la classe \emph{RhythmicTree} est créé. Ce dernier contient une 
-\emph{Signature}, une \emph{Fraction}, un \emph{ItemType}, une liste d'\emph{ExtraSymbols} et une 
+Une fois la structure objet construite, les arbres rythmiques pour chaque mesure sont construits.
+Cette étape est réalisée par les classes du package \emph{rhythmicstructures}. La classe factory
+\emph{RhythmicTreeFactory} parcours tout l'arbre des objets intermédiaires, et pour chaque \emph{Measure}
+rencontrée, un nouvel objet de la classe \emph{RhythmicTree} est créé. Ce dernier contient une
+\emph{Signature}, une \emph{Fraction}, un \emph{ItemType}, une liste d'\emph{ExtraSymbols} et une
 liste de \emph{RhythmicTree} correspondant aux fils.
 
 
