@@ -63,13 +63,18 @@ La structure de données que nous avons élaborée se compose de la façon suiva
 \emph{IMusicalItem} est la super classe de bon nombre d'élément que nous pouvons qualifier de bout de chaine comme les \emph{Note}, \emph{Rest} (silence) ou encore les \emph{Tie} (liaison). Mais ce n'est pas tout, les groupes de \emph{IMusicalItem} sont également des \emph{IMusicalItem}. Cela nous permet entre autre de pouvoir imbriquer des groupes de \emph{IMusicalItem}. Dans les premières version de cette partie du code, il y n'y avait pas de lien entre les mesures et les groupes. Nous nous sommes rapidement rendu compte que la mesure et le groupe étaient à peu de chose près la même chose. Nous avons donc décidé qu'il serait mieux que le mesure soit aussi un groupe pour limiter la duplication de code. Un groupe peut représenter des croches liées ou encore un \emph{triolet}.
 
 \par
-Le tempo contient un type (une noire par exemple) et un nombre par minute. Ainsi, le tempo \emph{60 à la noire} signifie qu'il y a, dans une minute, 60 noires ou bien 30 blanches. Un élément musical possède aussi une liste de symboles musicaux. Un symbole musical représente une notation qui peut être une nuance comme un point ou encore un répétition par exemple.
-
-\par
 Pour chaque symbole musical, une classe lui est associée. Le symbole peut être unaire ou binaire. Les symboles unaires sont liés à une seule note, tel que les points d'orgues. Les symboles binaires sont liés à 2 notes, comme les liaisons. Pour chaque note, on récupère tous les symboles qui lui sont associés, on créé les objets intermédiaires et on les ajoute à l'objet \emph{Note}.
 
 \par
-La création de l'objet \emph{Score} se fait en deux étapes. Tout d'abord, nous récupérons les données brutes dans le \emph{Document} que nous mettons dans l'objet \emph{Score} final. Une fois toutes ces données à disposition, nous pouvons créer les groupes en fonction des symboles que nous rencontrons lors du parcours des mesures. Prenons comme exemple la balise \emph{<beam>}, elle peut être présente dans une balise \emph{<note>} et peut contenir les informations nécessaires pour représenter un groupe de croches dans \emph{MusicXML}. Cette balise a principalement un attribut \emph{number} qui désigne le numéro du groupe actuel dans le cas où il a plusieurs groupes dans une mesure et qui contient l’énumération suivante : \emph{begin, end, continue} qui nous permet de connaître la position de la note dans le groupe. Lors de notre premier passage nous stockons ces informations dans un objet \emph{Beam}. Lors de notre second passage nous utilisons ces données pour créer nos groupes.
+La création de l'objet \emph{Score} se fait en deux étapes. Tout d'abord, nous récupérons les données brutes dans le \emph{Document} que nous mettons dans l'objet \emph{Score} final. Une fois toutes ces données à disposition, nous pouvons créer les groupes en fonction des symboles que nous rencontrons lors du parcours des mesures. Prenons comme exemple la balise \emph{<beam>}, elle peut être présente dans une balise \emph{<note>} et peut contenir les informations nécessaires pour représenter un groupe de croches dans \emph{MusicXML}. Comme le montre le code ci-dessous, la balise possède un attribut \emph{number}. Il nous permet de connaître le numéro du groupe actuel dans le cas où il y a plusieurs groupes de croches dans la même mesure. Et enfin la balise contient un énumération \emph{begin, end, continue} qui nous permet de connaître la position de la note dans le groupe. Lors de notre premier passage nous stockons ces informations dans un objet \emph{Beam}. Lors de notre second passage nous utilisons ces données pour créer nos groupes.
+
+
+\begin{lstlisting}[caption=Exemple d'une balise beam de MusicXML]
+<note>
+[...]
+<beam number="1">begin</beam>
+</note>
+\end{lstlisting}
 
 % TODO mettre ref à la doc de MusicXML ->
 % http://usermanuals.musicxml.com/MusicXML/MusicXML.htm#EL-MusicXML-beam.htm%3FTocPath%3DMusicXML%2520Reference%7CScore%2520Schema%2520(XSD)%7CElements%7Cnote%7C_____18

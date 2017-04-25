@@ -1,40 +1,40 @@
 \section{Technologies utilisées}
 
-\subsection{OpenMusic}
-
-OpenMusic \cite{openmusic} est un langage de programmation visuel basé sur le langage Lisp qui permet d'écrire graphiquement des compositions musicales. Il a été conçu par les chercheurs de l'IRCAM Carlos Agon, Gérard Assayag et Jean Bresson. Les programmes sont constitués d'éléments reliés entre eux et représentant des structures de données ou des fonctions. La figure suivante montre l'interface du logiciel.
-
-
-\begin{figure}[!h] %h : here
-\centering
-\includegraphics[width=1\textwidth]{openmusic.png}\\[1cm]
-\caption{OpenMusic}
-\label{OpenMusic}
-\end{figure}
-
-\par
-Dans ce logiciel, les morceaux de musique sont constitués d'une suite d'arbres rythmiques. Comme décrit dans l'article \cite{agon}, \enquote{un arbre rythmique est défini comme un couple (D S) où D est une fraction (< 0) et S est une liste de n-éléments définissant n-proportions de D. Chaque élément de S peut-être soit un entier, soit un arbre rythmique.}
-
-\par
-Les images suivantes sont des exemples d'arbres rythmiques, en haut, et la partition correspondante, en bas.
-
-
-\begin{minipage}[c]{.46\linewidth}
-  \centering
-  \includegraphics[width=0.5\textwidth]{rt1.png}\\[1cm]
-\end{minipage}
-\hfill
-\begin{minipage}[c]{.46\linewidth}
-  \centering
-  \includegraphics[width=0.9\textwidth]{rt2.png}\\[1cm]
-\end{minipage}
+%\subsection{OpenMusic}
+%
+%OpenMusic \cite{openmusic} est un langage de programmation visuel basé sur le langage Lisp qui permet d'écrire graphiquement des compositions musicales. Il a été conçu par les chercheurs de l'IRCAM Carlos Agon, Gérard Assayag et Jean Bresson. Les programmes sont constitués d'éléments reliés entre eux et représentant des structures de données ou des fonctions. La figure suivante montre l'interface du logiciel.
+%
+%
+%\begin{figure}[!h] %h : here
+%\centering
+%\includegraphics[width=1\textwidth]{openmusic.png}\\[1cm]
+%\caption{OpenMusic}
+%\label{OpenMusic}
+%\end{figure}
+%
+%\par
+%Dans notre application, les durées des éléments constituant les mesures sont représentées sous forme d'arbres rythmiques comme décrit dans l'article \cite{agon}, \enquote{un arbre rythmique est défini comme un couple (D S) où D est une fraction (< 0) et S est une liste de n-éléments définissant n-proportions de D. Chaque élément de S peut-être soit un entier, soit un arbre rythmique.}
+%
+%\par
+%Les images suivantes sont des exemples d'arbres rythmiques, en haut, et la partition correspondante, en bas.
+%
+%
+%\begin{minipage}[c]{.46\linewidth}
+%  \centering
+%  \includegraphics[width=0.5\textwidth]{rt1.png}\\[1cm]
+%\end{minipage}
+%\hfill
+%\begin{minipage}[c]{.46\linewidth}
+%  \centering
+%  \includegraphics[width=0.9\textwidth]{rt2.png}\\[1cm]
+%\end{minipage}
 
 
 
 \subsection{Le langage Java}
 
 \par 
-Java \cite{java_oracle} est un langage de programmation \textbf{orienté objet} fortement typé développé par \textbf{Sun Microsystems} à partir de \textbf{1995}. La société sera plus tard rachetée par \textbf{Oracle} en 2009 qui possède et maintient Java encore aujourd'hui.
+Java \cite{java_oracle} est un langage de programmation orienté objet fortement typé développé par Sun Microsystems à partir de 1995. La société sera plus tard rachetée par Oracle en 2009 qui possède et maintient Java encore aujourd'hui.
 
 \par 
 Java se détache de la masse des autres langages de programmation notamment grâce à sa portabilité et sa facilité d'utilisation.
@@ -74,7 +74,7 @@ Un document XML est constitué de balises pouvant contenir d'autres balises ou u
 Ci-dessus un exemple de XML simpliste mais qui met en avant les bases du langage. La première ligne annonce le type de document et la version dans lequel le document va être rédigé. \emph{<racine>} est le nœud racine du document, celui qui en somme va contenir tout le document. On peut ici, facilement remarquer que le document peut être représenté sous la forme d'un arbre.
 
 \par
-XML permet à l'utilisateur de définir lui même la grammaire de son document grâce notamment aux \textbf{DTD} et au \textbf{Schéma XML}. Ces outils nous permettent de disposer de format d’échange de données tel que \textbf{MusicXML}.
+XML permet à l'utilisateur de définir lui même la grammaire de son document grâce notamment aux DTD et au Schéma XML. Ces outils nous permettent de disposer de format d’échange de données tel que MusicXML.
 
 
 
@@ -153,7 +153,7 @@ On voit, dans le code correspondant à la partition suivante, que les informatio
 
 \subsection{Le langage Relax NG}
 
-\textbf{Relax NG} (\textbf{Re}gular \textbf{La}nguage for \textbf{X}ML \textbf{N}ext \textbf{G}eneration) \cite{relaxng} née de la fusion de TreX de James Clark et de Relax de Murata Makoto. C'est un langage qui permet de définir la grammaire d'un document XML. Relax NG ne s'intéresse qu'à la structure du document et non à sa valeur.
+Relax NG (\textbf{Re}gular \textbf{La}nguage for \textbf{X}ML \textbf{N}ext \textbf{G}eneration) \cite{relaxng} née de la fusion de TreX de James Clark et de Relax de Murata Makoto. C'est un langage qui permet de définir la grammaire d'un document XML. Relax NG ne s'intéresse qu'à la structure du document et non à sa valeur.
 
 \par
 C'est ce que nous utiliserons afin de s'assurer de la validité du document à traiter.
@@ -166,7 +166,7 @@ Dans cette section, nous aborderons les librairies utilisées pour réaliser ce 
 
 \subsubsection{Trang et Jing}
 
-\textbf{Trang} \cite{trang} et \textbf{Jing} \cite{jing} sont deux librairies développées par \textbf{Thai Open Source}. Elles permettant de générer des grammaires Relax NG et de valider des documents XML à partir de cette même grammaire.
+\textbf{Trang} \cite{trang} et \textbf{Jing} \cite{jing} sont deux librairies développées par Thai Open Source. Elles permettant de générer des grammaires Relax NG et de valider des documents XML à partir de cette même grammaire.
 
 \par
 Trang est une librairie qui permet de traduire un fichier de description grammaticale en fichier Relax NG. En effet XML n'est pas facilement lisible pour un esprit humain, c'est pour cela que Trang nous permet de créer notre grammaire dans un langage plus compréhensible. Une fois la grammaire écrite dans un fichier en \emph{.rnc}, nous pouvons générer notre fichier Relax NG en \emph{.rng}.
@@ -210,6 +210,6 @@ La figure suivante montre un exemple de DOM.
 \end{figure}
 
 
-\subsubsection{Affichage d'un graphe avec GraphStream}
-
-Une fois le fichier XML parsé, nous disposons d'un \emph{DOM} sous forme d'un objet \emph{document}. Nous pouvons ensuite afficher l'arbre grâce à la librairie GraphStream \cite{graphstream}. Pour cela nous appelons un méthode qui affiche un nœud de l'arbre sur la racine du \emph{Document}. Cela nous permet donc d'afficher tout l'arbre.
+%\subsubsection{Affichage d'un graphe avec GraphStream}
+%
+%Une fois le fichier XML parsé, nous disposons d'un \emph{DOM} sous forme d'un objet \emph{document}. Nous pouvons ensuite afficher l'arbre grâce à la librairie GraphStream \cite{graphstream}. Pour cela nous appelons un méthode qui affiche un nœud de l'arbre sur la racine du \emph{Document}. Cela nous permet donc d'afficher tout l'arbre.
