@@ -35,6 +35,115 @@ Le tempo contient un type (une noire par exemple) et un nombre par minute. Ainsi
 Nous désignons par symbole musical, chaque artefact influençant la manière de jouer une note ou un groupe de notes.
 
 
+Symboles unaires : 
+
+ \begin{music}
+ 
+ \instrumentnumber{1} % nombre de voix
+ \generalmeter{\meterfrac{4}{4}} % mesure 4/4
+ %\setname 1{chant} %nom de la portée
+ 
+\startextract
+\metron{\qu}{60} % tempo
+\def\atnextbar{\znotes\loffset{0.7}{\centerbar{\Fermataup l\wh j}}\en}% point d'orgue
+\bar
+\NOTes\trrml j\ha j \en % tremolo double
+
+%accent
+\Notes\ibu0f3\busfz0\qb0f\bupz0\qb0g\bust0\qb0h\buppz0\qb0i\busf0\qb0j\butext0\tqh0k\en
+\Notes\Ibl0lg5\blsfz0\qb0l\blpz0\qb0k\blst0\qb0j\blppz0\qb0i\blsf0\qb0h\bltext0\tqb0g\en
+
+\endextract
+ 
+ \end{music}
+ 
+ Symboles binaires : 
+ 
+  \begin{music}
+ 
+ \instrumentnumber{1} % nombre de voix
+ \generalmeter{\meterfrac{4}{4}} % mesure 4/4
+ %\setname 1{chant} %nom de la portée
+ 
+\startextract
+\notesp\triolet n\isluru0l\Ibl0ln2\qb0{lm}\tslur0n\tqb0n\en % triolet
+\endextract
+ 
+ \end{music}
+ 
+ 
+ Symboles de répétitions : 
+ 
+  \begin{music}
+ 
+ \input musixps
+ \instrumentnumber{1} % nombre de voix
+ 
+\startextract
+\NOTes\ha g\en
+\leftrepeat
+\NOTes\ha h\en
+\leftrightrepeat
+\NOTes\ha i\en
+\rightrepeat
+\NOTEs\wh j\en
+
+\endextract
+ 
+ \end{music}
+ 
+ 
+ Plusieurs portées et voix :
+  
+ \begin{music}
+ 
+ \instrumentnumber{2} % 2 instruments
+ 
+ \setstaffs 1{2} % instrument 1 (en bas) : 2 portées
+ 
+ \setclef{1}{60} % clef de fa (6) en 1, clef de sol (0) en 2
+ \generalmeter{\meterfrac{4}{4}} % mesure 4/4
+ \setname 1{piano} %
+ \setname 2{chant} %
+ \parindent 10mm % pour éviter la collision de piano avec l'accolade
+ \startextract
+ % {{bleu|1re mesure}}
+ \Notes 
+ \ha J | % chgt portée, même instr
+ \zhu{c e}\hu g & % chgt instr ; pas d'espace entre } et \hu
+ \islurd0c\ibu0d0\qb0{c c c}\tslur0d\tbu0\qb0d 
+ \enotes % assure l'alignement
+ %
+ \Notes 
+ \ha N | % chgt portée, même instr
+ \zhu{g i}\hu k & % chgt instr
+ \qa{e d} 
+ \enotes 
+ \bar % après toutes les notes de la mesure, pour toutes les voix
+ % {{bleu|2e mesure}}
+ \Notes
+ \qa J | 
+ \zqu{c e}\qu g &
+ \islurd0c\ibu0d0\qb0{c e} 
+ \enotes
+ %
+ \Notes
+ \qa N |
+ \zqu{g i}\qu k &
+ \qb0{d}\tslur0d\tbu0\qb0d
+ \enotes
+ %
+ \Notes
+ \ha J | 
+ \zhu{c e}\hu g &
+ \ha c 
+ \enotes
+ %
+ \endextract
+ 
+ \end{music}
+
+
 \subsection{Arbre rythmique}
 
 \par
@@ -55,3 +164,6 @@ Les images suivantes sont des exemples d'arbres rythmiques, en haut, et la parti
 \end{minipage}
 
 %silence et liaison
+
+
+
