@@ -9,12 +9,12 @@ Une partition est un document contenant toutes les informations jugées nécessa
 \centering
 
 \begin{music}
- 
+
 \instrumentnumber{1} % nombre de voix
 \generalmeter{\meterfrac{4}{4}} % mesure 4/4
 %\setname 1{chant} %nom de la portée
 \generalsignature{3} % armure
- 
+
 \startextract
 \metron{\qu}{60} % tempo
 \NOTes\ha g\en %une blanche
@@ -33,9 +33,9 @@ Une partition est un document contenant toutes les informations jugées nécessa
 %\NOTes \zq{ceg}\qu j \en % autre manière de faire un accord
 
 \endextract
- 
+
 \end{music}
- 
+
 \caption{Exemple d'une partition}
 \end{figure}
 
@@ -47,17 +47,17 @@ Une partition peut comporter plusieurs instruments ou voix. Une voix peut être 
 \centering 
 
 \begin{music}
- 
+
 \instrumentnumber{2} % 2 instruments
 
 \setstaffs 1{2} % instrument 1 (en bas) : 2 portées
- 
+
 \setclef{1}{60} % clef de fa (6) en 1, clef de sol (0) en 2
 \generalmeter{\meterfrac{4}{4}} % mesure 4/4
 \setname 1{piano} %
 \setname 2{chant} %
 \parindent 10mm % pour éviter la collision de piano avec l'accolade
- 
+
 \startextract
 % {{bleu|1re mesure}}
 \Notes 
@@ -71,7 +71,7 @@ Une partition peut comporter plusieurs instruments ou voix. Une voix peut être 
 \zhu{g i}\hu k & % chgt instr
 \qa{e d} 
 \enotes 
- 
+
 \bar % après toutes les notes de la mesure, pour toutes les voix
 % {{bleu|2e mesure}}
 \Notes
@@ -93,9 +93,9 @@ Une partition peut comporter plusieurs instruments ou voix. Une voix peut être 
 \enotes
 %
 \endextract
- 
+
 \end{music}
- 
+
 \caption{Plusieurs portées et voix}
 \end{figure}
 
@@ -112,8 +112,6 @@ La signature symbolise le référentiel de la durée de la mesure. Elle peut êt
 
 Une note est définie par sa hauteur et sa durée. La hauteur caractérise la fréquence du son d'une note. Cette fréquence est divisée en 8 intervalles appelé octave. Cette octave est divisée en 7 hauteurs : do, ré, mi, fa, sol, la et si. En ce qui concerne la durée de la note, elle est indiquée par la tête de la note et la présence ou non de symboles de croches. Si l'on ne prend pas en compte les croches, il existe 4 types de durées pour une note : carrée, ronde, blanche et noire. Une note carrée vaut 2 rondes, 4 blanches et 8 noires. Afin d'exprimer une durée plus courte que celle de la noire, on peut lui rajouter un ou plusieurs symboles de croches. La durée de la note s'en retrouve divisée par deux à chaque ajout.
 
-\par
-Dans notre programme, tout comme dans MusicXML, nous utilisons la notation anglo-saxonne. Elle diffère de la notation française par la façon dont est exprimée la hauteur et la durée de la note. Do, ré, mi, fa, sol, la et si sont remplacées respectivement par C, D, E, F, G, A et B. Concernant la durée, ce sont simplement des fractions. Par exemple, la blanche est un 1/2 (half) et la noire 1/4 (quarter).
 
 \begin{figure}[!h]
   \centering
@@ -122,9 +120,64 @@ Dans notre programme, tout comme dans MusicXML, nous utilisons la notation anglo
 \end{figure}
 
 
+\par
+Dans notre programme, tout comme dans MusicXML, nous utilisons la notation anglo-saxonne. Elle diffère de la notation française par la façon dont est exprimée la hauteur et la durée de la note. Do, ré, mi, fa, sol, la et si sont remplacées respectivement par C, D, E, F, G, A et B. Concernant la durée, ce sont simplement des fractions. Par exemple, la blanche est un 1/2 (half) et la noire 1/4 (quarter).
+
+
+\begin{figure}[!h]
+\centering
+
+\begin{music}
+
+\instrumentnumber{1}
+
+\startextract
+\NOTes\wh g\en % rond
+\NOTes\ha g\en % blanche
+\NOTes\qa g\en % noire
+\NOTes\ca g\en % croche
+\NOTes\cca g\en % double croche
+\NOTes\ccca g\en % triple croche
+\NOTes\cccca g\en % quadruple croche
+\endextract
+
+\end{music}
+
+\caption{Les différents figures de notes}
+\end{figure}
+
+
+\subsection{Le silence}
+
+Un silence est un arrêt momentané dans l'exécution d'une œuvre. Tout comme les notes, il existe différentes figures de silence variant en fonction de leur durée. La pause a la même durée qu'une ronde et se situe sous la quatrième ligne de la portée. La demi-pause, d'une durée égale à la blanche, se place sur la troisième ligne. Les autres figures sont le soupir, le demi-soupir, le quart de soupir, huitième de soupir, seizième de soupir, etc. La figure suivante montre ces figures de silence.
+
+
+\begin{figure}[!h]
+\centering
+
+\begin{music}
+
+\instrumentnumber{1}
+
+\startextract
+\NOTes\pause \en % pause
+\NOTes\hpause \en % demi-pause
+\NOTes\soupir \en % soupir
+\NOTes\ds \en % demi-soupir
+\NOTes\qs \en % quart de soupir
+\NOTes\hs \en % 8ème de soupir
+\NOTes\qqs \en % 16ème de soupir
+\endextract
+
+\end{music}
+
+\caption{Les différents figures de silence}
+\end{figure}
+
+
 \subsection{Le tempo}
 
-Le tempo contient un type (une noire par exemple) et un nombre par minute. Ainsi, le tempo \emph{60 à la noire} signifie qu'il y a, dans une minute, 60 noires ou bien 30 blanches.
+Le tempo correspond à la vitesse d'exécution d'un morceau de musique. Il contient un type (une noire par exemple) et un nombre par minute. Ainsi, le tempo \emph{60 à la noire} signifie qu'il y a, dans une minute, 60 noires ou bien 30 blanches. Il se place en début de mesure mais peut parfois être absent. L'interprète peut dans ce cas jouer le morceau à la vitesse souhaité.
 
 
 \subsection{Les symboles musicaux}
@@ -132,15 +185,15 @@ Le tempo contient un type (une noire par exemple) et un nombre par minute. Ainsi
 Nous désignons par symbole musical, chaque artefact influençant la manière de jouer une note ou un groupe de notes.
 
 \par
-Certains symboles ne s'appliquent que sur une figure de note. Ils sont dits unaires.
+Certains symboles ne s'appliquent que sur une figure de note. Ils sont dits unaires. La figure suivante montre quelques exemples de symboles unaires.
 
 \begin{figure}[!h]
 \centering
 
 \begin{music}
- 
+
 \instrumentnumber{1}
- 
+
 \startextract
 \NOTes \trrml j\ha j \en % tremolo double
 \NOTes\en
@@ -149,47 +202,46 @@ Certains symboles ne s'appliquent que sur une figure de note. Ils sont dits unai
 \bar
 %accent
 \Notes\ibu0f3\busfz0\qb0f\bupz0\qb0g\bust0\qb0h\buppz0\qb0i\busf0\qb0j\butext0\tqh0k\en
-\Notes\Ibl0lg5\blsfz0\qb0l\blpz0\qb0k\blst0\qb0j\blppz0\qb0i\blsf0\qb0h\bltext0\tqb0g\en
-
 \endextract
- 
+
 \end{music}
- 
+
 \caption{Symboles unaires}
 \end{figure}
 
 \par 
-Les symboles influençant un groupe de notes sont appelés symboles binaires. Les 3 symboles suivant sont une liaison, un triolet et une appoggiature.
- 
+Les symboles influençant un groupe de notes sont appelés symboles binaires. Les 4 symboles suivant sont une liaison, un triolet, une appoggiature et un groupe de croches. Ce dernier est constitué de plusieurs croches reliées entre elles par une ou plusieurs barres selon la durée des notes. Une telle barre est appelée \emph{beam} en anglais.
+
 \begin{figure}[!h]
 \centering 
- 
+
 \begin{music}
- 
+
 \instrumentnumber{1}
- 
+
 \startextract
 \NOtes \islurd0g\qu g\tslur0g\qu g\en
 \notesp \triolet n\isluru0l\Ibl0ln2\qb0{lm}\tslur0n\tqb0n\en % triolet
 \notes \multnoteskip\smallvalue\smallnotesize\grcu j\en % petite note de l'appogiature
 \NOTes \hu i\en
+\Notes\ibbbu0h0\qb0e\tbbbu0\qb0e\tbbu0\qb0e\tbu0\qb0e\en %beam
 \endextract
- 
+
 \end{music}
- 
+
 \caption{Symboles binaires}
 \end{figure}
- 
- 
+
+
 Des symboles servent à répéter les notes d'une ou de plusieurs mesures.
- 
+
 \begin{figure}[!h]
 \centering 
 
 \begin{music}
- 
+
 \instrumentnumber{1}
- 
+
 \startextract
 \NOTes\ha g\en
 \leftrepeat
@@ -200,9 +252,9 @@ Des symboles servent à répéter les notes d'une ou de plusieurs mesures.
 \NOTEs\wh j\en
 
 \endextract
- 
+
 \end{music}
- 
+
 \caption{Symboles de répétitions}
 \end{figure}
 
@@ -213,31 +265,38 @@ Des symboles servent à répéter les notes d'une ou de plusieurs mesures.
 \par
 Dans notre application, les durées des éléments constituant les mesures sont représentées sous forme d'arbres rythmiques. Comme décrit dans l'article \cite{agon}, \enquote{un arbre rythmique est défini comme un couple (D S) où D est une fraction (< 0) et S est une liste de n-éléments définissant n-proportions de D. Chaque élément de S peut-être soit un entier, soit un arbre rythmique.}
 
+\par
+Si S est une note, l'entier aura a une valeur positive, si c'est un silence, il sera négatif. Si il y a une liaison, la note qui la termine a une valeur de 1.0. Dans le couple, la valeur de la note de plus courte durée sera de 1, les valeurs des notes ayant une plus longue durée seront proportionnelles à celle-ci.
 
 \par
-Soit la partition suivante, constitué de deux noires et d'un soupir:
+Le couple (D S) peut être représenté sous forme arborescente. La fraction D est située à la racine. Les éléments de S sont donc les nœuds ou les feuilles.
+
+\par
+Soit la partition suivante, constitué d'une blanche, de deux noires reliées par une liaison et d'un soupir :
 
 \begin{music}
- 
-\input musixps
+
 \instrumentnumber{1}
-\generalmeter{\meterfrac{3}{4}}
- 
+\generalmeter{\meterfrac{5}{4}}
+
 \startextract
-\NOTes\qa g\en
-\NOTes\qa g\en
+\NOTes\ha g\en
+\NOtes \islurd0g\qu g\tslur0g\qu g\en
 \NOTes\soupir \en
 \endextract
- 
+
 \end{music}
 
+Le couple (D S) peut donc être représenté des manières suivantes :
+
 \begin{center}
-(3/4 (1 1 -1) )
+(5/4 (2 1 1.0 -1) )
 \end{center} 
 
 \begin{figure}[!h]
-\Tree[.3/4 [.1 ]
+\Tree[.5/4 [.2 ]
            [.1 ]
+           [.1.0 ]
            [.-1 ]
      ]
 
@@ -247,32 +306,36 @@ Soit la partition suivante, constitué de deux noires et d'un soupir:
 
 
 \par
-Soit la deuxième partition suivante :
+Prenons une autre partition contenant un triolet. Un triolet est composé de 3 figures égales, mais dont la durée en vaut deux.
 
 \begin{music}
- 
+
 \input musixps
 \instrumentnumber{1}
-\generalmeter{\meterfrac{2}{4}}
- 
+\generalmeter{\meterfrac{4}{4}}
+
 \startextract
 \NOTes\qa g\en
 \notesp\triolet n\Ibl0ln2\qb0{ll}\tqb0n \en % triolet
+\NOTes\ha g\en
 \endextract
- 
+
 \end{music}
+
+Le couple (D S) et l'arbre rythmique correspondant sont :
  
 \begin{center}
-(2/4 (1 (1 (1 1 1) ) ) )
+(4/4 (1 (1 (1 1 1) ) 2) )
 \end{center}  
 
 \begin{figure}[!h]
-\Tree[.2/4 [.1 ]
+\Tree[.4/4 [.1 ]
            [.1 
                [.1 ]
                [.1 ]
                [.1 ]
            ]
+           [.2 ]
      ]
 
 \caption{Arbre rythmique 2}
