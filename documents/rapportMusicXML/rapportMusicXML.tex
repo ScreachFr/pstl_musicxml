@@ -13,6 +13,9 @@
 \usepackage{listings} % pour code XML
 \usepackage[babel=true]{csquotes}
 
+\usepackage{musixtex} % notation musicale
+\usepackage{qtree} % pour faire des arbres rythmiques
+
 \renewcommand{\familydefault}{\sfdefault}
 
 \graphicspath{{images/}}
@@ -123,10 +126,10 @@
 \begin{minipage}{0.5\textwidth}
   \begin{flushleft} \large
     \emph{Auteurs :}\\
-      Sébastien \textsc{Duchenne}\\
-      Alexandre \textsc{Gaspard Cilia}\\~\\
+      Sébastien DUCHENNE\\
+      Alexandre GASPARD CILIA\\~\\
     \emph{Encadrant :} \\
-    Pr.~Carlos \textsc{Agon}\\
+    Pr.~Carlos AGON\\
   \end{flushleft}
 \end{minipage}
 
@@ -152,10 +155,10 @@
 
 \section{Remerciements}
 
-Carlos Agon : idées et conseils pour la réalisation du projet, cours de musique et sur le fonctionnement de OpenMusic, relecture du rapport, visite de l'IRCAM, découverte d'un domaine qui était totalement obscur pour nous
+Carlos Agon : idées et conseils pour la réalisation du projet, cours de musique, relecture du rapport, visite de l'IRCAM, découverte d'un domaine qui était totalement obscur pour nous
 
 \par
-Karim Haddad : explications sur la musique et OpenMusic
+Karim Haddad : explications sur la musique
 
 
 \newpage\null\thispagestyle{empty}\newpage
@@ -164,6 +167,8 @@ Karim Haddad : explications sur la musique et OpenMusic
 
 
 \listoffigures % liste des figures
+
+\newpage\null\thispagestyle{empty}\newpage
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Abbréviation  %%%%%%%%%%%%%%%%%%%%
@@ -183,7 +188,8 @@ Karim Haddad : explications sur la musique et OpenMusic
 
 \include{1_introduction}
 \include{2_technologies_utilisees}
-\include{3_architecture}
+\include{3_musique}
+\include{4_architecture}
 \include{conclusion}
 
 

@@ -101,13 +101,25 @@ Comme le format XML est verbeux, le fichier prend de la place. La version 2.0, s
 \par
 On voit, dans le code correspondant à la partition suivante, que les informations sur la partition sont placées dans la balise "measure" et celle concernant la ronde sont contenues dans la balise "note".
 
-\begin{figure}[!h] %h : here
-\centering
-\includegraphics[width=0.2\textwidth]{musicxml_hello_world.png}\\[1cm]
-%source : https://en.wikipedia.org/wiki/MusicXML
-\caption{Hello World en MusicXML}
-\label{Hello World en MusicXML}
-\end{figure}
+%\begin{figure}[!h] %h : here
+%\centering
+%\includegraphics[width=0.2\textwidth]{musicxml_hello_world.png}\\[1cm]
+%%source : https://en.wikipedia.org/wiki/MusicXML
+%\caption{Hello World en MusicXML}
+%\label{Hello World en MusicXML}
+%\end{figure}
+
+
+\largemusicsize % grande taille pour toute les partitions
+
+\begin{music}
+\instrumentnumber{1}
+\generalmeter{\meterfrac{4}{4}}
+\startextract
+\NOTes\wh c\en
+\endextract
+\end{music}
+
 
 
 \begin{lstlisting}[caption=Document XML d'un Hello World en MusicXML, label=ruleml]
