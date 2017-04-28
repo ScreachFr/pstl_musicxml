@@ -33,10 +33,10 @@
 
 \subsection{Le langage Java}
 
-\par 
+\par
 Java \cite{java_oracle} est un langage de programmation orienté objet fortement typé développé par Sun Microsystems à partir de 1995. La société sera plus tard rachetée par Oracle en 2009 qui possède et maintient Java encore aujourd'hui.
 
-\par 
+\par
 Java se détache de la masse des autres langages de programmation notamment grâce à sa portabilité et sa facilité d'utilisation.
 
 \begin{lstlisting}[caption=Hello world en java]
@@ -166,6 +166,9 @@ On voit, dans le code correspondant à la partition suivante, que les informatio
 \subsection{Le langage Relax NG}
 
 Relax NG (\textbf{Re}gular \textbf{La}nguage for \textbf{X}ML \textbf{N}ext \textbf{G}eneration) \cite{relaxng} née de la fusion de TreX de James Clark et de Relax de Murata Makoto. C'est un langage qui permet de définir la grammaire d'un document XML. Relax NG ne s'intéresse qu'à la structure du document et non à sa valeur.
+
+\par
+Relax NG s'utilise assez facilement. Il faut tout d'abord écrire la grammaire du document \emph{XML} que nous souhaitons définir. Pour ce programme nous utilisons une grammaire écrite par \cite{relaxng_for_musicxml}. Nous devons ensuite la compiler et l'utiliser pour valider des documents grâce aux outils fourni par \cite{relaxng}.
 
 \par
 C'est ce que nous utiliserons afin de s'assurer de la validité du document à traiter.
