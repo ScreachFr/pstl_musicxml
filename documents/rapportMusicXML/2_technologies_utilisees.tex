@@ -90,7 +90,7 @@ Dans ce projet, nous nous intéresserons aux différents symboles de la notation
 Il y a plus de 20 ans, le format MIDI était très utilisé. Cependant, il n’est pas très adapté pour représenter toutes les caractéristiques de la musique, on perd donc en informations avec ce format. Pour pallier à cela, les formats SMDL et NIFF ont été créés. Cependant, le format SMDL était complexe et donc peu compréhensible. Il était donc très peu utilisé. Le format NIFF était un format peu pratique à utiliser et n’a donc pas été adopté par certains logiciels. Ces formats n’ont donc pas eu le succès souhaité.
 
 \par
-En 2004, la société Recordare LLC s’inspire des 2 formats universitaires MuseData et Humdrum pour créer la première version du format MusicXML. Ses avantages sont qu’il est facile à manipuler. Il permet le transfert de morceaux de musique d’une application à une autre. Il peut représenter beaucoup de caractéristiques de la musique. Cependant, il est verbeux, puisqu'il utilise le format XML, et ne donc permet pas de représenter la musique non occidentale.
+En 2004, la société Recordare LLC s’inspire des 2 formats universitaires MuseData et Humdrum pour créer la première version du format MusicXML. Ses avantages sont qu’il est facile à manipuler. Il permet le transfert de morceaux de musique d’une application à une autre. Il peut représenter beaucoup de caractéristiques de la musique. Cependant, il est verbeux, puisqu'il utilise le format XML.
 
 \par
 Il est de plus en plus utilisé puisque plus de 200 logiciels de musique l’ont adopté. Il est donc possible de travailler finement sur un morceau de musique en utilisant différents programmes.
@@ -165,7 +165,7 @@ On voit, dans le code correspondant à la partition suivante, que les informatio
 
 \subsection{Le langage Relax NG}
 
-Relax NG (\textbf{Re}gular \textbf{La}nguage for \textbf{X}ML \textbf{N}ext \textbf{G}eneration) \cite{relaxng} née de la fusion de TreX de James Clark et de Relax de Murata Makoto. C'est un langage qui permet de définir la grammaire d'un document XML. Relax NG ne s'intéresse qu'à la structure du document et non à sa valeur.
+Relax NG (\textbf{Re}gular \textbf{La}nguage for \textbf{X}ML \textbf{N}ext \textbf{G}eneration) \cite{relaxng} est né de la fusion de TreX de James Clark et de Relax de Murata Makoto. C'est un langage qui permet de définir la grammaire d'un document XML. Relax NG ne s'intéresse qu'à la structure du document et non à sa valeur.
 
 \par
 Relax NG s'utilise assez facilement. Il faut tout d'abord écrire la grammaire du document \emph{XML} que nous souhaitons définir. Pour ce programme nous utilisons une grammaire écrite par \cite{relaxng_for_musicxml}. Nous devons ensuite la compiler et l'utiliser pour valider des documents grâce aux outils fourni par \cite{relaxng}.
@@ -181,7 +181,7 @@ Dans cette section, nous aborderons les librairies utilisées pour réaliser ce 
 
 \subsubsection{Trang et Jing}
 
-\textbf{Trang} \cite{trang} et \textbf{Jing} \cite{jing} sont deux librairies développées par Thai Open Source. Elles permettant de générer des grammaires Relax NG et de valider des documents XML à partir de cette même grammaire.
+\textbf{Trang} \cite{trang} et \textbf{Jing} \cite{jing} sont deux librairies développées par Thai Open Source. Elles permettent de générer des grammaires Relax NG et de valider des documents XML à partir de cette même grammaire.
 
 \par
 Trang est une librairie qui permet de traduire un fichier de description grammaticale en fichier Relax NG. En effet XML n'est pas facilement lisible pour un esprit humain, c'est pour cela que Trang nous permet de créer notre grammaire dans un langage plus compréhensible. Une fois la grammaire écrite dans un fichier en \emph{.rnc}, nous pouvons générer notre fichier Relax NG en \emph{.rng}.
@@ -228,3 +228,4 @@ La figure suivante montre un exemple de DOM.
 %\subsubsection{Affichage d'un graphe avec GraphStream}
 %
 %Une fois le fichier XML parsé, nous disposons d'un \emph{DOM} sous forme d'un objet \emph{document}. Nous pouvons ensuite afficher l'arbre grâce à la librairie GraphStream \cite{graphstream}. Pour cela nous appelons un méthode qui affiche un nœud de l'arbre sur la racine du \emph{Document}. Cela nous permet donc d'afficher tout l'arbre.
+

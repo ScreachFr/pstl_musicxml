@@ -110,7 +110,7 @@ La signature symbolise le référentiel de la durée de la mesure. Elle peut êt
 
 \subsection{La note}
 
-Une note est définie par sa hauteur et sa durée. La hauteur caractérise la fréquence du son d'une note. Cette fréquence est divisée en 8 intervalles appelé octave. Cette octave est divisée en 7 hauteurs : do, ré, mi, fa, sol, la et si. En ce qui concerne la durée de la note, elle est indiquée par la tête de la note et la présence ou non de symboles de croches. Si l'on ne prend pas en compte les croches, il existe 4 types de durées pour une note : carrée, ronde, blanche et noire. Une note carrée vaut 2 rondes, 4 blanches et 8 noires. Afin d'exprimer une durée plus courte que celle de la noire, on peut lui rajouter un ou plusieurs symboles de croches. La durée de la note s'en retrouve divisée par deux à chaque ajout.
+Une note est définie par sa hauteur et sa durée. La hauteur caractérise la fréquence du son d'une note. Cette fréquence est divisée en 8 intervalles appelés octave. Cette octave est divisée en 7 hauteurs : do, do#, ré, ré#, mi, fa, fa#, sol, la, la#, si et si#. En ce qui concerne la durée de la note, elle est indiquée par la tête de la note et la présence ou non de symboles de croches. Si l'on ne prend pas en compte les croches, il existe 4 types de durées pour une note : carrée, ronde, blanche et noire. Une note carrée vaut 2 rondes, 4 blanches et 8 noires. Afin d'exprimer une durée plus courte que celle de la noire, on peut lui rajouter un ou plusieurs symboles de croches. La durée de la note s'en retrouve divisée par deux à chaque ajout.
 
 
 \begin{figure}[!h]
@@ -266,13 +266,13 @@ Des symboles servent à répéter les notes d'une ou de plusieurs mesures.
 Dans notre application, les durées des éléments constituant les mesures sont représentées sous forme d'arbres rythmiques. Comme décrit dans l'article \cite{agon}, \enquote{un arbre rythmique est défini comme un couple (D S) où D est une fraction (< 0) et S est une liste de n-éléments définissant n-proportions de D. Chaque élément de S peut-être soit un entier, soit un arbre rythmique.}
 
 \par
-Si S est une note, l'entier aura a une valeur positive, si c'est un silence, il sera négatif. Si il y a une liaison, la note qui la termine a une valeur de 1.0. Dans le couple, la valeur de la note de plus courte durée sera de 1, les valeurs des notes ayant une plus longue durée seront proportionnelles à celle-ci.
+Si S est une note, l'entier aura une valeur positive, si c'est un silence, il sera négatif. Si il y a une liaison, la note qui la termine a une valeur flottante (e.g. 1.0). Dans le couple, la valeur de la note de plus courte durée sera de 1, les valeurs des notes ayant une plus longue durée seront proportionnelles à celle-ci.
 
 \par
 Le couple (D S) peut être représenté sous forme arborescente. La fraction D est située à la racine. Les éléments de S sont donc les nœuds ou les feuilles.
 
 \par
-Soit la partition suivante, constitué d'une blanche, de deux noires reliées par une liaison et d'un soupir :
+Soit la partition suivante, constituée d'une blanche, de deux noires reliées par une liaison et d'un soupir :
 
 \begin{music}
 
@@ -344,5 +344,6 @@ Le couple (D S) et l'arbre rythmique correspondant sont :
 
 
 %rt de silence et liaison
+
 
 

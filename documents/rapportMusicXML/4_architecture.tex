@@ -8,7 +8,7 @@ Dans cette section nous aborderons l'architecture du programme. C'est-à-dire la
 \par
 Le format \emph{MusicXML}, et plus généralement une partition musicale, peut comporter énormément de symboles différents. C'est pour cela que nous avons du nous adapter à la structure très "personnalisable" et penser le code pour qu'il soit très malléable. Pour ce faire, nous avons gardé un niveau d'abstraction assez élevé pour pouvoir implémenter chaque symbole en modifiant le minimum de code. Lors de la réflexion qui a découlé de ce constat, nous avons pu observer deux types de symbole : les symboles unaires et les symboles binaires.
 \par
-Les symboles unaires sont assez simple à implémenter dans le sens où il n'influence, pour la plupart du temps, qu'une seule note. Il nous suffit donc de les stocker dans ladite note.
+Les symboles unaires sont assez simple à implémenter dans le sens où ils n'influence, pour la plupart du temps, qu'une seule note. Il nous suffit donc de les stocker dans ladite note.
 \par
 En ce qui concerne les symboles binaires, l'implémentation est beaucoup plus contraignante. Certains symboles, comme les groupes de croches, ont des marqueurs de début, de continuation et de fin, alors que d'autres, comme les groupes de liaison, n'ont qu'un début et une fin. Cela nous oblige donc à faire du sur-mesure pour certains symboles.
 \par
@@ -105,3 +105,4 @@ Une fois la \emph{Score} créé, les arbres rythmiques pour chaque mesure sont c
 \subsection{Test du programme}
 
 Afin de vérifier que notre programme fonctionne correctement, une base de test a été créée dans le dossier \emph{test-data}. Elle est constituée de nombreux fichiers tests au format MusicXML. Chaque fichier contient quelques notes avec un symbole musical (signe crescendo, staccato, etc.). Chaque classe associée à un symbole peut ainsi être testée. Une partition complète de Bach est également présente pour tester sur un grand nombre de mesure.
+
