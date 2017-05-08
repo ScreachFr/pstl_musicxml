@@ -610,11 +610,11 @@ public class ScoreUtils {
 //		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/t_beam01.xml";
 //		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/t01-chord.xml";
 //		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/customfiles/bigfile.xml";
-//		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/simple/test_slur_2_measures.xml";
+		//String input = "/home/sduchenne/git/pstl_musicxml/musicxml/test-data/simple/test_slur_2_measures.xml";
 
-		String input = "/home/alexandre/git/pstl_musicxml/musicxml/test-data/xmlsamples/ActorPreludeSample.xml";
+		String input = "/home/sduchenne/git/pstl_musicxml/musicxml/test-data/simple/test_rest.xml";
 
-		rng = new File("/home/alexandre/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
+		rng = new File("/home/sduchenne/git/pstl_musicxml/musicxml/grammars/rng/musicXML.rng");
 
 //		String pattern = ".*\\.(xml)";
 

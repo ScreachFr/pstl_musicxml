@@ -115,19 +115,19 @@ Notre implémentation de l'\emph{arbre rythmique} est structurellement assez sim
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.5\textwidth]{rtClassDiagram.png}\\[1cm]
+\includegraphics[width=0.6\textwidth]{rtClassDiagram.png}\\[1cm]
 %source : Alexandre
 \caption{Structure de l'implémentation de l'arbre rythmique}
 \end{figure}
 
 \par
-La \emph{Signature} contient simplement deux entiers. La \emph{Fraction} quant à elle est un peu plus complexe. Elle contient un \emph{Type} qui est simplement un énumération des durées possible d'une note qui est utilisé comme le dénominateur de la fraction. Le role du numérateur est assuré par un simple entier. Les valeurs de la \emph{Fraction} ne change jamais. Les méthodes de cette classe permettent de calculer la valeur ralative à un \emph{Type} de \emph{Fraction}. Plus concrètement, prenons la \emph{Fraction} $a=1/2$, en utilisant la méthode $a.getRelativeValue(Type.QUARTER)$ soit $4$ en dénominateur nous obtiendrons 2 et donc $a=2/4$. Et enfin l'énumeration \emph{ItemType} nous permet de savoir si l'arbre courrant est une note, un silence, une liaison ou une mesure.
+La \emph{Signature} contient simplement deux entiers. La \emph{Fraction} quant à elle est un peu plus complexe. Elle contient un \emph{Type} qui est simplement un énumération des durées possibles d'une note et qui est utilisé comme le dénominateur de la fraction. Le rôle du numérateur est assuré par un simple entier. Les valeurs de la \emph{Fraction} ne change jamais. Les méthodes de cette classe permettent de calculer la valeur relative à un \emph{Type} de \emph{Fraction}. Plus concrètement, prenons la \emph{Fraction} $a=1/2$, en utilisant la méthode $a.getRelativeValue(Type.QUARTER)$ soit $4$ en dénominateur nous obtiendrons 2 et donc $a=2/4$. Et enfin l’énumération \emph{ItemType} nous permet de savoir si l'arbre courant est une note, un silence, une liaison ou une mesure.
 
 
 \par
 Une fois la \emph{Score} créé, les arbres rythmiques pour chaque mesure sont construits. Cette étape est réalisée par les classes du package \emph{rhythmicstructures}. La classe factory \emph{RhythmicTreeFactory} parcours tout l'arbre des objets intermédiaires, et pour chaque \emph{Measure} rencontrée, un nouvel objet de la classe \emph{RhythmicTree} est créé. La seule étape que nous pouvons qualifier d'épineuse ici est celle qui consiste à traiter les groupes. Si une mesure contient des groupes imbriqués, il faut créer les arbre rythmiques correspondant et les remplir. L'algorithme est donc récursif, manipulation d'arbres oblige. Ayant suivi au premier semestre le module d'algorithmique avancé qui traitait entre autres de manipulation d'arbres, nous avons pu réaliser cet algorithme sans trop de soucis.
 
-\begin{lstlisting}[caption=Exemple d'une balise beam de MusicXML]
+\begin{lstlisting}[caption=Code de la méthode buidRTFromMeasure]
 public static RhythmicTree buidRTFromMeasure(Measure measure) {
 	RhythmicTree result = new RhythmicTree(ItemType.Measure, measure.getSignature());
 
@@ -157,8 +157,20 @@ public static RhythmicTree buidRTFromMeasure(Measure measure) {
 \end{lstlisting}
 
 \par
-Le code ci-dessus est la dernière partie de la génération de l'\emph{arbre rythmique}. Nous commençons par définir la signature de l'arbre. Son abscence ne pose pas de problème au reste du code. Ensuite nous parcourons l'ensemble des éléments qui constituent la mesure. En fonction de leur type nous créons la structure adéquate. On peut remarquer qu'une fois arrivé à cette étape du code, les groupes ont déjà été formés et que nous n'avons plus qu'à effectuer une simple traduction. La constitution des groupes de la partie précédente est donc fondamentale.
+Le code ci-dessus est la dernière partie de la génération de l'\emph{arbre rythmique}. Nous commençons par définir la signature de l'arbre. Son absence ne pose pas de problème au reste du code. Ensuite nous parcourons l'ensemble des éléments qui constituent la mesure. En fonction de leur type nous créons la structure adéquate. On peut remarquer qu'une fois arrivé à cette étape du code, les groupes ont déjà été formé et que nous n'avons plus qu'à effectuer une simple traduction. La constitution des groupes de la partie précédente est donc fondamentale.
 
 \subsection{Test du programme}
 
-Afin de vérifier que notre programme fonctionne correctement, une base de test a été créée dans le dossier \emph{test-data}. Elle est constituée de nombreux fichiers tests au format MusicXML. Chaque fichier contient quelques notes avec un symbole musical (signe crescendo, staccato, etc.). Chaque classe associée à un symbole peut ainsi être testée. Une partition complète de Bach est également présente pour tester sur un grand nombre de mesure.
+Afin de vérifier que notre programme fonctionne correctement, une base de test a été créée dans le dossier test-data. Elle est constituée de nombreux fichiers au format MusicXML.
+
+Chaque fichier du dossier simple contient quelques notes avec un symbole musical (signe crescendo, staccato, etc.). Chaque classe associée à un symbole peut ainsi être testée. Par exemple, lorsqu’on exécute le programme sur le fichier {<<test\_chord>>}, constitué d’une noire et d’un accord de trois noires, on obtient l’arbre rythmique suivant : 
+
+\begin{center}
+(2/4 (1 1))
+\end{center}
+
+La signature et le nombre d’accords sont corrects. On voit bien que l’arbre rythmique voit la mesure comme une suite d’accords. 
+
+Plusieurs œuvres complètes de Bach, nommées BWV, sont présentes dans le dossier {<<chorales.all.musicxml>>} pour tester sur un grand nombre de mesure. 
+
+Pour calculer le taux de couverture des tests, on peut calculer le nombre de fonctions testées par rapport au nombre de fonctions dans le programme. Le nombre total de fonctions est de 213. En fonction du fichier à tester, le nombre de fonctions appelées ne sera pas le même. Ce dernier va de 136 à 213. Le taux de couverture va donc de 64\% à 100\% si le fichier contient tous les symboles musicaux.
