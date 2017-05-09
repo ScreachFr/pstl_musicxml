@@ -22,5 +22,12 @@
 ## RAPPORT
 + Bien montrer la difficulté
 + Bien présenter le problème (précis/pointer les z)
-+ Conclision -> les trucs qu'on aurait fait si on avait plus de temps
++ Conclusion -> les trucs qu'on aurait fait si on avait plus de temps
 + Conclusion sur l'experience acquise
+
+## Dates
++ Arrivé des commentaires vendredi 19 mai
++ Doit être envoyé le 21 mai sur spip
++ Repetition le vendredi 26
++ Envoyer le rapport la veille
++ 7 juin présentation séminaire
