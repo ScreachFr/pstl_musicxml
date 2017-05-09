@@ -107,6 +107,86 @@ La création de l'objet \emph{Score} se fait en deux étapes. Tout d'abord, nous
 \par
 On pourrait penser que ce modèle de données est lourd, mais cela est largement compensé entre autres par l'aisance d'utilisation qu'il procure ainsi que la possibilité notamment de déduire les "coordonnées" des éléments qui le composent. En effet rien de plus facile que de dire qu'une note se trouve dans le \emph{Chord} 4 de la \emph{Measure} 2 de la \emph{Part} 2 de telle \emph{Score}. Ainsi nous pouvons par exemple utiliser ces coordonnées pour placer certains symboles à des endroits précis.
 
+\subsection{L'arbre rythmique}
+
+\par
+Dans notre application, les durées des éléments constituant les mesures sont représentées sous forme d'arbres rythmiques. Comme décrit dans l'article \cite{agon}, \enquote{un arbre rythmique est défini comme un couple (D S) où D est une fraction (< 0) et S est une liste de n-éléments définissant n-proportions de D. Chaque élément de S peut-être soit un entier, soit un arbre rythmique.}
+
+\par
+Si S est une note, l'entier aura une valeur positive, si c'est un silence, il sera négatif. Si il y a une liaison, la note qui la termine a une valeur flottante (e.g. 1.0). Dans le couple, la valeur de la note de plus courte durée sera de 1, les valeurs des notes ayant une plus longue durée seront proportionnelles à celle-ci.
+
+\par
+Le couple (D S) peut être représenté sous forme arborescente. La fraction D est située à la racine. Les éléments de S sont donc les nœuds ou les feuilles.
+
+\par
+Soit la partition suivante, constituée d'une blanche, de deux noires reliées par une liaison et d'un soupir :
+
+\begin{music}
+
+\instrumentnumber{1}
+\generalmeter{\meterfrac{5}{4}}
+
+\startextract
+\NOTes\ha g\en
+\NOtes \islurd0g\qu g\tslur0g\qu g\en
+\NOTes\soupir \en
+\endextract
+
+\end{music}
+
+Le couple (D S) peut donc être représenté des manières suivantes :
+
+\begin{center}
+(5/4 (2 1 1.0 -1) )
+\end{center}
+
+\begin{figure}[!h]
+\Tree[.5/4 [.2 ]
+           [.1 ]
+           [.1.0 ]
+           [.-1 ]
+     ]
+
+\caption{Arbre rythmique 1}
+\end{figure}
+
+
+
+\par
+Prenons une autre partition contenant un triolet. Un triolet est composé de 3 figures égales, mais dont la durée en vaut deux.
+
+\begin{music}
+
+\input musixps
+\instrumentnumber{1}
+\generalmeter{\meterfrac{4}{4}}
+
+\startextract
+\NOTes\qa g\en
+\notesp\triolet n\Ibl0ln2\qb0{ll}\tqb0n \en % triolet
+\NOTes\ha g\en
+\endextract
+
+\end{music}
+
+Le couple (D S) et l'arbre rythmique correspondant sont :
+
+\begin{center}
+(4/4 (1 (1 (1 1 1) ) 2) )
+\end{center}
+
+\begin{figure}[!h]
+\Tree[.4/4 [.1 ]
+           [.1
+               [.1 ]
+               [.1 ]
+               [.1 ]
+           ]
+           [.2 ]
+     ]
+
+\caption{Arbre rythmique 2}
+\end{figure}
 
 \subsection{Construction des arbres rythmiques}
 
@@ -163,14 +243,14 @@ Le code ci-dessus est la dernière partie de la génération de l'\emph{arbre ry
 
 Afin de vérifier que notre programme fonctionne correctement, une base de test a été créée dans le dossier test-data. Elle est constituée de nombreux fichiers au format MusicXML.
 
-Chaque fichier du dossier simple contient quelques notes avec un symbole musical (signe crescendo, staccato, etc.). Chaque classe associée à un symbole peut ainsi être testée. Par exemple, lorsqu’on exécute le programme sur le fichier {<<test\_chord>>}, constitué d’une noire et d’un accord de trois noires, on obtient l’arbre rythmique suivant : 
+Chaque fichier du dossier simple contient quelques notes avec un symbole musical (signe crescendo, staccato, etc.). Chaque classe associée à un symbole peut ainsi être testée. Par exemple, lorsqu’on exécute le programme sur le fichier {<<test\_chord>>}, constitué d’une noire et d’un accord de trois noires, on obtient l’arbre rythmique suivant :
 
 \begin{center}
 (2/4 (1 1))
 \end{center}
 
-La signature et le nombre d’accords sont corrects. On voit bien que l’arbre rythmique voit la mesure comme une suite d’accords. 
+La signature et le nombre d’accords sont corrects. On voit bien que l’arbre rythmique voit la mesure comme une suite d’accords.
 
-Plusieurs œuvres complètes de Bach, nommées BWV, sont présentes dans le dossier {<<chorales.all.musicxml>>} pour tester sur un grand nombre de mesure. 
+Plusieurs œuvres complètes de Bach, nommées BWV, sont présentes dans le dossier {<<chorales.all.musicxml>>} pour tester sur un grand nombre de mesure.
 
 Pour calculer le taux de couverture des tests, on peut calculer le nombre de fonctions testées par rapport au nombre de fonctions dans le programme. Le nombre total de fonctions est de 213. En fonction du fichier à tester, le nombre de fonctions appelées ne sera pas le même. Ce dernier va de 136 à 213. Le taux de couverture va donc de 64\% à 100\% si le fichier contient tous les symboles musicaux.

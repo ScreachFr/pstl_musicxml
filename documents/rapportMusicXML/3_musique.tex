@@ -28,7 +28,7 @@ Une partition est un document contenant toutes les informations jugées nécessa
 %\Notes \ibu0d0\qb0{c c c}\tbu0\qb0d \enotes %beam
 \Notes\qa g\en %une croche
 \notes\Dqbu fg\en %beam double
-\Notes\ibbbu0h0\qb0e\tbbbu0\qb0e\tbbu0\qb0e\tbu0\qb0e\en %beam 
+\Notes\ibbbu0h0\qb0e\tbbbu0\qb0e\tbbu0\qb0e\tbu0\qb0e\en %beam
 \NOTes\zq c\zq e\zq g\qu j \en %accord
 %\NOTes \zq{ceg}\qu j \en % autre manière de faire un accord
 
@@ -44,7 +44,7 @@ Une partition est un document contenant toutes les informations jugées nécessa
 Une partition peut comporter plusieurs instruments ou voix. Une voix peut être formée de une (chant) ou deux portées (piano).
 
 \begin{figure}[!h]
-\centering 
+\centering
 
 \begin{music}
 
@@ -60,24 +60,24 @@ Une partition peut comporter plusieurs instruments ou voix. Une voix peut être 
 
 \startextract
 % {{bleu|1re mesure}}
-\Notes 
+\Notes
 \ha J | % chgt portée, même instr
 \zhu{c e}\hu g & % chgt instr ; pas d'espace entre } et \hu
-\ibu0d0\qb0{c c c}\tbu0\qb0d 
+\ibu0d0\qb0{c c c}\tbu0\qb0d
 \enotes % assure l'alignement
 %
-\Notes 
+\Notes
 \ha N | % chgt portée, même instr
 \zhu{g i}\hu k & % chgt instr
-\qa{e d} 
-\enotes 
+\qa{e d}
+\enotes
 
 \bar % après toutes les notes de la mesure, pour toutes les voix
 % {{bleu|2e mesure}}
 \Notes
-\qa J | 
+\qa J |
 \zqu{c e}\qu g &
-\ibu0d0\qb0{c e} 
+\ibu0d0\qb0{c e}
 \enotes
 %
 \Notes
@@ -87,9 +87,9 @@ Une partition peut comporter plusieurs instruments ou voix. Une voix peut être 
 \enotes
 %
 \Notes
-\ha J | 
+\ha J |
 \zhu{c e}\hu g &
-\ha c 
+\ha c
 \enotes
 %
 \endextract
@@ -101,12 +101,12 @@ Une partition peut comporter plusieurs instruments ou voix. Une voix peut être 
 
 \subsection{La durée}
 
-La durée est le temps pendant laquelle la note est jouée. La durée n'est pas exprimée sous forme de valeur fixe mais comme une proportion relative à la mesure. En effet, la durée de la mesure dépend de sa signature et du tempo (expliqués plus tard). 
+La durée est le temps pendant laquelle la note est jouée. La durée n'est pas exprimée sous forme de valeur fixe mais comme une proportion relative à la mesure. En effet, la durée de la mesure dépend de sa signature et du tempo (expliqués plus tard).
 
 
 \subsection{La signature}
 
-La signature symbolise le référentiel de la durée de la mesure. Elle peut être représentée sous forme d'une fraction. Le numérateur permet de définir la durée totale de la mesure et le dénominateur la durée d'un temps dans la mesure. 
+La signature symbolise le référentiel de la durée de la mesure. Elle peut être représentée sous forme d'une fraction. Le numérateur permet de définir la durée totale de la mesure et le dénominateur la durée d'un temps dans la mesure.
 
 \subsection{La note}
 
@@ -209,11 +209,11 @@ Certains symboles ne s'appliquent que sur une figure de note. Ils sont dits unai
 \caption{Symboles unaires}
 \end{figure}
 
-\par 
+\par
 Les symboles influençant un groupe de notes sont appelés symboles binaires. Les 4 symboles suivant sont une liaison, un triolet, une appoggiature et un groupe de croches. Ce dernier est constitué de plusieurs croches reliées entre elles par une ou plusieurs barres selon la durée des notes. Une telle barre est appelée \emph{beam} en anglais.
 
 \begin{figure}[!h]
-\centering 
+\centering
 
 \begin{music}
 
@@ -236,7 +236,7 @@ Les symboles influençant un groupe de notes sont appelés symboles binaires. Le
 Des symboles servent à répéter les notes d'une ou de plusieurs mesures.
 
 \begin{figure}[!h]
-\centering 
+\centering
 
 \begin{music}
 
@@ -260,90 +260,87 @@ Des symboles servent à répéter les notes d'une ou de plusieurs mesures.
 
 
 
-\subsection{L'arbre rythmique}
-
-\par
-Dans notre application, les durées des éléments constituant les mesures sont représentées sous forme d'arbres rythmiques. Comme décrit dans l'article \cite{agon}, \enquote{un arbre rythmique est défini comme un couple (D S) où D est une fraction (< 0) et S est une liste de n-éléments définissant n-proportions de D. Chaque élément de S peut-être soit un entier, soit un arbre rythmique.}
-
-\par
-Si S est une note, l'entier aura une valeur positive, si c'est un silence, il sera négatif. Si il y a une liaison, la note qui la termine a une valeur flottante (e.g. 1.0). Dans le couple, la valeur de la note de plus courte durée sera de 1, les valeurs des notes ayant une plus longue durée seront proportionnelles à celle-ci.
-
-\par
-Le couple (D S) peut être représenté sous forme arborescente. La fraction D est située à la racine. Les éléments de S sont donc les nœuds ou les feuilles.
-
-\par
-Soit la partition suivante, constituée d'une blanche, de deux noires reliées par une liaison et d'un soupir :
-
-\begin{music}
-
-\instrumentnumber{1}
-\generalmeter{\meterfrac{5}{4}}
-
-\startextract
-\NOTes\ha g\en
-\NOtes \islurd0g\qu g\tslur0g\qu g\en
-\NOTes\soupir \en
-\endextract
-
-\end{music}
-
-Le couple (D S) peut donc être représenté des manières suivantes :
-
-\begin{center}
-(5/4 (2 1 1.0 -1) )
-\end{center} 
-
-\begin{figure}[!h]
-\Tree[.5/4 [.2 ]
-           [.1 ]
-           [.1.0 ]
-           [.-1 ]
-     ]
-
-\caption{Arbre rythmique 1}
-\end{figure}
-
-
-
-\par
-Prenons une autre partition contenant un triolet. Un triolet est composé de 3 figures égales, mais dont la durée en vaut deux.
-
-\begin{music}
-
-\input musixps
-\instrumentnumber{1}
-\generalmeter{\meterfrac{4}{4}}
-
-\startextract
-\NOTes\qa g\en
-\notesp\triolet n\Ibl0ln2\qb0{ll}\tqb0n \en % triolet
-\NOTes\ha g\en
-\endextract
-
-\end{music}
-
-Le couple (D S) et l'arbre rythmique correspondant sont :
- 
-\begin{center}
-(4/4 (1 (1 (1 1 1) ) 2) )
-\end{center}  
-
-\begin{figure}[!h]
-\Tree[.4/4 [.1 ]
-           [.1 
-               [.1 ]
-               [.1 ]
-               [.1 ]
-           ]
-           [.2 ]
-     ]
-
-\caption{Arbre rythmique 2}
-\end{figure}
-
-
+% \subsection{L'arbre rythmique}
+%
+% \par
+% Dans notre application, les durées des éléments constituant les mesures sont représentées sous forme d'arbres rythmiques. Comme décrit dans l'article \cite{agon}, \enquote{un arbre rythmique est défini comme un couple (D S) où D est une fraction (< 0) et S est une liste de n-éléments définissant n-proportions de D. Chaque élément de S peut-être soit un entier, soit un arbre rythmique.}
+%
+% \par
+% Si S est une note, l'entier aura une valeur positive, si c'est un silence, il sera négatif. Si il y a une liaison, la note qui la termine a une valeur flottante (e.g. 1.0). Dans le couple, la valeur de la note de plus courte durée sera de 1, les valeurs des notes ayant une plus longue durée seront proportionnelles à celle-ci.
+%
+% \par
+% Le couple (D S) peut être représenté sous forme arborescente. La fraction D est située à la racine. Les éléments de S sont donc les nœuds ou les feuilles.
+%
+% \par
+% Soit la partition suivante, constituée d'une blanche, de deux noires reliées par une liaison et d'un soupir :
+%
+% \begin{music}
+%
+% \instrumentnumber{1}
+% \generalmeter{\meterfrac{5}{4}}
+%
+% \startextract
+% \NOTes\ha g\en
+% \NOtes \islurd0g\qu g\tslur0g\qu g\en
+% \NOTes\soupir \en
+% \endextract
+%
+% \end{music}
+%
+% Le couple (D S) peut donc être représenté des manières suivantes :
+%
+% \begin{center}
+% (5/4 (2 1 1.0 -1) )
+% \end{center}
+%
+% \begin{figure}[!h]
+% \Tree[.5/4 [.2 ]
+%            [.1 ]
+%            [.1.0 ]
+%            [.-1 ]
+%      ]
+%
+% \caption{Arbre rythmique 1}
+% \end{figure}
+%
+%
+%
+% \par
+% Prenons une autre partition contenant un triolet. Un triolet est composé de 3 figures égales, mais dont la durée en vaut deux.
+%
+% \begin{music}
+%
+% \input musixps
+% \instrumentnumber{1}
+% \generalmeter{\meterfrac{4}{4}}
+%
+% \startextract
+% \NOTes\qa g\en
+% \notesp\triolet n\Ibl0ln2\qb0{ll}\tqb0n \en % triolet
+% \NOTes\ha g\en
+% \endextract
+%
+% \end{music}
+%
+% Le couple (D S) et l'arbre rythmique correspondant sont :
+%
+% \begin{center}
+% (4/4 (1 (1 (1 1 1) ) 2) )
+% \end{center}
+%
+% \begin{figure}[!h]
+% \Tree[.4/4 [.1 ]
+%            [.1
+%                [.1 ]
+%                [.1 ]
+%                [.1 ]
+%            ]
+%            [.2 ]
+%      ]
+%
+% \caption{Arbre rythmique 2}
+% \end{figure}
+%
+%
 
 %rt de silence et liaison
-
-
-
