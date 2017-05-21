@@ -13,7 +13,7 @@ Notre objectif ici est de concevoir un programme nous permettant de lire et de t
 \par
 Le format \emph{MusicXML}, et plus généralement une partition musicale, peut comporter énormément de symboles différents. C'est pour cela que nous avons du nous adapter à la structure très "personnalisable" et penser le code pour qu'il soit très malléable. Pour ce faire, nous avons gardé un niveau d'abstraction assez élevé pour pouvoir implémenter chaque symbole en modifiant le minimum de code. Lors de la réflexion qui a découlé de ce constat, nous avons pu observer deux types de symbole : les symboles unaires et les symboles binaires.
 \par
-Les symboles unaires sont assez simple à implémenter dans le sens où ils n'influence, pour la plupart du temps, qu'une seule note. Il nous suffit donc de les stocker dans ladite note.
+Les symboles unaires sont assez simples à implémenter dans le sens où ils n'influencent, pour la plupart du temps, qu'une seule note. Il nous suffit donc de les stocker dans ladite note.
 \par
 En ce qui concerne les symboles binaires, l'implémentation est beaucoup plus contraignante. Certains symboles, comme les groupes de croches, ont des marqueurs de début, de continuation et de fin, alors que d'autres, comme les groupes de liaison, n'ont qu'un début et une fin. Cela nous oblige donc à faire du sur-mesure pour certains symboles.
 \par
@@ -23,7 +23,7 @@ Il demeure cependant des symboles qui peuvent concerner une mesure comme la part
 \subsection{Architecture générale}
 
 \par
-Le programme se divise en trois parties. La première, le parser, permet au programme de disposer d'un \emph{DOM} à partir d'un fichier \emph{MusicXML}. La deuxième partie range les données obtenues grâce à la première dans des structures de données afin de pouvoir les traiter plus aisément. Et enfin le code ayant pour but de générer l'\emph{arbre rythmique} constitue la troisième partie.
+Le programme se divise en trois parties. La première, le parser, permet au programme de disposer d'un \emph{DOM} à partir d'un fichier \emph{MusicXML}. La deuxième partie range les données obtenues grâce au parser dans des structures de données afin de pouvoir les traiter plus aisément. Et enfin le code ayant pour but de générer l'\emph{arbre rythmique} constitue la troisième partie.
 
 % Et enfin la troisième partie est l'arbre rythmique qui pourra être généré à partir de la représentation objet de la partition.
 
@@ -57,11 +57,11 @@ Ce parser nous permet de disposer d'un \emph{DOM} (qui a pour nom de classe \emp
 \subsection{Représentation objet de la partition}
 
 \par
-Nous aurions pu nous satisfaire du \emph{Document} retourné par le parser pour générer notre arbre rythmique mais cela aurait posé plusieurs problèmes. Tout d'abord la manipulation du \emph{DOM} n'est pas aisée. Cette structure de données basé sur des nœuds qui contiennent des fils, attributs et leur contenu textuel, doit être exploré d'une façon assez lourde à cause en partie du fait qu'un nœud n'est pas nativement un objet itérable comme les \emph{Collections} de Java par exemple. D'autre part, toutes les données contenues dans ces nœuds sont considérées comme des chaînes de caractère qui nécessitent un parsing et donc une manipulation assez verbeuse. De ce fait, il est plus simple pour nous de parcourir ce \emph{Document} une seule fois et d'extraire les données qu'il contient dans une structure de données plus aisément manipulable dans Java. Cela permet par exemple d'éviter des erreurs lors du développement des autres fonctionnalités de l'application qui se basent sur ces informations. Nous utilisons donc un ensemble de méthodes contenus dans la classe \emph{ScoreUtils} pour convertir notre \emph{Document} en instance de \emph{Score}.
+Nous aurions pu nous satisfaire du \emph{Document} retourné par le parser pour générer notre arbre rythmique mais cela aurait posé plusieurs problèmes. Tout d'abord la manipulation du \emph{DOM} n'est pas aisée. Cette structure de données basée sur des nœuds qui contiennent des fils, attributs et leur contenu textuel, doit être exploré d'une façon assez lourde à cause en partie du fait qu'un nœud n'est pas nativement un objet itérable comme les \emph{Collections} de Java par exemple. D'autre part, toutes les données contenues dans ces nœuds sont considérées comme des chaînes de caractère qui nécessitent un parsing et donc une manipulation assez verbeuse. De ce fait, il est plus simple pour nous de parcourir ce \emph{Document} une seule fois et d'extraire les données qu'il contient dans une structure de données plus aisément manipulable dans Java. Cela permet par exemple d'éviter des erreurs lors du développement des autres fonctionnalités de l'application qui se basent sur ces informations. Nous utilisons donc un ensemble de méthodes contenus dans la classe \emph{ScoreUtils} pour convertir notre \emph{Document} en instance de \emph{Score}.
 
-\begin{figure}[!h]
+\begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{muscicalStructureClassDiag.png}\\[1cm]
+\includegraphics[width=0.8\textwidth]{muscicalStructureClassDiag.png}\\[1cm]
 %source : Alexandre
 \caption{Structure d'une partition sous forme d'un diagramme de classe UML}
 \end{figure}
@@ -82,7 +82,7 @@ La structure de données que nous avons élaborée se compose de la façon suiva
 Pour chaque symbole musical, une classe lui est associée. Le symbole peut être unaire ou binaire. Les symboles unaires sont liés à une seule note, tel que les points d'orgues. Les symboles binaires sont liés à 2 notes, comme les liaisons. Pour chaque note, on récupère tous les symboles qui lui sont associés, on créé les objets intermédiaires et on les ajoute à l'objet \emph{Note}.
 
 
-\begin{figure}[!h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{symbolsClassDiagram.png}\\[1cm]
 %source : Alexandre
@@ -91,7 +91,7 @@ Pour chaque symbole musical, une classe lui est associée. Le symbole peut être
 
 
 \par
-La création de l'objet \emph{Score} se fait en deux étapes. Tout d'abord, nous récupérons les données brutes dans le \emph{Document} que nous mettons dans l'objet \emph{Score} final. Une fois toutes ces données à disposition, nous pouvons créer les groupes en fonction des symboles que nous rencontrons lors du parcours des mesures. Prenons comme exemple la balise \emph{<beam>}, elle peut être présente dans une balise \emph{<note>} et peut contenir les informations nécessaires pour représenter un groupe de croches dans \emph{MusicXML}. Comme le montre le code ci-dessous, la balise possède un attribut \emph{number}. Il nous permet de connaître le numéro du groupe actuel dans le cas où il y a plusieurs groupes de croches dans la même mesure. Et enfin la balise contient un énumération \emph{begin, end, continue} qui nous permet de connaître la position de la note dans le groupe. Lors de notre premier passage nous stockons ces informations dans un objet \emph{Beam}. Lors de notre second passage nous utilisons ces données pour créer nos groupes. Cette étape est essentielle car elle precalcule les groupes qui seront formés dans l'\emph{arbre rythmique}. En effet, ces groupes influence directement la durée des notes et accords et donc les sous-arbres d'un \emph{arbre rythmique}.
+La création de l'objet \emph{Score} se fait en deux étapes. Tout d'abord, nous récupérons les données brutes dans le \emph{Document} que nous mettons dans l'objet \emph{Score} final. Une fois toutes ces données à disposition, nous pouvons créer les groupes en fonction des symboles que nous rencontrons lors du parcours des mesures. Prenons comme exemple la balise \emph{<beam>}, elle peut être présente dans une balise \emph{<note>} et peut contenir les informations nécessaires pour représenter un groupe de croches dans \emph{MusicXML}. Comme le montre le code ci-dessous, la balise possède un attribut \emph{number}. Il nous permet de connaître le numéro du groupe actuel dans le cas où il y a plusieurs groupes de croches dans la même mesure. Et enfin la balise contient un énumération \emph{begin, end, continue} qui nous permet de connaître la position de la note dans le groupe. Lors de notre premier passage nous stockons ces informations dans un objet \emph{Beam}. Lors de notre second passage nous utilisons ces données pour créer nos groupes. Cette étape est essentielle car elle precalcule les groupes qui seront formés dans l'\emph{arbre rythmique}. En effet, ces groupes influencent directement la durée des notes et accords et donc les sous-arbres d'un \emph{arbre rythmique}.
 
 
 \begin{lstlisting}[caption=Exemple d'une balise beam de MusicXML]
@@ -193,12 +193,6 @@ Le couple (D S) et l'arbre rythmique correspondant sont :
 \par
 Notre implémentation de l'\emph{arbre rythmique} est structurellement assez simple. Un \emph{RhythmicThree} contient une \emph{Signature}, une \emph{Fraction}, un \emph{ItemType}, une liste d'\emph{ExtraSymbols} et une liste de \emph{RhythmicTree} correspondant aux fils.
 
-\begin{figure}[!h]
-\centering
-\includegraphics[width=0.6\textwidth]{rtClassDiagram.png}\\[1cm]
-%source : Alexandre
-\caption{Structure de l'implémentation de l'arbre rythmique}
-\end{figure}
 
 \par
 La \emph{Signature} contient simplement deux entiers. La \emph{Fraction} quant à elle est un peu plus complexe. Elle contient un \emph{Type} qui est simplement un énumération des durées possibles d'une note et qui est utilisé comme le dénominateur de la fraction. Le rôle du numérateur est assuré par un simple entier. Les valeurs de la \emph{Fraction} ne change jamais. Les méthodes de cette classe permettent de calculer la valeur relative à un \emph{Type} de \emph{Fraction}. Plus concrètement, prenons la \emph{Fraction} $a=1/2$, en utilisant la méthode $a.getRelativeValue(Type.QUARTER)$ soit $4$ en dénominateur nous obtiendrons 2 et donc $a=2/4$. Et enfin l’énumération \emph{ItemType} nous permet de savoir si l'arbre courant est une note, un silence, une liaison ou une mesure.
@@ -206,6 +200,14 @@ La \emph{Signature} contient simplement deux entiers. La \emph{Fraction} quant �
 
 \par
 Une fois la \emph{Score} créé, les arbres rythmiques pour chaque mesure sont construits. Cette étape est réalisée par les classes du package \emph{rhythmicstructures}. La classe factory \emph{RhythmicTreeFactory} parcours tout l'arbre des objets intermédiaires, et pour chaque \emph{Measure} rencontrée, un nouvel objet de la classe \emph{RhythmicTree} est créé. La seule étape que nous pouvons qualifier d'épineuse ici est celle qui consiste à traiter les groupes. Si une mesure contient des groupes imbriqués, il faut créer les arbre rythmiques correspondant et les remplir. L'algorithme est donc récursif, manipulation d'arbres oblige. Ayant suivi au premier semestre le module d'algorithmique avancé qui traitait entre autres de manipulation d'arbres, nous avons pu réaliser cet algorithme sans trop de soucis.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{rtClassDiagram.png}\\[1cm]
+%source : Alexandre
+\caption{Structure de l'implémentation de l'arbre rythmique}
+\end{figure}
 
 \begin{lstlisting}[caption=Code de la méthode buidRTFromMeasure]
 public static RhythmicTree buidRTFromMeasure(Measure measure) {
@@ -236,8 +238,9 @@ public static RhythmicTree buidRTFromMeasure(Measure measure) {
 }
 \end{lstlisting}
 
+
 \par
-Le code ci-dessus est la dernière partie de la génération de l'\emph{arbre rythmique}. Nous commençons par définir la signature de l'arbre. Son absence ne pose pas de problème au reste du code. Ensuite nous parcourons l'ensemble des éléments qui constituent la mesure. En fonction de leur type nous créons la structure adéquate. On peut remarquer qu'une fois arrivé à cette étape du code, les groupes ont déjà été formé et que nous n'avons plus qu'à effectuer une simple traduction. La constitution des groupes de la partie précédente est donc fondamentale.
+Le code ci-dessus est la dernière partie de la génération de l'\emph{arbre rythmique}. Nous commençons par définir la signature de l'arbre. Son absence ne pose pas de problème au reste du code. Ensuite nous parcourons l'ensemble des éléments qui constituent la mesure. En fonction de leur type nous créons la structure adéquate. On peut remarquer qu'une fois arrivé à cette étape du code, les groupes ont déjà été formés et que nous n'avons plus qu'à effectuer une simple traduction. La constitution des groupes de la partie précédente est donc fondamentale.
 
 \subsection{Test du programme}
 
