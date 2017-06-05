@@ -33,7 +33,6 @@ public class RhythmicTreeFactory {
 		return result;
 	}
 	
-	//TODO add a possible default signature
 	public static RhythmicTree buidRTFromMeasure(Measure measure) {
 		RhythmicTree result = new RhythmicTree(ItemType.Measure, measure.getSignature());
 		

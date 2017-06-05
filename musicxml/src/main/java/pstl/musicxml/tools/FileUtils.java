@@ -27,7 +27,7 @@ public class FileUtils {
 	}
 	
 	
-	public ArrayList<File> getByFilesExt(File dir, String ext) throws IOException {
+	public static ArrayList<File> getFilesByExt(File dir, String ext) throws IOException {
 		if (!dir.exists())
 			throw new IOException(dir + " does not exist!");
 		else if (!dir.isDirectory())

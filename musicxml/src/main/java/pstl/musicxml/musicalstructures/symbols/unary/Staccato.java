@@ -1,6 +1,6 @@
 package pstl.musicxml.musicalstructures.symbols.unary;
 
-public class Staccato implements UnarySymbol{
+public class Staccato implements UnarySymbol {
 	private static Staccato staccato = new Staccato();
 	
 	@Override

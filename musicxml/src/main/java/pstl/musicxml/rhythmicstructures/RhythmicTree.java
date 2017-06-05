@@ -152,26 +152,26 @@ public class RhythmicTree {
 	}
 	
 	
-	public static void main(String[] args) {
-		RhythmicTree root = new RhythmicTree(ItemType.Measure, new Signature(4, 4));
-		RhythmicTree rt = new RhythmicTree(ItemType.Note, FractionFactory.newQuarter());
-
-		rt.addChild(new RhythmicTree(ItemType.Note, FractionFactory.newFraction(1, Type.EIGHTH)));
-		rt.addChild(new RhythmicTree(ItemType.Note, FractionFactory.newFraction(1, Type.EIGHTH)));
-		
-		root.addChild(new RhythmicTree(ItemType.Note, FractionFactory.newQuarter()));
-		root.addChild(rt);
-		root.addChild(new RhythmicTree(ItemType.Rest, FractionFactory.newQuarter()));
-		root.addChild(new RhythmicTree(ItemType.Note, FractionFactory.newFraction(1, Type.HALF)));
-		root.addChild(new RhythmicTree(ItemType.Note, FractionFactory.newFraction(1, Type.SIXTY_FOURTH)));
-		
-		root.calculateFractions();
-		
-		System.out.println(root);
-		
-		
-		
-		
-	}
+//	public static void main(String[] args) {
+//		RhythmicTree root = new RhythmicTree(ItemType.Measure, new Signature(4, 4));
+//		RhythmicTree rt = new RhythmicTree(ItemType.Note, FractionFactory.newQuarter());
+//
+//		rt.addChild(new RhythmicTree(ItemType.Note, FractionFactory.newFraction(1, Type.EIGHTH)));
+//		rt.addChild(new RhythmicTree(ItemType.Note, FractionFactory.newFraction(1, Type.EIGHTH)));
+//		
+//		root.addChild(new RhythmicTree(ItemType.Note, FractionFactory.newQuarter()));
+//		root.addChild(rt);
+//		root.addChild(new RhythmicTree(ItemType.Rest, FractionFactory.newQuarter()));
+//		root.addChild(new RhythmicTree(ItemType.Note, FractionFactory.newFraction(1, Type.HALF)));
+//		root.addChild(new RhythmicTree(ItemType.Note, FractionFactory.newFraction(1, Type.SIXTY_FOURTH)));
+//		
+//		root.calculateFractions();
+//		
+//		System.out.println(root);
+//		
+//		
+//		
+//		
+//	}
 
 }
